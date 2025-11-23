@@ -78,10 +78,10 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                     &kp F6        &kp F7    &kp F8        &kp F9    &kp F10        &kp F11
-&trans               &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp N5                     &kp NUMBER_6  &kp N7    &kp N8        &kp N9    &kp N0         &kp F12
-&trans               &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR    &kp PRCNT                  &kp CARET     &kp AMPS  &kp ASTERISK  &kp LPAR  &kp RPAR       &kp PIPE
-&trans               &kp PLUS      &kp EQUAL     &kp PLUS      &none         &none      &none   &none   &none         &none     &none         &none     &kp BACKSLASH  &kp RIGHT_SHIFT
+&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                     &kp F6        &kp F7    &kp F8        &kp F9     &kp F10        &kp F11
+&trans               &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp N5                     &kp NUMBER_6  &kp N7    &kp N8        &kp N9     &kp N0         &kp F12
+&trans               &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR    &kp PRCNT                  &kp CARET     &kp AMPS  &kp ASTERISK  &kp LPAR   &kp RPAR       &kp PIPE
+&trans               &none         &none         &none         &none         &none      &none   &none   &none         &none     &kp PLUS      &kp EQUAL  &kp BACKSLASH  &kp RIGHT_SHIFT
                                                  &trans        &trans        &trans     &trans  &trans  &trans        &trans    &trans
             >;
 
