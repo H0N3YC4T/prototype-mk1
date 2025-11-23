@@ -115,7 +115,9 @@
                                                     &kp LEFT_ALT      &kp LWIN  &none  &kp ENTER  &kp ENTER  &none  &kp BACKSPACE     &kp LWIN
             >;
 
-            sensor-bindings = <&inc_dec_kp UP DOWN>, <&inc_dec_kp UP DOWN>;
+            sensor-bindings =
+                <&inc_dec_kp UP DOWN>,
+                <&inc_dec_kp RIGHT LEFT_ARROW>;
         };
 
         layer_mouse {
