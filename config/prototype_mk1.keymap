@@ -86,7 +86,7 @@
             >;
 
             sensor-bindings =
-                <&inc_dec_kp C_AC_SCROLL_UP C_AC_SCROLL_DOWN>,
+                <&inc_dec_kp K_SCROLL_UP K_SCROLL_DOWN>,
                 <&inc_dec_kp C_AL_NEXT_TASK C_AL_PREVIOUS_TASK>;
         };
 
