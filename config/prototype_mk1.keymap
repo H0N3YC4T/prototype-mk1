@@ -63,10 +63,10 @@
         layer_lower {
             display-name = "Lower";
             bindings = <
-&hold_esc ESC GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH   &kp DOLLAR    &kp PERCENT                      &kp CARET  &kp AMPS          &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL
-&kp TAB              &kp LC(LS(N4))   &none        &none      &none         &none                            &none      &kp HOME          &kp UP_ARROW    &kp END               &none                  &kp DELETE
-&kp LEFT_CONTROL     &kp LC(A)        &kp LC(S)    &kp LC(D)  &kp LC(F)     &kp LC(G)                        &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW       &none                  &none
-&kp LEFT_SHIFT       &kp LC(Z)        &kp LC(X)    &kp LC(C)  &kp LC(V)     &none        &none    &none      &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)      &kp LEFT_WIN           &kp RIGHT_SHIFT
+&hold_esc ESC GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH   &kp DOLLAR    &kp PERCENT                      &kp CARET  &kp AMPS          &kp ASTERISK    &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp EQUAL
+&kp TAB              &kp LC(LS(N4))   &none        &none      &none         &none                            &none      &kp HOME          &kp UP_ARROW    &kp END           &none              &kp DELETE
+&kp LEFT_CONTROL     &kp LC(A)        &kp LC(S)    &kp LC(D)  &kp LC(F)     &kp LC(G)                        &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW   &none              &none
+&kp LEFT_SHIFT       &kp LC(Z)        &kp LC(X)    &kp LC(C)  &kp LC(V)     &none        &none    &none      &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN       &kp RIGHT_SHIFT
                                                    &kp LALT   &kp LEFT_WIN  &mo 1        &kp RET  &kp SPACE  &mo 2      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
@@ -78,11 +78,11 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                           &kp F6        &kp F7         &kp F8         &kp F9            &kp F10        &kp F11
-&kp TAB              &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp N5                           &kp NUMBER_6  &kp N7         &kp N8         &kp N9            &kp N0         &kp F12
-&kp LEFT_CONTROL     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR    &kp PRCNT                        &kp CARET     &kp AMPS       &kp ASTERISK   &kp LPAR          &kp RPAR       &kp PIPE
-&kp LEFT_SHIFT       &none         &none         &none         &none         &none      &none      &none      &kp PLUS      &kp EQUAL      &kp LESS_THAN  &kp GREATER_THAN  &kp BACKSLASH  &kp RIGHT_SHIFT
-                                                 &kp LEFT_ALT  &kp LEFT_WIN  &mo 1      &kp ENTER  &kp SPACE  &mo 2         &kp BACKSPACE  &kp LEFT_WIN
+&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4            &kp F5                                   &kp F6        &kp F7         &kp F8         &kp F9                &kp F10                &kp F11
+&kp TAB              &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4      &kp N5                                   &kp NUMBER_6  &kp N7         &kp N8         &kp N9                &kp N0                 &kp F12
+&kp LEFT_CONTROL     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR        &kp PRCNT                                &kp CARET     &kp AMPS       &kp ASTERISK   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE
+&kp LEFT_SHIFT       &none         &none         &none         &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &none      &none      &kp PLUS      &kp EQUAL      &kp LESS_THAN  &kp GREATER_THAN      &kp BACKSLASH          &kp RIGHT_SHIFT
+                                                 &kp LEFT_ALT  &kp LEFT_WIN      &mo 1              &kp ENTER  &kp SPACE  &mo 2         &kp BACKSPACE  &kp LEFT_WIN
             >;
 
             sensor-bindings =
