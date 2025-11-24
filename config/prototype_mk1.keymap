@@ -99,17 +99,10 @@
     };
 
     macros {
-        alt_tab_f: alt_tab_f {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB>;
-            label = "ALT_TAB_F";
-        };
-
         alt_tab_b: alt_tab_b {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
             label = "ALT_TAB_B";
         };
 
@@ -139,6 +132,20 @@
             #binding-cells = <0>;
             bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
             label = "ALT_TAB_INIT";
+        };
+
+        alt_tab_forw: alt_tab_forw_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kt LEFT_ALT>;
+            label = "ALT_TAB_FORW_P";
+        };
+
+        alt_tab_back: alt_tab_back_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
+            label = "ALT_TAB_BACK_P";
         };
     };
 
