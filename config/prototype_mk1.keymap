@@ -190,7 +190,7 @@
                                                    &kp LALT   &kp LEFT_WIN  &mo 1        &kp RET  &kp SPACE  &mo 2      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
-            sensor-bindings = <&encoder_mscroll>, <&encoder_undo_redo>;
+            sensor-bindings = <&encoder_undo_redo>, <&encoder_undo_redo>;
         };
 
         layer_upper {
@@ -199,12 +199,12 @@
 &hold_esc ESC GRAVE  &kp F1  &kp F2  &kp F3        &kp F4        &kp F5                          &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
 &kp TAB              &none   &none   &none         &none         &none                           &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
 &kp LEFT_CONTROL     &none   &none   &none         &none         &none                           &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
-&kp LEFT_SHIFT       &none   &none   &none         &none         &none   &kp LC(N0)  &kp K_MUTE  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
+&kp LEFT_SHIFT       &none   &none   &none         &none         &none   &kp K_MUTE  &kp K_MUTE  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
                                      &kp LEFT_ALT  &kp LEFT_WIN  &mo 1   &kp ENTER   &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
             >;
 
             sensor-bindings =
-                <&encoder_zoom>,
+                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>,
                 <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
@@ -218,7 +218,9 @@
                                                &kp LALT      &kp LGUI      &mo 1         &kp ENTER    &kp SPACE                                     &mo 2               &kp BSPC          &kp LEFT_GUI
             >;
 
-            sensor-bindings = <&at_encoder>, <&encoder_change_desktop>;
+            sensor-bindings =
+                <&inc_dec_kp LEFT RIGHT>,
+                <&encoder_change_desktop>;
         };
 
         layer_arrows {
