@@ -52,19 +52,6 @@
             tapping-term-ms = <250>;
         };
 
-        encoder_mscroll: encoder_mscroll {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_MSCROLL";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
-        };
-
-        encoder_zoom: encoder_zoom {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_ZOOM";
-            #sensor-binding-cells = <0>;
-            bindings = <&zoom_in>, <&zoom_out>;
-        };
 
         encoder_undo_redo: encoder_undo_redo {
             compatible = "zmk,behavior-sensor-rotate";
