@@ -59,13 +59,6 @@
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
         };
 
-        encoder_alt_tab: encoder_alt_tab {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_ALT_TAB";
-            #sensor-binding-cells = <0>;
-            bindings = <&alt_tab_f>, <&alt_tab_b>;
-        };
-
         encoder_zoom: encoder_zoom {
             compatible = "zmk,behavior-sensor-rotate";
             label = "ENCODER_ZOOM";
