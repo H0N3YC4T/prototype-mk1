@@ -72,6 +72,13 @@
             #sensor-binding-cells = <0>;
             bindings = <&zoom_in>, <&zoom_out>;
         };
+
+        encoder_undo_redo: encoder_undo_redo {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_UNDO_REDO";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LC(Y)>, <&kp LC(Z)>;
+        };
     };
 
     macros {
@@ -89,11 +96,11 @@
             label = "ALT_TAB_B";
         };
 
-        alt_tab_hold: alt_tab_hold {
+        alt_tab_release: alt_tab_release {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB>;
-            label = "ALT_TAB_HOLD";
+            bindings = <&kt LEFT_ALT>;
+            label = "ALT_TAB_RELEASE";
         };
 
         zoom_in: zoom_in {
@@ -137,24 +144,20 @@
                                                    &kp LALT   &kp LEFT_WIN  &mo 1        &kp RET  &kp SPACE  &mo 2      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
-            sensor-bindings =
-                <&inc_dec_kp C_AC_ZOOM_IN C_AC_ZOOM_OUT>,
-                <&inc_dec_kp LC(Y) LC(Z)>;
+            sensor-bindings = <&encoder_mscroll>, <&encoder_undo_redo>;
         };
 
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4            &kp F5                                   &kp F6        &kp F7         &kp F8         &kp F9                &kp F10                &kp F11
-&kp TAB              &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4      &kp N5                                   &kp NUMBER_6  &kp N7         &kp N8         &kp N9                &kp N0                 &kp F12
-&kp LEFT_CONTROL     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR        &kp PRCNT                                &kp CARET     &kp AMPS       &kp ASTERISK   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE
-&kp LEFT_SHIFT       &none         &none         &none         &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &none      &none      &kp PLUS      &kp EQUAL      &kp LESS_THAN  &kp GREATER_THAN      &kp BACKSLASH          &kp RIGHT_SHIFT
-                                                 &kp LEFT_ALT  &kp LEFT_WIN      &mo 1              &kp ENTER  &kp SPACE  &mo 2         &kp BACKSPACE  &kp LEFT_WIN
+&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4            &kp F5                                    &kp F6        &kp F7         &kp F8         &kp F9                &kp F10                &kp F11
+&kp TAB              &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4      &kp N5                                    &kp NUMBER_6  &kp N7         &kp N8         &kp N9                &kp N0                 &kp F12
+&kp LEFT_CONTROL     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR        &kp PRCNT                                 &kp CARET     &kp AMPS       &kp ASTERISK   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE
+&kp LEFT_SHIFT       &none         &none         &none         &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LC(N0)  &none      &kp PLUS      &kp EQUAL      &kp LESS_THAN  &kp GREATER_THAN      &kp BACKSLASH          &kp RIGHT_SHIFT
+                                                 &kp LEFT_ALT  &kp LEFT_WIN      &mo 1              &kp ENTER   &kp SPACE  &mo 2         &kp BACKSPACE  &kp LEFT_WIN
             >;
 
-            sensor-bindings =
-                <&inc_dec_kp K_SCROLL_UP K_SCROLL_DOWN>,
-                <&inc_dec_kp C_AL_NEXT_TASK C_AL_PREVIOUS_TASK>;
+            sensor-bindings = <&encoder_zoom>, <&encoder_zoom>;
         };
 
         layer_settings {
