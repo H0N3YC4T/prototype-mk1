@@ -40,7 +40,7 @@
 
             #binding-cells = <2>;
             flavor = "tap-preferred";
-            tapping-term-ms = <80>;
+            tapping-term-ms = <150>;
         };
 
         shift_capslock: shift_capslock {
@@ -79,20 +79,37 @@
             #sensor-binding-cells = <0>;
             bindings = <&kp LC(Y)>, <&kp LC(Z)>;
         };
+
+        desktop_create_destroy: desktop_create_destroy {
+            compatible = "zmk,behavior-hold-tap";
+            label = "DESKTOP_CREATE_DESTROY";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <250>;
+        };
+
+        encoder_change_desktop: encoder_change_desktop {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_CHANGE_DESKTOP";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LC(LG(RIGHT))>, <&kp LG(LC(LEFT))>;
+        };
     };
 
     macros {
         alt_tab_f: alt_tab_f {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB &kt LEFT_ALT>;
+            bindings = <&kt LEFT_ALT &kp TAB>;
             label = "ALT_TAB_F";
         };
 
         alt_tab_b: alt_tab_b {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT>;
             label = "ALT_TAB_B";
         };
 
@@ -150,29 +167,29 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4            &kp F5                                    &kp F6        &kp F7         &kp F8         &kp F9                &kp F10                &kp F11
-&kp TAB              &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4      &kp N5                                    &kp NUMBER_6  &kp N7         &kp N8         &kp N9                &kp N0                 &kp F12
-&kp LEFT_CONTROL     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR        &kp PRCNT                                 &kp CARET     &kp AMPS       &kp ASTERISK   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE
-&kp LEFT_SHIFT       &none         &none         &none         &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LC(N0)  &none      &kp PLUS      &kp EQUAL      &kp LESS_THAN  &kp GREATER_THAN      &kp BACKSLASH          &kp RIGHT_SHIFT
-                                                 &kp LEFT_ALT  &kp LEFT_WIN      &mo 1              &kp ENTER   &kp SPACE  &mo 2         &kp BACKSPACE  &kp LEFT_WIN
+&hold_esc ESC GRAVE  &kp F1        &kp F2        &kp F3        &kp F4            &kp F5                                     &kp F6        &kp F7         &kp F8         &kp F9                &kp F10                &kp F11
+&kp TAB              &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4      &kp N5                                     &kp NUMBER_6  &kp N7         &kp N8         &kp N9                &kp N0                 &kp F12
+&kp LEFT_CONTROL     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR        &kp PRCNT                                  &kp CARET     &kp AMPS       &kp ASTERISK   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE
+&kp LEFT_SHIFT       &none         &none         &none         &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LC(N0)  &kp K_MUTE  &kp PLUS      &kp EQUAL      &kp LESS_THAN  &kp GREATER_THAN      &kp BACKSLASH          &kp RIGHT_SHIFT
+                                                 &kp LEFT_ALT  &kp LEFT_WIN      &mo 1              &kp ENTER   &kp SPACE   &mo 2         &kp BACKSPACE  &kp LEFT_WIN
             >;
 
-            sensor-bindings = <&encoder_zoom>, <&encoder_zoom>;
+            sensor-bindings =
+                <&encoder_zoom>,
+                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                &tog 4          &tog 5             &tog 6  &none  &none  &none
-&sys_reset         &bl BL_INC    &none         &none         &none         &kp RS(RC(ESCAPE))                          &none           &none              &none   &none  &none  &none
-&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &kp RG(E)                                   &kp LG(LC(D))   &kp LG(LC(RIGHT))  &none   &none  &none  &none
-&studio_unlock     &bl BL_DEC    &none         &none         &none         &none               &kp C_MUTE  &kp C_MUTE  &kp LG(LC(F4))  &kp LG(LC(LEFT))   &none   &none  &none  &none
-                                               &trans        &trans        &trans              &trans      &trans      &trans          &trans             &trans
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                                              &tog 4  &tog 5  &tog 6  &none  &none  &none
+&sys_reset         &bl BL_INC    &none         &none         &none         &kp RS(RC(ESCAPE))                                                        &none   &none   &none   &none  &none  &none
+&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &kp RG(E)                                                                 &none   &none   &none   &none  &none  &none
+&studio_unlock     &bl BL_DEC    &none         &none         &none         &none               &trans  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &none   &none   &none   &none  &none  &none
+                                               &trans        &trans        &trans              &trans  &trans                                        &trans  &trans  &trans
             >;
 
-            sensor-bindings =
-                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>,
-                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
+            sensor-bindings = <&encoder_alt_tab>, <&encoder_change_desktop>;
         };
 
         layer_arrows {
