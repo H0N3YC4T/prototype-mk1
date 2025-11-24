@@ -133,6 +133,13 @@
             bindings = <&sk LEFT_CONTROL &msc SCRL_DOWN>;
             label = "ZOOM_OUT";
         };
+
+        alt_tab_init: alt_tab_init {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
+            label = "ALT_TAB_INIT";
+        };
     };
 
     keymap {
