@@ -97,9 +97,9 @@
             bindings = <&kp LC(LG(RIGHT))>, <&kp LG(LC(LEFT))>;
         };
 
-        alt_tab_forw_mod: alt_tab_forw_mod {
+        at_forw_mod: at_forw_mod {
             compatible = "zmk,behavior-mod-morph";
-            label = "ALT_TAB_FORW_MOD";
+            label = "AT_FORW_MOD";
             bindings = <&alt_tab_forw>, <&kp RIGHT>;
 
             #binding-cells = <0>;
@@ -107,32 +107,34 @@
             keep-mods = <(MOD_LALT|MOD_RALT)>;
         };
 
-        alt_tab_back_mod: alt_tab_back_mod {
+        at_back_mod: at_back_mod {
             compatible = "zmk,behavior-mod-morph";
-            label = "ALT_TAB_BACK_MOD";
+            label = "AT_BACK_MOD";
             bindings = <&alt_tab_back>, <&kp LEFT>;
 
             #binding-cells = <0>;
             mods = <(MOD_LALT|MOD_RALT)>;
             keep-mods = <(MOD_RALT|MOD_LALT)>;
         };
+
+        at_tog_mod: at_tog_mod {
+            compatible = "zmk,behavior-mod-morph";
+            label = "AT_TOG_MOD";
+            bindings = <&alt_tab_init>, <&kt LEFT_ALT>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_RALT|MOD_LALT)>;
+        };
+
+        at_encoder: at_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "AT_ENCODER";
+            #sensor-binding-cells = <0>;
+            bindings = <&at_forw_mod>, <&at_back_mod>;
+        };
     };
 
     macros {
-        alt_tab_b: alt_tab_b {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
-            label = "ALT_TAB_B";
-        };
-
-        alt_tab_release: alt_tab_release {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT>;
-            label = "ALT_TAB_RELEASE";
-        };
-
         zoom_in: zoom_in {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
