@@ -203,5 +203,5 @@ static int nice_view_cycle_animation_listener(const zmk_event_t *eh)
     return 0;
 }
 
-ZMK_LISTENER(nice_view_cycle_animation_listener, nice_view_cycle_animation_listener);
-ZMK_SUBSCRIPTION(nice_view_cycle_animation_listener, cycle_animation_state_changed);
+// ZMK_LISTENER(nice_view_cycle_animation_listener, nice_view_cycle_animation_listener);
+// ZMK_SUBSCRIPTION(nice_view_cycle_animation_listener, cycle_animation_state_changed);
