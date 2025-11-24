@@ -203,11 +203,11 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESC GRAVE  &kp F1  &kp F2  &kp F3        &kp F4         &kp F5                               &kp F6             &kp F7             &kp F8         &kp F9     &kp F10   &kp F11
-&kp TAB              &none   &none   &none         &none          &none                                &kp LEFT_BRACE     &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none     &kp F12
-&kp LEFT_CONTROL     &none   &none   &none         &none          &none                                &kp LEFT_BRACKET   &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none     &none
-&kp LEFT_SHIFT       &none   &none   &none         &none          &none     &kp LC(N0)  &kp K_MUTE     &kp LESS_THAN      &kp GREATER_THAN   &none          &none      &none     &kp RIGHT_SHIFT
-                                     &kp LEFT_ALT  &kp LEFT_WIN   &mo 1     &kp ENTER   &kp SPACE      &mo 2              &kp BACKSPACE      &kp LEFT_WIN
+&hold_esc ESC GRAVE  &kp F1  &kp F2  &kp F3        &kp F4        &kp F5                          &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
+&kp TAB              &none   &none   &none         &none         &none                           &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
+&kp LEFT_CONTROL     &none   &none   &none         &none         &none                           &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
+&kp LEFT_SHIFT       &none   &none   &none         &none         &none   &kp LC(N0)  &kp K_MUTE  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
+                                     &kp LEFT_ALT  &kp LEFT_WIN  &mo 1   &kp ENTER   &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
             >;
 
             sensor-bindings =
@@ -218,11 +218,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                                                   &tog 4  &tog 5    &tog 6  &none  &none  &none
-&sys_reset         &bl BL_INC    &none         &none         &none         &kp RS(RC(ESCAPE))                                                             &none   &none     &none   &none  &none  &none
-&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &kp RG(E)                                                                      &none   &none     &none   &none  &none  &none
-&studio_unlock     &bl BL_DEC    &none         &none         &none         &none               &at_tog_mod  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &none   &none     &none   &none  &none  &none
-                                               &kp LALT      &kp LGUI      &mo 1               &kp ENTER    &kp SPACE                                     &mo 2   &kp BSPC  &kp LEFT_GUI
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                                             &tog 4              &tog 5            &tog 6            &none             &none       &none
+&sys_reset         &bl BL_INC    &none         &none         &none         &none                                                                    &kp LG(E)           &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)  &none
+&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &none                                                                    &kp LC(LS(ESCAPE))  &none             &none             &none             &none       &none
+&studio_unlock     &bl BL_DEC    &none         &none         &none         &none         &at_tog_mod  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(LA(DEL))     &none             &none             &none             &none       &none
+                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER    &kp SPACE                                     &mo 2               &kp BSPC          &kp LEFT_GUI
             >;
 
             sensor-bindings = <&at_encoder>, <&encoder_change_desktop>;
