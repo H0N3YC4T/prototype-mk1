@@ -40,109 +40,208 @@
 
             #binding-cells = <2>;
             flavor = "tap-preferred";
-            tapping-term-ms = <80>;
+            tapping-term-ms = <150>;
+        };
+
+        shift_capslock: shift_capslock {
+            compatible = "zmk,behavior-tap-dance";
+            label = "SHIFT_CAPSLOCK";
+            #binding-cells = <0>;
+            bindings = <&sk RIGHT_SHIFT>, <&caps_word>, <&kp CAPSLOCK>;
+
+            tapping-term-ms = <250>;
+        };
+
+        encoder_mscroll: encoder_mscroll {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_MSCROLL";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+        };
+
+        encoder_alt_tab: encoder_alt_tab {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_ALT_TAB";
+            #sensor-binding-cells = <0>;
+            bindings = <&alt_tab_f>, <&alt_tab_b>;
+        };
+
+        encoder_zoom: encoder_zoom {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_ZOOM";
+            #sensor-binding-cells = <0>;
+            bindings = <&zoom_in>, <&zoom_out>;
+        };
+
+        encoder_undo_redo: encoder_undo_redo {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_UNDO_REDO";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LC(Y)>, <&kp LC(Z)>;
+        };
+
+        desktop_create_destroy: desktop_create_destroy {
+            compatible = "zmk,behavior-hold-tap";
+            label = "DESKTOP_CREATE_DESTROY";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <250>;
+        };
+
+        encoder_change_desktop: encoder_change_desktop {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_CHANGE_DESKTOP";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LC(LG(RIGHT))>, <&kp LG(LC(LEFT))>;
+        };
+
+        at_forw_mod: at_forw_mod {
+            compatible = "zmk,behavior-mod-morph";
+            label = "AT_FORW_MOD";
+            bindings = <&alt_tab_forw>, <&kp RIGHT>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT|MOD_RALT)>;
+            keep-mods = <(MOD_LALT|MOD_RALT)>;
+        };
+
+        at_back_mod: at_back_mod {
+            compatible = "zmk,behavior-mod-morph";
+            label = "AT_BACK_MOD";
+            bindings = <&alt_tab_back>, <&kp LEFT>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT|MOD_RALT)>;
+            keep-mods = <(MOD_RALT|MOD_LALT)>;
+        };
+
+        at_tog_mod: at_tog_mod {
+            compatible = "zmk,behavior-mod-morph";
+            label = "AT_TOG_MOD";
+            bindings = <&alt_tab_init>, <&kt LEFT_ALT>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_RALT|MOD_LALT)>;
+        };
+
+        at_encoder: at_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "AT_ENCODER";
+            #sensor-binding-cells = <0>;
+            bindings = <&at_forw_mod>, <&at_back_mod>;
+        };
+    };
+
+    macros {
+        zoom_in: zoom_in {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&sk LEFT_CONTROL &msc SCRL_UP>;
+            label = "ZOOM_IN";
+        };
+
+        zoom_out: zoom_out {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&sk LEFT_CONTROL &msc SCRL_DOWN>;
+            label = "ZOOM_OUT";
+        };
+
+        alt_tab_init: alt_tab_init {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
+            label = "ALT_TAB_INIT";
+        };
+
+        alt_tab_forw: alt_tab_forw_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kt LEFT_ALT>;
+            label = "ALT_TAB_FORW_P";
+        };
+
+        alt_tab_back: alt_tab_back_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
+            label = "ALT_TAB_BACK_P";
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-
-
-
-
         default_layer {
             display-name = "Base";
             bindings = <
-&hold_esc ESCAPE GRAVE  &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                        &kp N6  &kp N7    &kp N8     &kp N9   &kp N0    &kp MINUS
-&kp TAB                 &kp Q   &kp W   &kp E     &kp R     &kp T                         &kp Y   &kp U     &kp I      &kp O    &kp P     &kp DELETE
-&kp LCTRL               &kp A   &kp S   &kp D     &kp F     &kp G                         &kp H   &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LSHFT               &kp Z   &kp X   &kp C     &kp V     &kp B   &trans     &trans     &kp N   &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                                        &kp LALT  &kp LGUI  &mo 1   &kp ENTER  &kp SPACE  &mo 2   &kp BSPC  &kp RGUI
+&hold_esc ESCAPE GRAVE  &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                        &kp N6  &kp N7    &kp N8        &kp N9   &kp N0    &kp MINUS
+&kp TAB                 &kp Q   &kp W   &kp E     &kp R     &kp T                         &kp Y   &kp U     &kp I         &kp O    &kp P     &kp DELETE
+&kp LCTRL               &kp A   &kp S   &kp D     &kp F     &kp G                         &kp H   &kp J     &kp K         &kp L    &kp SEMI  &kp SQT
+&kp LSHFT               &kp Z   &kp X   &kp C     &kp V     &kp B   &tog 4     &tog 5     &kp N   &kp M     &kp COMMA     &kp DOT  &kp FSLH  &shift_capslock
+                                        &kp LALT  &kp LGUI  &mo 1   &kp ENTER  &kp SPACE  &mo 2   &kp BSPC  &kp LEFT_GUI
             >;
 
             sensor-bindings = <&inc_dec_kp UP DOWN>, <&inc_dec_kp RIGHT LEFT>;
         };
 
-
-
-
-
-
         layer_lower {
             display-name = "Lower";
             bindings = <
-&kp ESC  &trans          &trans     &trans     &trans     &trans                               &trans             &trans            &trans          &trans            &trans        &none
-&trans   &kp LC(LS(N4))  &none      &none      &none      &none                                &none              &kp HOME          &kp UP_ARROW    &kp END           &none         &kp DELETE
-&trans   &kp LC(A)       &kp LC(S)  &kp LC(D)  &kp LC(F)  &kp LC(G)                            &none              &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW   &none         &none
-&trans   &kp LC(Z)       &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LEFT_BRACKET  &trans     &trans  &kp RIGHT_BRACKET  &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN  &trans
-                                    &trans     &trans     &trans            &kp SPACE  &trans  &trans             &trans            &trans
+&hold_esc ESC GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH   &kp DOLLAR    &kp PERCENT                      &kp CARET  &kp AMPS          &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL
+&kp TAB              &kp LC(LS(N4))   &none        &none      &none         &none                            &none      &kp HOME          &kp UP_ARROW    &kp END               &none                  &kp DELETE
+&kp LEFT_CONTROL     &kp LC(A)        &kp LC(S)    &kp LC(D)  &kp LC(F)     &kp LC(G)                        &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW       &none                  &none
+&kp LEFT_SHIFT       &kp LC(Z)        &kp LC(X)    &kp LC(C)  &kp LC(V)     &none        &none    &none      &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)      &kp LEFT_WIN           &kp RIGHT_SHIFT
+                                                   &kp LALT   &kp LEFT_WIN  &mo 1        &kp RET  &kp SPACE  &mo 2      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
-            sensor-bindings =
-                <&inc_dec_kp C_AC_ZOOM_IN C_AC_ZOOM_OUT>,
-                <&inc_dec_kp LC(Y) LC(Z)>;
+            sensor-bindings = <&encoder_mscroll>, <&encoder_undo_redo>;
         };
-
-
-
-
-
 
         layer_upper {
             display-name = "Raise";
             bindings = <
-&kp GRAVE  &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                                     &kp F6                 &kp F7    &kp F8           &kp F9     &kp F10        &kp F11
-&trans     &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp N5                                     &kp NUMBER_6           &kp N7    &kp N8           &kp N9     &kp N0         &kp F12
-&trans     &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR    &kp PRCNT                                  &kp CARET              &kp AMPS  &kp KP_MULTIPLY  &kp LPAR   &kp RPAR       &kp PIPE
-&trans     &kp EQUAL     &kp MINUS     &kp PLUS      &none         &kp LEFT_PARENTHESIS  &none   &kp LG(TAB)  &kp RIGHT_PARENTHESIS  &none     &kp SEMI         &kp COLON  &kp BACKSLASH  &kp RIGHT_SHIFT
-                                       &trans        &trans        &trans                &trans  &trans       &trans                 &trans    &trans
+&hold_esc ESC GRAVE  &kp F1  &kp F2  &kp F3        &kp F4        &kp F5                          &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
+&kp TAB              &none   &none   &none         &none         &none                           &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
+&kp LEFT_CONTROL     &none   &none   &none         &none         &none                           &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
+&kp LEFT_SHIFT       &none   &none   &none         &none         &none   &kp LC(N0)  &kp K_MUTE  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
+                                     &kp LEFT_ALT  &kp LEFT_WIN  &mo 1   &kp ENTER   &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
             >;
+
             sensor-bindings =
-                <&inc_dec_kp K_SCROLL_UP K_SCROLL_DOWN>,
-                <&inc_dec_kp C_AL_NEXT_TASK C_AL_PREVIOUS_TASK>;
+                <&encoder_zoom>,
+                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
-
-
-
-
-
 
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                &tog 4          &tog 5             &tog 6  &none  &none  &none
-&sys_reset         &bl BL_INC    &none         &none         &none         &kp RS(RC(ESCAPE))                          &none           &none              &none   &none  &none  &none
-&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &kp RG(E)                                   &kp LG(LC(D))   &kp LG(LC(RIGHT))  &none   &none  &none  &none
-&studio_unlock     &bl BL_DEC    &none         &none         &none         &none               &kp K_MUTE  &kp K_MUTE  &kp LG(LC(F4))  &kp LG(LC(LEFT))   &none   &none  &none  &none
-                                               &trans        &trans        &trans              &trans      &trans      &trans          &trans             &trans
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                                             &tog 4              &tog 5            &tog 6            &none             &none       &none
+&sys_reset         &bl BL_INC    &none         &none         &none         &none                                                                    &kp LG(E)           &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)  &none
+&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &none                                                                    &kp LC(LS(ESCAPE))  &none             &none             &none             &none       &none
+&studio_unlock     &bl BL_DEC    &none         &none         &none         &none         &at_tog_mod  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(LA(DEL))     &none             &none             &none             &none       &none
+                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER    &kp SPACE                                     &mo 2               &kp BSPC          &kp LEFT_GUI
             >;
-            sensor-bindings =
-                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>,
-                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
+
+            sensor-bindings = <&at_encoder>, <&encoder_change_desktop>;
         };
-
-
-
-
 
         layer_arrows {
             display-name = "Arrows";
             bindings = <
-&kp ESCAPE        &none             &none           &none             &none     &none                        &none  &none           &none           &none            &none  &tog 4
-&kp TAB           &kp HOME          &kp UP_ARROW    &kp END           &none     &none                        &none  &kp HOME        &kp UP_ARROW    &kp END          &none  &kp TAB
-&kp LEFT_CONTROL  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW   &none     &none                        &none  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none  &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &none     &none  &none      &none      &none  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none  &kp LEFT_SHIFT
-                                                    &kp LEFT_ALT      &kp LWIN  &none  &kp ENTER  &kp ENTER  &none  &kp BACKSPACE   &kp LWIN
+&kp ESCAPE        &kp N1            &kp N2          &kp N3            &kp N4    &kp N5                        &kp N6  &kp N7            &kp N8              &kp N9           &kp N0  &kp MINUS
+&kp TAB           &kp HOME          &kp UP_ARROW    &kp END           &none     &none                         &none   &kp HOME          &kp UP_ARROW        &kp END          &none   &kp TAB
+&kp LEFT_CONTROL  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW   &none     &none                         &none   &kp LEFT_ARROW    &kp DOWN_ARROW      &kp RIGHT_ARROW  &none   &kp LEFT_CONTROL
+&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &none     &none   &tog 4     &tog 4     &none   &kp LA(LEFT_WIN)  &kp LG(DOWN_ARROW)  &kp LS(LWIN)     &none   &kp LEFT_SHIFT
+                                                    &kp LEFT_ALT      &kp LWIN  &none   &kp ENTER  &kp ENTER  &none   &kp BACKSPACE     &kp LWIN
             >;
-            sensor-bindings = 
-                <&inc_dec_kp UP DOWN>, 
-                <&inc_dec_kp UP DOWN>;
+
+            sensor-bindings =
+                <&inc_dec_kp UP DOWN>,
+                <&inc_dec_kp RIGHT LEFT_ARROW>;
         };
-
-
-
-
 
         layer_mouse {
             display-name = "Mouse";
@@ -150,27 +249,28 @@
 &kp ESCAPE        &kp LS(TAB)       &kp ENTER       &kp TAB           &none         &none                      &none  &none          &none     &none  &none  &tog 5
 &kp TAB           &mkp MB1          &mmv MOVE_UP    &mkp MB2          &none         &none                      &none  &none          &none     &none  &none  &kp TAB
 &kp LEFT_CONTROL  &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT   &none         &none                      &none  &none          &none     &none  &none  &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN  &none  &none     &none     &none  &none          &none     &none  &none  &kp LEFT_SHIFT
+&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN  &none  &tog 5    &tog 5    &none  &none          &none     &none  &none  &kp LEFT_SHIFT
                                                     &kp LEFT_ALT      &kp LWIN      &none  &mkp MB1  &mkp MB1  &none  &kp BACKSPACE  &kp LWIN
             >;
+
+            sensor-bindings =
+                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>,
+                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
-
-
-
-
 
         layer_gaming {
             display-name = "Gaming";
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2  &kp N3        &kp N4        &kp N5                        &kp N6       &kp N7  &kp N8     &kp N9   &kp N0    &tog 6
-&kp TAB     &kp Q   &kp W   &kp E         &kp R         &kp T                         &kp Y        &kp U   &kp I      &kp O    &kp P     &kp BSLH
-&kp LSHFT   &kp A   &kp S   &kp D         &kp F         &kp G                         &kp H        &kp J   &kp K      &kp L    &kp RET   &kp RET
-&kp LCTRL   &kp Z   &kp X   &kp C         &kp V         &kp B   &none      &none      &kp N        &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                            &kp LEFT_ALT  &kp LEFT_WIN  &none   &kp SPACE  &kp ENTER  &kp LA(TAB)  &trans  &trans
+&kp ESCAPE  &kp N1  &kp N2  &kp N3  &kp N4            &kp N5                              &kp N6       &kp N7  &kp N8     &kp N9   &kp N0    &tog 6
+&kp TAB     &kp Q   &kp W   &kp E   &kp R             &kp T                               &kp Y        &kp U   &kp I      &kp O    &kp P     &kp BSLH
+&kp LSHFT   &kp A   &kp S   &kp D   &kp F             &kp G                               &kp H        &kp J   &kp K      &kp L    &kp RET   &kp RET
+&kp LCTRL   &kp Z   &kp X   &kp C   &kp V             &kp B         &tog 6     &tog 6     &kp N        &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
+                            &none   &kp LEFT_CONTROL  &kp LEFT_ALT  &kp SPACE  &kp ENTER  &kp LA(TAB)  &trans  &trans
             >;
+
             sensor-bindings =
-                <&inc_dec_kp C_AL_NEXT_TASK C_AL_PREV_TASK>,
-                <&inc_dec_kp C_KEYBOARD_INPUT_ASSIST_NEXT C_KEYBOARD_INPUT_ASSIST_PREVIOUS>;
+                <&inc_dec_kp K_VOLUME_DOWN K_VOLUME_DOWN>,
+                <&inc_dec_kp K_NEXT K_PREV>;
         };
     };
 };
