@@ -218,11 +218,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                                                   &tog 4  &tog 5  &tog 6  &none  &none  &none
-&sys_reset         &bl BL_INC    &none         &none         &none         &kp RS(RC(ESCAPE))                                                             &none   &none   &none   &none  &none  &none
-&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &kp RG(E)                                                                      &none   &none   &none   &none  &none  &none
-&studio_unlock     &bl BL_DEC    &none         &none         &none         &none               &at_tog_mod  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &none   &none   &none   &none  &none  &none
-                                               &trans        &trans        &trans              &trans       &trans                                        &trans  &trans  &trans
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                                                   &tog 4  &tog 5    &tog 6  &none  &none  &none
+&sys_reset         &bl BL_INC    &none         &none         &none         &kp RS(RC(ESCAPE))                                                             &none   &none     &none   &none  &none  &none
+&ext_power EP_TOG  &bl BL_TOG    &none         &none         &none         &kp RG(E)                                                                      &none   &none     &none   &none  &none  &none
+&studio_unlock     &bl BL_DEC    &none         &none         &none         &none               &at_tog_mod  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &none   &none     &none   &none  &none  &none
+                                               &kp LALT      &kp LGUI      &mo 1               &kp ENTER    &kp SPACE                                     &mo 2   &kp BSPC  &kp LEFT_GUI
             >;
 
             sensor-bindings = <&at_encoder>, <&encoder_change_desktop>;
