@@ -47,9 +47,67 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SHIFT_CAPSLOCK";
             #binding-cells = <0>;
-            bindings = <&sk RIGHT_SHIFT>, <&kp CAPSLOCK>;
+            bindings = <&sk RIGHT_SHIFT>, <&caps_word>, <&kp CAPSLOCK>;
 
-            tapping-term-ms = <200>;
+            tapping-term-ms = <250>;
+        };
+
+        encoder_mscroll: encoder_mscroll {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_MSCROLL";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+        };
+
+        encoder_alt_tab: encoder_alt_tab {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_ALT_TAB";
+            #sensor-binding-cells = <0>;
+            bindings = <&alt_tab_f>, <&alt_tab_b>;
+        };
+
+        encoder_zoom: encoder_zoom {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_ZOOM";
+            #sensor-binding-cells = <0>;
+            bindings = <&zoom_in>, <&zoom_out>;
+        };
+    };
+
+    macros {
+        alt_tab_f: alt_tab_f {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kt LEFT_ALT>;
+            label = "ALT_TAB_F";
+        };
+
+        alt_tab_b: alt_tab_b {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
+            label = "ALT_TAB_B";
+        };
+
+        alt_tab_hold: alt_tab_hold {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kt LEFT_ALT &kp TAB>;
+            label = "ALT_TAB_HOLD";
+        };
+
+        zoom_in: zoom_in {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&sk LEFT_CONTROL &msc SCRL_UP>;
+            label = "ZOOM_IN";
+        };
+
+        zoom_out: zoom_out {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&sk LEFT_CONTROL &msc SCRL_DOWN>;
+            label = "ZOOM_OUT";
         };
     };
 
