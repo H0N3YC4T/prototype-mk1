@@ -52,26 +52,6 @@
             tapping-term-ms = <250>;
         };
 
-        encoder_mscroll: encoder_mscroll {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_MSCROLL";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
-        };
-
-        encoder_alt_tab: encoder_alt_tab {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_ALT_TAB";
-            #sensor-binding-cells = <0>;
-            bindings = <&alt_tab_f>, <&alt_tab_b>;
-        };
-
-        encoder_zoom: encoder_zoom {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_ZOOM";
-            #sensor-binding-cells = <0>;
-            bindings = <&zoom_in>, <&zoom_out>;
-        };
 
         encoder_undo_redo: encoder_undo_redo {
             compatible = "zmk,behavior-sensor-rotate";
@@ -97,26 +77,6 @@
             bindings = <&kp LC(LG(RIGHT))>, <&kp LG(LC(LEFT))>;
         };
 
-        at_forw_mod: at_forw_mod {
-            compatible = "zmk,behavior-mod-morph";
-            label = "AT_FORW_MOD";
-            bindings = <&alt_tab_forw>, <&kp RIGHT>;
-
-            #binding-cells = <0>;
-            mods = <(MOD_LALT|MOD_RALT)>;
-            keep-mods = <(MOD_LALT|MOD_RALT)>;
-        };
-
-        at_back_mod: at_back_mod {
-            compatible = "zmk,behavior-mod-morph";
-            label = "AT_BACK_MOD";
-            bindings = <&alt_tab_back>, <&kp LEFT>;
-
-            #binding-cells = <0>;
-            mods = <(MOD_LALT|MOD_RALT)>;
-            keep-mods = <(MOD_RALT|MOD_LALT)>;
-        };
-
         at_tog_mod: at_tog_mod {
             compatible = "zmk,behavior-mod-morph";
             label = "AT_TOG_MOD";
@@ -130,44 +90,15 @@
             compatible = "zmk,behavior-sensor-rotate";
             label = "AT_ENCODER";
             #sensor-binding-cells = <0>;
-            bindings = <&at_forw_mod>, <&at_back_mod>;
+            bindings = <&none>, <&none>;
         };
     };
-
     macros {
-        zoom_in: zoom_in {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&sk LEFT_CONTROL &msc SCRL_UP>;
-            label = "ZOOM_IN";
-        };
-
-        zoom_out: zoom_out {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&sk LEFT_CONTROL &msc SCRL_DOWN>;
-            label = "ZOOM_OUT";
-        };
-
         alt_tab_init: alt_tab_init {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
             label = "ALT_TAB_INIT";
-        };
-
-        alt_tab_forw: alt_tab_forw_p {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB &kt LEFT_ALT>;
-            label = "ALT_TAB_FORW_P";
-        };
-
-        alt_tab_back: alt_tab_back_p {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kt LEFT_ALT &kp TAB &kp LEFT &kp LEFT &kt LEFT_ALT>;
-            label = "ALT_TAB_BACK_P";
         };
     };
 
@@ -197,7 +128,9 @@
                                                    &kp LALT   &kp LEFT_WIN  &mo 1        &kp RET  &kp SPACE  &mo 2      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
-            sensor-bindings = <&encoder_mscroll>, <&encoder_undo_redo>;
+            sensor-bindings =
+                <&inc_dec_kp PAGE_UP PAGE_DOWN>,
+                <&encoder_undo_redo>;
         };
 
         layer_upper {
@@ -211,7 +144,7 @@
             >;
 
             sensor-bindings =
-                <&encoder_zoom>,
+                <&inc_dec_kp LC(PLUS) LC(MINUS)>,
                 <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
@@ -225,7 +158,9 @@
                                                &kp LALT      &kp LGUI      &mo 1         &kp ENTER    &kp SPACE                                     &mo 2               &kp BSPC          &kp LEFT_GUI
             >;
 
-            sensor-bindings = <&at_encoder>, <&encoder_change_desktop>;
+            sensor-bindings =
+                <&inc_dec_kp LEFT RIGHT>,
+                <&encoder_change_desktop>;
         };
 
         layer_arrows {

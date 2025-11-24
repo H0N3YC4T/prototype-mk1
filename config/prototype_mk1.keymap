@@ -93,7 +93,7 @@
             bindings = <&none>, <&none>;
         };
     };
-
+    macros {
         alt_tab_init: alt_tab_init {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
