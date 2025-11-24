@@ -108,20 +108,6 @@
     };
 
     macros {
-        zoom_in: zoom_in {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&sk LEFT_CONTROL &msc SCRL_UP>;
-            label = "ZOOM_IN";
-        };
-
-        zoom_out: zoom_out {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&sk LEFT_CONTROL &msc SCRL_DOWN>;
-            label = "ZOOM_OUT";
-        };
-
         alt_tab_init: alt_tab_init {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
