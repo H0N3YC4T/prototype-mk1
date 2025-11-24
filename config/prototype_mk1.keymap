@@ -47,11 +47,10 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SHIFT_CAPSLOCK";
             #binding-cells = <0>;
-            bindings = <&sk RIGHT_SHIFT>, <&caps_word>, <&kp CAPSLOCK>;
+            bindings = <&sk RIGHT_SHIFT>, <&caps_word>;
 
             tapping-term-ms = <250>;
         };
-
 
         encoder_undo_redo: encoder_undo_redo {
             compatible = "zmk,behavior-sensor-rotate";
@@ -93,6 +92,7 @@
             bindings = <&none>, <&none>;
         };
     };
+
     macros {
         alt_tab_init: alt_tab_init {
             compatible = "zmk,behavior-macro";
