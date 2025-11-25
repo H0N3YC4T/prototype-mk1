@@ -121,16 +121,14 @@
         layer_lower {
             display-name = "Lower";
             bindings = <
-&hold_esc ESC GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH   &kp DOLLAR    &kp PERCENT                               &kp CARET  &kp AMPS          &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL
-&kp TAB              &none            &none        &none      &none         &none                                     &none      &kp HOME          &kp UP_ARROW    &kp END               &none                  &kp DELETE
-&kp LEFT_CONTROL     &kp LC(A)        &kp LC(S)    &kp LC(D)  &kp LC(F)     &kp LC(G)                                 &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW       &none                  &none
-&kp LEFT_SHIFT       &kp LC(Z)        &kp LC(X)    &kp LC(C)  &kp LC(V)     &kp LC(LS(NUMBER_4))  &none    &none      &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)      &kp LEFT_WIN           &kp RIGHT_SHIFT
-                                                   &kp LALT   &kp LEFT_WIN  &mo 1                 &kp RET  &kp SPACE  &mo 2      &kp BACKSPACE     &kp LEFT_WIN
+&hold_esc ESC GRAVE  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH   &kp DOLLAR    &kp PERCENT                                 &kp CARET  &kp AMPS          &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL
+&kp TAB              &none            &none        &none      &none         &none                                       &none      &kp HOME          &kp UP_ARROW    &kp END               &none                  &kp DELETE
+&kp LEFT_CONTROL     &kp LC(A)        &kp LC(S)    &kp LC(D)  &kp LC(F)     &kp LC(G)                                   &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW       &none                  &none
+&kp LEFT_SHIFT       &kp LC(Z)        &kp LC(X)    &kp LC(C)  &kp LC(V)     &kp LC(LS(NUMBER_4))  &none    &at_tog_mod  &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)      &kp LEFT_WIN           &kp RIGHT_SHIFT
+                                                   &kp LALT   &kp LEFT_WIN  &mo 1                 &kp RET  &kp SPACE    &mo 2      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
-            sensor-bindings =
-                <&inc_dec_kp PAGE_UP PAGE_DOWN>,
-                <&encoder_undo_redo>;
+            sensor-bindings = <&encoder_undo_redo>, <&inc_dec_kp RIGHT LEFT>;
         };
 
         layer_upper {
@@ -139,7 +137,7 @@
 &hold_esc ESC GRAVE  &kp F1              &kp F2            &kp F3            &kp F4            &kp F5                              &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
 &kp TAB              &kp LG(E)           &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)                          &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
 &kp LEFT_CONTROL     &kp LC(LS(ESCAPE))  &none             &none             &none             &none                               &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
-&kp LEFT_SHIFT       &kp LC(LA(DELETE))  &none             &none             &none             &none       &kp LC(N0)  &kp K_MUTE  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
+&kp LEFT_SHIFT       &kp LC(LA(DELETE))  &none             &none             &none             &none       &kp LC(N0)  &kp LC(N0)  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
                                                            &kp LEFT_ALT      &kp LEFT_WIN      &mo 1       &kp ENTER   &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
             >;
 
