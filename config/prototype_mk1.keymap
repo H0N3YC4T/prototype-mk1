@@ -179,10 +179,10 @@
         layer_mouse {
             display-name = "Mouse";
             bindings = <
-&kp ESCAPE        &kp LS(TAB)       &kp ENTER       &kp TAB           &none         &none                      &none  &none          &none     &none  &none  &tog 5
-&kp TAB           &mkp MB1          &mmv MOVE_UP    &mkp MB2          &none         &none                      &none  &none          &none     &none  &none  &kp TAB
-&kp LEFT_CONTROL  &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT   &none         &none                      &none  &none          &none     &none  &none  &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN  &none  &tog 5    &tog 5    &none  &none          &none     &none  &none  &kp LEFT_SHIFT
+&kp ESCAPE        &kp LS(TAB)       &kp ENTER       &kp TAB           &none         &none                      &none  &none          &kp LS(TAB)       &kp ENTER       &kp TAB  &tog 5
+&kp TAB           &mkp MB1          &mmv MOVE_UP    &mkp MB2          &none         &none                      &none  &none          &mkp MB1          &mmv MOVE_UP    &mkp MB2  &kp TAB
+&kp LEFT_CONTROL  &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT   &none         &none                      &none  &none          &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LEFT_CONTROL
+&kp LEFT_SHIFT    &none  &none       &none  &none  &none  &tog 5    &tog 5    &none  &none          &none     &none  &none  &kp LEFT_SHIFT
                                                     &kp LEFT_ALT      &kp LWIN      &none  &mkp MB1  &mkp MB1  &none  &kp BACKSPACE  &kp LWIN
             >;
 
