@@ -95,33 +95,12 @@ LV_IMG_DECLARE(transmutation_12);
 LV_IMG_DECLARE(transmutation_13);
 LV_IMG_DECLARE(transmutation_14);
 LV_IMG_DECLARE(transmutation_15);
-LV_IMG_DECLARE(transmutation_16);
-LV_IMG_DECLARE(transmutation_17);
-LV_IMG_DECLARE(transmutation_18);
-LV_IMG_DECLARE(transmutation_19);
-LV_IMG_DECLARE(transmutation_20);
-LV_IMG_DECLARE(transmutation_21);
-LV_IMG_DECLARE(transmutation_22);
-LV_IMG_DECLARE(transmutation_23);
-LV_IMG_DECLARE(transmutation_24);
-LV_IMG_DECLARE(transmutation_25);
-LV_IMG_DECLARE(transmutation_26);
-LV_IMG_DECLARE(transmutation_27);
-LV_IMG_DECLARE(transmutation_28);
-LV_IMG_DECLARE(transmutation_29);
-LV_IMG_DECLARE(transmutation_30);
-LV_IMG_DECLARE(transmutation_31);
-LV_IMG_DECLARE(transmutation_32);
 
 static const lv_img_dsc_t *transmutation_imgs[] = {
     &transmutation_01, &transmutation_02, &transmutation_03, &transmutation_04, 
     &transmutation_05, &transmutation_06, &transmutation_07, &transmutation_08, 
     &transmutation_09, &transmutation_10, &transmutation_11, &transmutation_12,
-    &transmutation_13, &transmutation_14, &transmutation_15, &transmutation_16,
-    &transmutation_17, &transmutation_18, &transmutation_19, &transmutation_20, 
-    &transmutation_21, &transmutation_22, &transmutation_23, &transmutation_24, 
-    &transmutation_25, &transmutation_26, &transmutation_27, &transmutation_28,
-    &transmutation_29, &transmutation_30, &transmutation_31, &transmutation_32,
+    &transmutation_13, &transmutation_14, &transmutation_15,
 };
 
 // -------------------------------------------------------------------------------
