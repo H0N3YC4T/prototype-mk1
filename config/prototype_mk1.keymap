@@ -134,11 +134,11 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESC GRAVE  &kp F1  &kp F2  &kp F3        &kp F4        &kp F5                                                            &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
-&kp TAB              &mkp MB1          &mmv MOVE_UP    &mkp MB2         &none         &none                                                             &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
-&kp LEFT_CONTROL     &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT         &none         &none                                                             &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
-&kp LEFT_SHIFT       &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN         &none   &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
-                                     &kp LEFT_ALT  &kp LEFT_WIN  &mo 1   &kp ENTER                                     &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
+&hold_esc ESC GRAVE  &kp F1            &kp F2          &kp F3            &kp F4        &kp F5                                                            &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
+&kp TAB              &mkp MB2          &mmv MOVE_UP    &mkp MB1          &none         &none                                                             &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
+&kp LEFT_CONTROL     &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT   &none         &none                                                             &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
+&kp LEFT_SHIFT       &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &kp LEFT_WIN  &none   &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
+                                                       &kp LEFT_ALT      &kp LEFT_WIN  &mo 1   &kp ENTER                                     &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
             >;
 
             sensor-bindings =
