@@ -179,11 +179,11 @@
         layer_mouse {
             display-name = "Mouse";
             bindings = <
-&kp ESCAPE        &kp LS(TAB)       &kp ENTER       &kp TAB           &none         &none                      &none  &none          &kp LS(TAB)       &kp ENTER       &kp TAB  &tog 5
-&kp TAB           &mkp MB1          &mmv MOVE_UP    &mkp MB2          &none         &none                      &none  &none          &mkp MB1          &mmv MOVE_UP    &mkp MB2  &kp TAB
-&kp LEFT_CONTROL  &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT   &none         &none                      &none  &none          &mmv MOVE_LEFT    &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &none  &none       &none  &none  &none  &tog 5    &tog 5    &none  &none          &none     &none  &none  &kp LEFT_SHIFT
-                                                    &kp LEFT_ALT      &kp LWIN      &none  &mkp MB1  &mkp MB1  &none  &kp BACKSPACE  &kp LWIN
+&kp ESCAPE        &kp LS(TAB)     &kp ENTER       &kp TAB          &none          &none                      &none  &none          &kp LS(TAB)     &kp ENTER       &kp TAB          &tog 5
+&kp TAB           &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp PAGE_UP    &none                      &none  &kp PAGE_UP    &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp TAB
+&kp LEFT_CONTROL  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp PAGE_DOWN  &none                      &none  &kp PAGE_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LEFT_CONTROL
+&kp LEFT_SHIFT    &none           &none           &none            &none          &none  &tog 5    &tog 5    &none  &none          &none           &none           &none            &kp LEFT_SHIFT
+                                                  &kp LEFT_ALT     &kp LWIN       &none  &mkp MB1  &mkp MB1  &none  &kp BACKSPACE  &kp LWIN
             >;
 
             sensor-bindings =
