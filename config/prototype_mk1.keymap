@@ -149,11 +149,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &tog 4              &tog 5            &tog 6            &none             &none       &none
-&sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &kp LG(E)           &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)  &none
-&ext_power EP_TOG  &none         &none         &none         &none         &none                                 &kp LC(LS(ESCAPE))  &none             &none             &none             &none       &none
-&studio_unlock     &none         &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &kp LC(LA(DEL))     &none             &none             &none             &none       &none
-                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 2               &kp BSPC          &kp LEFT_GUI
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &tog 4  &tog 5    &tog 6        &none  &none  &none
+&sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none   &none     &none         &none  &none  &none
+&ext_power EP_TOG  &none         &none         &none         &none         &none                                 &none   &none     &none         &none  &none  &none
+&studio_unlock     &none         &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &none   &none     &none         &none  &none  &none
+                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 2   &kp BSPC  &kp LEFT_GUI
             >;
 
             sensor-bindings =
@@ -179,7 +179,7 @@
         layer_mouse {
             display-name = "Mouse";
             bindings = <
-&kp ESCAPE        &kp LS(TAB)     &kp ENTER       &kp TAB          &none          &none                      &none  &none          &kp LS(TAB)     &kp ENTER       &kp TAB          &tog 5
+&kp ESCAPE        &kp LS(TAB)     &kp ENTER       &kp TAB          &none          &none                      &none  &none          &kp LS(TAB)     &kp ENTER       &kp TAB          &kp ESC
 &kp TAB           &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp PAGE_UP    &none                      &none  &kp PAGE_UP    &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp TAB
 &kp LEFT_CONTROL  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp PAGE_DOWN  &none                      &none  &kp PAGE_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LEFT_CONTROL
 &kp LEFT_SHIFT    &none           &none           &none            &none          &none  &tog 5    &tog 5    &none  &none          &none           &none           &none            &kp LEFT_SHIFT
