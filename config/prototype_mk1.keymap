@@ -137,7 +137,7 @@
             display-name = "Raise";
             bindings = <
 &hold_esc ESC GRAVE  &kp F1  &kp F2  &kp F3        &kp F4        &kp F5                          &kp F6            &kp F7             &kp F8         &kp F9     &kp F10  &kp F11
-&kp TAB              &none   &none   &none         &none         &none                           &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
+&kp TAB              &kp LG(E)           &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)                           &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
 &kp LEFT_CONTROL     &none   &none   &none         &none         &none                           &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
 &kp LEFT_SHIFT       &none   &none   &none         &none         &none   &kp LC(N0)  &kp K_MUTE  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
                                      &kp LEFT_ALT  &kp LEFT_WIN  &mo 1   &kp ENTER   &kp SPACE   &mo 2             &kp BACKSPACE      &kp LEFT_WIN
