@@ -3,12 +3,6 @@ if SHIELD_NICE_VIEW_GEM
 config NICE_VIEW_ANIMATION_THEME_TRANSMUTATION
     bool "Enable transmutation animation"
     default n
-config NICE_VIEW_ANIMATION_THEME_OMNISSIAH
-    bool "Enable omnissiah animation"
-    default n
-config NICE_VIEW_ANIMATION_THEME_ULTRAMAR
-    bool "Enable ultramar animation"
-    default n
 config NICE_VIEW_ANIMATION_THEME_CRYSTAL
     bool "Enable crystal animation"
     default n

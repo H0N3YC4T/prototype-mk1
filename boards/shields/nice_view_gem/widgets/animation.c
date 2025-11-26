@@ -15,14 +15,6 @@
 static enum nice_view_theme current_theme = NICE_VIEW_THEME_TRANSMUTATION;
 #endif
 
-#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_OMNISSIAH)
-static enum nice_view_theme current_theme = NICE_VIEW_THEME_OMNISSIAH;
-#endif
-
-#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_ULTRAMAR)
-static enum nice_view_theme current_theme = NICE_VIEW_THEME_ULTRAMAR;
-#endif
-
 #if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_CRYSTAL)
 static enum nice_view_theme current_theme = NICE_VIEW_THEME_CRYSTAL;
 #endif
