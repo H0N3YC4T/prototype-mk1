@@ -822,7 +822,8 @@ const lv_img_dsc_t transmutation_09 = {
 };
 
 
-const img10 uint8_t img_10[] = {
+
+
 
 #ifndef LV_ATTRIBUTE_IMG_TRANSMUTATION_10
 #define LV_ATTRIBUTE_IMG_TRANSMUTATION_10
