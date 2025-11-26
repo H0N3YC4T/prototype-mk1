@@ -1,203 +1,462 @@
-layout: {zmk_keyboard: prototype_mk1}
+layout: {cols_thumbs_notation: 4444443+4 4+3444444}
 layers:
   Base:
-  - - {t: '`', h: ESCAPE}
-    - '1'
-    - '2'
-    - '3'
-    - '4'
-    - '5'
-    - '6'
-    - '7'
-    - '8'
-    - '9'
-    - '0'
-    - '-'
-    - TAB
-    - Q
-  - [W, E, R, T, Y, U, I, O, P, DELETE, LCTRL, A, S, D]
-  - [F, G, H, J, K, L, ;, '''', LSHFT, Z, X, C, V, B]
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - N
-    - M
-    - ','
-    - .
-    - /
-    - RSHFT
-    - LALT
-    - LGUI
-    - Lower
-    - ENTER
-    - SPACE
-    - Raise
-  - [BSPC, RGUI]
+  - {t: '`', h: ESC}
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - {t: $$mdi:chevron-up$$, h: scroll up}
+  - {t: $$mdi:chevron-right$$, h: scroll up}
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - '-'
+  - $$mdi:keyboard-tab$$
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - {t: $$mdi:chevron-down$$, h: scroll down}
+  - {t: $$mdi:chevron-left$$, h: scroll down}
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - DELETE
+  - $$mdi:apple-keyboard-control$$
+  - A
+  - S
+  - D
+  - F
+  - G
+  - {t: Arrows, h: layer}
+  - {t: Mouse, h: layer}
+  - H
+  - J
+  - K
+  - L
+  - ;
+  - ''''
+  - $$mdi:apple-keyboard-shift$$
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - {t: $$mdi:apple-keyboard-shift$$, h: capslock}
+  - ALT
+  - $$mdi:microsoft-windows$$
+  - {t: Lower, h: layer}
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-space$$
+  - {t: Raise, h: layer}
+  - $$mdi:backspace-outline$$
+  - $$mdi:microsoft-windows$$
   Lower:
-  - - ESC
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - ''
-    - {t: ▽, type: trans}
-    - 'SCREENSHOT TO CLIPBOARD'
-  - - ''
-    - ''
-    - ''
-    - ''
-    - ''
-    - HOME
-    - UP ARROW
-    - END
-    - ''
-    - DELETE
-    - {t: ▽, type: trans}
-    - 'SELECT ALL'
-    - 'SAVE'
-    - Ctl+D
-  - - 'FIND'
-    - 'FIND NEXT'
-    - ''
-    - LEFT ARROW
-    - DOWN ARROW
-    - RIGHT ARROW
-    - ''
-    - ''
-    - {t: ▽, type: trans}
-    - 'UNDO'
-    - 'CUT'
-    - 'COPY'
-    - 'PASTE'
-    - '['
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - ']'
-    - 'POSITION MOD'
-    - 'POSITION MENU'
-    - 'MOVE MOD'
-    - 'WIN'
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {type: held}
-    - SPACE
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+  - {t: '`', h: ESC}
+  - '!'
+  - '@'
+  - '#'
+  - $
+
+  - '%'
+  - {t: Undo, h: scroll up}
+  - {t: $$mdi:chevron-right$$, h: scroll down}
+  - ^
+  - '&'
+  - '*'
+  - (
+  - )
+  - '='
+  - $$mdi:keyboard-tab$$
+  - 'FILES'
+  - 'CMD'
+  - 'TEXT'
+  - 'WEB'
+  - $$mdi:microsoft-windows$$+5
+  - {t: Redo, h: scroll down}
+  - {t: $$mdi:chevron-left$$, h: scroll down}
+  - ''
+  - HOME
+  - $$mdi:chevron-up$$
+  - END
+  - ''
+  - DELETE
+  - $$mdi:apple-keyboard-control$$
+  - Select All
+  - Save
+  - Ctl+D
+  - Find
+  - Find Next
+  - Task Manager
+  - Programs
+  - ''
+  - $$mdi:chevron-left$$
+  - $$mdi:chevron-down$$
+  - $$mdi:chevron-right$$
+  - ''
+  - ''
+  - $$mdi:apple-keyboard-shift$$
+  - Undo
+  - Cut
+  - Copy
+  - Paste
+  - Clip
+
+  - ''
+  - {t: Organise, h: window}
+  - {t: Menu, h: window}
+  - {t: Shift, h: window}
+  - $$mdi:microsoft-windows$$
+  - $$mdi:apple-keyboard-shift$$
+  - ALT
+  - $$mdi:microsoft-windows$$
+  - {t: Lower, h: layer, type: held}
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-space$$
+  - {t: Raise, h: layer}
+  - $$mdi:backspace-outline$$
+  - $$mdi:microsoft-windows$$
   Raise:
-  - - '`'
-    - F1
-    - F2
-    - F3
-    - F4
-    - F5
-    - F6
-    - F7
-    - F8
-    - F9
-    - F10
-    - F11
-    - {t: ▽, type: trans}
-    - '1'
-  - - '2'
-    - '3'
-    - '4'
-    - '5'
-    - '6'
-    - '7'
-    - '8'
-    - '9'
-    - '0'
-    - F12
-    - {t: ▽, type: trans}
-    - '!'
-    - '@'
-    - '#'
-  - - $
-    - '%'
-    - ^
-    - '&'
-    - '*'
-    - (
-    - )
-    - '|'
-    - {t: ▽, type: trans}
-    - '='
-    - '-'
-    - +
-    - ''
-    - (
-  - - ''
-    - 'ALT TAB'
-    - )
-    - ''
-    - ;
-    - ':'
-    - \
-    - RIGHT SHIFT
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {type: held}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+  - {t: '`', h: ESC}
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
+  - {t: Next Desktop, h: scroll up}
+  - {t: Zoom In, h: scroll up}
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - F11
+  - $$mdi:keyboard-tab$$
+  - MB2
+  - {t: Up, h: mouse}
+  - MB1
+  - ''
+  - ''
+  - {t: Prev Desktop, h: scroll down}
+  - {t: Zoom Out, h: scroll down}
+  - '{'
+  - '}'
+  - +
+  - '='
+  - ''
+  - F12
+  - $$mdi:apple-keyboard-control$$
+  - {t: Left, h: mouse}
+  - {t: Down, h: mouse}
+  - {t: Right, h: mouse}
+  - ''
+  - ''
+  - {t: Create Destroy, h: desktop}
+  - Reset Zoom
+  - '['
+  - ']'
+  - \
+  - '|'
+  - ''
+  - ''
+  - $$mdi:apple-keyboard-shift$$
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+
+  - <
+  - '>'
+  - ''
+  - ''
+  - ''
+  - $$mdi:apple-keyboard-shift$$
+  - ALT
+  - $$mdi:microsoft-windows$$
+  - {t: Lower, h: layer}
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-space$$
+  - {t: Raise, h: layer, type: held}
+  - $$mdi:backspace-outline$$
+  - $$mdi:microsoft-windows$$
+
   Settings:
-  - - BT CLR
-    - {t: BT, h: '0'}
-    - {t: BT, h: '1'}
-    - {t: BT, h: '2'}
-    - {t: BT, h: '3'}
-    - {t: BT, h: '4'}
-    - 'LAYER DEFAULT'
-    - 'LAYER ARROWS'
-    - 'LAYER MOUSE'
-    - 'LAYER GAMING'
-    - ''
-    - ''
-    - 'SYSTEM RESET'
-    - 'BACKLIGHT INC'
-  - ['', '', '', 'TASK MANAGER', '', '', '', '', '', '', 'DISPLAY POWER', 'BACKLIGHT TOGGLE', '', '']
-  - ['', 'EXPLORER', 'DESKTOP NEW', 'DESKTOP NEXT', '', '', '', '', 'ZMK STUDIO', 'BACKLIGHT DEC', '', '', '', '']
-  - - MUTE
-    - MUTE
-    - 'DESKTOP CLOSE'
-    - 'DESKTOP PREV'
-    - ''
-    - ''
-    - ''
-    - ''
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {type: held}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {type: held}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+  - {t: CLEAR, h: BT}
+  - {t: 1, h: BT}
+  - {t: 2, h: BT}
+  - {t: 3, h: BT}
+  - {t: 4, h: BT}
+  - {t: 5, h: BT}
+  - {t: Vol+, h: scroll up}
+  - {t: Vol+, h: scroll up}
+  - {t: Arrows, h: layer}
+  - {t: Mouse, h: layer}
+  - {t: Gaming, h: layer}
+  - ''
+  - ''
+  - ''
+  - System Reset
+  - ''
+  - ''
+
+  - {t: Decrease, h: backlight}
+
+  - {t: Toggle, h: backlight}
+  - {t: Increase, h: backlight}
+  - {t: Vol-, h: scroll down}
+  - {t: Vol-, h: scroll down}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - Power Toggle
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$mdi:volume-mute$$
+  - $$mdi:volume-mute$$
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ZMK Studio
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+
+  - ''
+  - ''
+
+  - ''
+  - ''
+  - ''
+  - ''
+  - ALT
+  - $$mdi:microsoft-windows$$
+  - {t: Lower, h: layer, type: held}
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-space$$
+  - {t: Raise, h: layer, type: held}
+  - $$mdi:backspace-outline$$
+  - $$mdi:microsoft-windows$$
   Arrows:
-  - [ESCAPE, '', '', '', '', 'LAYER DEFAULT', 'LAYER DEFAULT', 'LAYER ARROWS', 'LAYER MOUSE', 'LAYER GAMING', '', '', TAB, HOME]
-  - [UP ARROW, END, '', '', '', HOME, UP ARROW, END, '', TAB, LEFT CONTROL, LEFT ARROW, DOWN ARROW, RIGHT ARROW]
-  - ['', '', '', LEFT ARROW, DOWN ARROW, RIGHT ARROW, '', LEFT CONTROL, LEFT SHIFT, 'POSITION MOD', 'POSITION MENU',' MOVE MOD', '', '']
-  - ['', '', '', LEFT ARROW, DOWN ARROW, RIGHT ARROW, '', LEFT SHIFT, LEFT ALT, LWIN, '', ENTER, ENTER, '']
-  - [BACKSPACE, LWIN]
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - {t: $$mdi:chevron-up$$, h: scroll up}
+  - {t: $$mdi:chevron-right$$, h: scroll up}
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - '-'
+  - $$mdi:keyboard-tab$$
+  - HOME
+  - $$mdi:chevron-up$$
+  - END
+
+  - ''
+  - ''
+  - {t: $$mdi:chevron-down$$, h: scroll down}
+  - {t: $$mdi:chevron-left$$, h: scroll down}
+  - ''
+  - HOME
+  - $$mdi:chevron-up$$
+  - END
+  - ''
+  - $$mdi:keyboard-tab$$
+  - $$mdi:apple-keyboard-control$$
+  - $$mdi:chevron-left$$
+  - $$mdi:chevron-down$$
+  - $$mdi:chevron-right$$
+
+  - ''
+  - ''
+  - {t: Default, h: layer}
+  - {t: Default, h: layer}
+  - ''
+  - $$mdi:chevron-left$$
+  - $$mdi:chevron-down$$
+  - $$mdi:chevron-right$$
+  - ''
+  - $$mdi:apple-keyboard-control$$
+  - $$mdi:apple-keyboard-shift$$
+  - {t: Organise, h: window}
+  - {t: Menu, h: window}
+  - {t: Shift, h: window}
+  - ''
+  - ''
+
+  - ''
+  - {t: Organise, h: window}
+  - {t: Menu, h: window}
+  - {t: Shift, h: window}
+  - ''
+  - $$mdi:apple-keyboard-shift$$
+  - ALT
+  - $$mdi:microsoft-windows$$
+  - ''
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-return$$
+  - ''
+  - $$mdi:backspace$$
+  - $$mdi:microsoft-windows$$
   Mouse:
-  - [ESCAPE, 'BACK TAB', ENTER, TAB, '', 'LAYER DEFAULT', 'LAYER DEFAULT', 'LAYER ARROWS', 'LAYER MOUSE', 'LAYER GAMING', '', '', TAB, 'MB1']
-  - ['MOUSE UP', 'MB2', '', '', '', '', '', '', '', TAB, LEFT CONTROL, 'MOUSE LEFT', 'MOUSE DOWN', 'MOUSE RIGHT']
-  - ['', '', '', '', '', '', '', LEFT CONTROL, LEFT SHIFT, 'POSITION MOD', 'POSITION MENU','MOVE MOD', LEFT WIN, '']
-  - ['', '', '', '', '', '', '', LEFT SHIFT, LEFT ALT, LWIN, '', 'MB1', 'MB1', '']
-  - [BACKSPACE, LWIN]
+  - ESC
+  - Sft+TAB
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-tab$$
+  - ''
+
+  - ''
+  - {t: Vol+, h: scroll up}
+  - {t: Vol+, h: scroll up}
+  - ''
+  - ''
+  - Sft+TAB
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-tab$$
+  - ESC
+
+  - $$mdi:keyboard-tab$$
+  - MB1
+  - {t: Up, h: mouse}
+  - MB2
+  - PAGE UP
+  - ''
+  - {t: Vol-, h: scroll down}
+  - {t: Vol-, h: scroll down}
+  - ''
+  - PAGE UP
+  - MB1
+  - {t: Up, h: mouse}
+  - MB2
+  - $$mdi:keyboard-tab$$
+  - $$mdi:apple-keyboard-control$$
+  - {t: Left, h: mouse}
+  - {t: Down, h: mouse}
+  - {t: Right, h: mouse}
+  - PAGE DOWN
+  - ''
+  - {t: Default, h: layer}
+  - {t: Default, h: layer}
+  
+  
+  
+  
+  - ''
+  - PAGE DOWN
+  - {t: Left, h: mouse}
+  - {t: Down, h: mouse}
+  - {t: Right, h: mouse}
+  - $$mdi:apple-keyboard-control$$
+  - $$mdi:apple-keyboard-shift$$
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$mdi:apple-keyboard-shift$$
+  - ALT
+  - $$mdi:microsoft-windows$$
+  - ''
+  - MB1
+  - MB1
+  - ''
+  - $$mdi:backspace$$
+  - $$mdi:microsoft-windows$$
   Gaming:
-  - ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'LAYER DEFAULT', TAB, Q]
-  - [W, E, R, T, Y, U, I, O, P, \, LSHFT, A, S, D]
-  - [F, G, H, J, K, L, RET, RET, LCTRL, Z, X, C, V, B]
-  - ['', '', N, M, ',', ., /, RSHFT, '', '', '', SPACE, SPACE, '']
-  - ['', '']
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - {t: Vol+, h: scroll up}
+  - {t: Next, h: scroll up}
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - {t: Gaming, h: layer}
+  - $$mdi:keyboard-tab$$
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - {t: Vol-, h: scroll down}
+  - {t: Prev, h: scroll down}
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - \
+  - $$mdi:apple-keyboard-shift$$
+  - A
+  - S
+  - D
+  - F
+  - G
+  - {t: Gaming, h: layer}
+  - {t: Gaming, h: layer}
+  - H
+  - J
+  - K
+  - L
+  - $$mdi:keyboard-return$$
+  - $$mdi:keyboard-return$$
+  - $$mdi:apple-keyboard-control$$
+  - Z
+  - X
+  - C
+  - V
+  - B
+
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - RSHFT
+  - $$mdi:apple-keyboard-control$$
+  - ALT
+  - ALT
+  - $$mdi:keyboard-space$$
+  - $$mdi:keyboard-return$$
+  - Alt+TAB
+  - DEL
+  - ''
