@@ -42,10 +42,14 @@ LV_IMG_DECLARE(transmutation_05);
 LV_IMG_DECLARE(transmutation_06);
 LV_IMG_DECLARE(transmutation_07);
 LV_IMG_DECLARE(transmutation_08);
+LV_IMG_DECLARE(transmutation_09);
+LV_IMG_DECLARE(transmutation_10);
+LV_IMG_DECLARE(transmutation_11);
 
 static const lv_img_dsc_t *transmutation_imgs[] = {
     &transmutation_01, &transmutation_02, &transmutation_03, &transmutation_04, 
     &transmutation_05, &transmutation_06, &transmutation_07, &transmutation_08, 
+    &transmutation_09, &transmutation_10, &transmutation_11, 
 };
 
 // -------------------------------------------------------------------------------
