@@ -49,8 +49,7 @@ LV_IMG_DECLARE(transmutation_11);
 static const lv_img_dsc_t *transmutation_imgs[] = {
     &transmutation_09, &transmutation_08, &transmutation_02, &transmutation_09, 
     &transmutation_03, &transmutation_10, &transmutation_04, &transmutation_11, 
-    &transmutation_05, &transmutation_06, &transmutation_10, &transmutation_07,
-    &transmutation_01,
+    &transmutation_05, &transmutation_06, &transmutation_07, &transmutation_01,
 };
 
 // -------------------------------------------------------------------------------
