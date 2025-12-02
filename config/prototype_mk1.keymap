@@ -123,6 +123,20 @@
             label = "BEE_MOVIE";
             wait-ms = <4>;
         };
+
+        dnd_r20: dnd_r20 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH &kp R &kp O &kp L &kp L &kp SPACE &kp N1 &kp D &kp N2 &kp N0 &kp RET>;
+            label = "DND_R20";
+        };
+
+        dnd_r20plus: dnd_r20plus {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH &kp R &kp O &kp L &kp L &kp SPACE &kp N1 &kp D &kp N2 &kp N0 &kp PLUS>;
+            label = "DND_R20PLUS";
+        };
     };
 
     keymap {
@@ -172,11 +186,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none  &none     &none         &none  &none  &none
-&sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none  &none     &none         &none  &none  &none
-&ext_power EP_TOG  &none         &none         &tog 4        &tog 5        &tog 6                                &none  &none     &none         &none  &none  &none
-&studio_unlock     &none         &none         &none         &none         &bee_movie    &kp K_MUTE  &kp K_MUTE  &none  &none     &none         &none  &none  &none
-                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 2  &kp BSPC  &kp LEFT_GUI
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none       &none         &none         &none  &none  &none
+&sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &dnd_r20    &dnd_r20plus  &none         &none  &none  &none
+&ext_power EP_TOG  &none         &none         &tog 4        &tog 5        &tog 6                                &bee_movie  &none         &none         &none  &none  &none
+&studio_unlock     &none         &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &none       &none         &none         &none  &none  &none
+                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 2       &kp BSPC      &kp LEFT_GUI
             >;
 
             sensor-bindings =
