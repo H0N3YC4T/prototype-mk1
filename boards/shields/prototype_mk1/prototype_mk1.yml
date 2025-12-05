@@ -11,6 +11,7 @@ features:
   - underglow
   - studio
 siblings:
-  - prototype_mk1_left
-  - prototype_mk1_right
   - prototype_mk1_dongle
+  - prototype_mk1_central_left
+  - prototype_mk1_periph_left
+  - prototype_mk1_periph_right
