@@ -60,7 +60,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_01 = {
+const lv_image_dsc_t crystal_01 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -125,7 +125,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_02 = {
+const lv_image_dsc_t crystal_02 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -190,7 +190,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_03 = {
+const lv_image_dsc_t crystal_03 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -255,7 +255,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_04 = {
+const lv_image_dsc_t crystal_04 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -320,7 +320,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_05 = {
+const lv_image_dsc_t crystal_05 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -385,7 +385,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_06 = {
+const lv_image_dsc_t crystal_06 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -450,7 +450,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_07 = {
+const lv_image_dsc_t crystal_07 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -515,7 +515,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_08 = {
+const lv_image_dsc_t crystal_08 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -580,7 +580,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_0
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_09 = {
+const lv_image_dsc_t crystal_09 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -645,7 +645,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_10 = {
+const lv_image_dsc_t crystal_10 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -710,7 +710,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_11 = {
+const lv_image_dsc_t crystal_11 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -775,7 +775,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_12 = {
+const lv_image_dsc_t crystal_12 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -840,7 +840,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_13 = {
+const lv_image_dsc_t crystal_13 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -905,7 +905,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_14 = {
+const lv_image_dsc_t crystal_14 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -970,7 +970,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_15 = {
+const lv_image_dsc_t crystal_15 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,
@@ -1035,7 +1035,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CRYSTAL_1
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const lv_img_dsc_t crystal_16 = {
+const lv_image_dsc_t crystal_16 = {
     .header.cf = LV_COLOR_FORMAT_I1,
 .header.w = 69,
     .header.h = 68,

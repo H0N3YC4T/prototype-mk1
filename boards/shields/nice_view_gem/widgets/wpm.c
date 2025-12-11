@@ -3,8 +3,8 @@
 #include "wpm.h"
 #include "../assets/custom_fonts.h"
 
-LV_IMG_DECLARE(gauge);
-LV_IMG_DECLARE(grid);
+LV_IMAGE_DECLARE(gauge);
+LV_IMAGE_DECLARE(grid);
 
 static void draw_gauge(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_image_dsc_t img_dsc;

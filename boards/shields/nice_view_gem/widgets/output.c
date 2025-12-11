@@ -2,10 +2,10 @@
 #include "output.h"
 #include "../assets/custom_fonts.h"
 
-LV_IMG_DECLARE(bt_no_signal);
-LV_IMG_DECLARE(bt_unbonded);
-LV_IMG_DECLARE(bt);
-LV_IMG_DECLARE(usb);
+LV_IMAGE_DECLARE(bt_no_signal);
+LV_IMAGE_DECLARE(bt_unbonded);
+LV_IMAGE_DECLARE(bt);
+LV_IMAGE_DECLARE(usb);
 
 #if !IS_ENABLED(CONFIG_ZMK_SPLIT) || IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 static void draw_usb_connected(lv_obj_t *canvas) {

@@ -1,7 +1,7 @@
 #include <zephyr/kernel.h>
 #include "profile.h"
 
-LV_IMG_DECLARE(profiles);
+LV_IMAGE_DECLARE(profiles);
 
 static void draw_inactive_profiles(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_image_dsc_t img_dsc;

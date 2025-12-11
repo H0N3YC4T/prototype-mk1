@@ -2,7 +2,7 @@
 #include "battery.h"
 #include "../assets/custom_fonts.h"
 
-LV_IMG_DECLARE(bolt);
+LV_IMAGE_DECLARE(bolt);
 
 static void draw_level(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_label_dsc_t label_right_dsc;
