@@ -86,9 +86,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_01 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_01_map,
@@ -177,9 +175,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_02 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_02_map,
@@ -268,9 +264,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_03 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_03_map,
@@ -359,9 +353,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_04 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_04_map,
@@ -450,9 +442,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_05 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_05_map,
@@ -541,9 +531,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_06 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_06_map,
@@ -632,9 +620,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_07 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_07_map,
@@ -723,9 +709,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_08 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_08_map,
@@ -813,9 +797,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_09 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_09_map,
@@ -905,9 +887,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_10 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_10_map,
@@ -1000,9 +980,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 };
 const lv_img_dsc_t transmutation_11 = {
     .header.cf = LV_COLOR_FORMAT_I1,
-    .header.always_zero = 0,
-    .header.reserved = 0,
-    .header.w = 120,
+.header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_11_map,
