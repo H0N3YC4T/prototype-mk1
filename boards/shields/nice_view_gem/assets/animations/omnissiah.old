@@ -62,7 +62,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_01 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -129,7 +129,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_02 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -196,7 +196,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_03 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -263,7 +263,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_04 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -330,7 +330,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_05 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -397,7 +397,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_06 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -464,7 +464,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_07 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -531,7 +531,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_08 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -598,7 +598,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_09 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -665,7 +665,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_10 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -732,7 +732,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_11 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -799,7 +799,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_12 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -866,7 +866,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_13 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -933,7 +933,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_14 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1000,7 +1000,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_15 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1067,7 +1067,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_16 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1134,7 +1134,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_17 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1201,7 +1201,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_18 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1268,7 +1268,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_19 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1335,7 +1335,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_20 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1402,7 +1402,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_21 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1469,7 +1469,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_22 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1536,7 +1536,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_23 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1603,7 +1603,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_24 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1670,7 +1670,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_25 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1737,7 +1737,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_26 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1804,7 +1804,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_27 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1871,7 +1871,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_28 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1938,7 +1938,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_29 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -2005,7 +2005,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_30 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -2072,7 +2072,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_31 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -2139,7 +2139,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_32 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,

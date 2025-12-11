@@ -85,7 +85,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x55, 0x55, 0x55, 0x14, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 const lv_img_dsc_t transmutation_01 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -176,7 +176,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 const lv_img_dsc_t transmutation_02 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -267,7 +267,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x01, 0x77, 0xff, 0xf5, 0x55, 0x57, 0x7d, 0x01, 0x00, 0x14, 0x10, 
 };
 const lv_img_dsc_t transmutation_03 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -358,7 +358,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x74, 0x05, 0x5d, 0xd7, 0xfd, 0x47, 0x60, 0x1f, 0xdf, 0xff, 0xd0, 0x00, 
 };
 const lv_img_dsc_t transmutation_04 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -449,7 +449,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 const lv_img_dsc_t transmutation_05 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -540,7 +540,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x01, 0xd5, 0x01, 0x3f, 0xff, 0x14, 0x14, 0x02, 0x05, 0x55, 0x00, 0x50, 
 };
 const lv_img_dsc_t transmutation_06 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -631,7 +631,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x41, 0x11, 0x41, 0x51, 0x51, 0x40, 0x47, 0x7f, 0x74, 0x01, 0x1f, 0x50, 
 };
 const lv_img_dsc_t transmutation_07 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -722,7 +722,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0xff, 0x7f, 0xc7, 0xf4, 0x14, 0x00, 0x00, 0x00, 0x01, 0x50, 0x00, 0x00,
 };
 const lv_img_dsc_t transmutation_08 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -812,7 +812,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 const lv_img_dsc_t transmutation_09 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -904,7 +904,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x01, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 const lv_img_dsc_t transmutation_10 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,
@@ -999,7 +999,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x55, 0x10, 0x00, 0x00, 0x00,
 };
 const lv_img_dsc_t transmutation_11 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 120,

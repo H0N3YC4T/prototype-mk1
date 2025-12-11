@@ -15,7 +15,7 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
 
     lv_img_dsc_t img;
     img.data = (void *)cbuf_tmp;
-    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.cf = LV_COLOR_FORMAT_NATIVE;
     img.header.w = BUFFER_SIZE;
     img.header.h = BUFFER_SIZE;
 

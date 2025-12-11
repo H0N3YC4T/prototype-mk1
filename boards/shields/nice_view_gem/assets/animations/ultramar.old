@@ -61,7 +61,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_01 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -127,7 +127,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_02 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -193,7 +193,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_03 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -259,7 +259,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_04 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -325,7 +325,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_05 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -391,7 +391,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_06 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -457,7 +457,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_07 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -523,7 +523,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_08 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -589,7 +589,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_09 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -655,7 +655,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_10 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -721,7 +721,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_11 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -787,7 +787,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_12 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -853,7 +853,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_13 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -919,7 +919,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_14 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -985,7 +985,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_15 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1051,7 +1051,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_16 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1117,7 +1117,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_17 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1183,7 +1183,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_18 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1249,7 +1249,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_19 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1315,7 +1315,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_20 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1381,7 +1381,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_21 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1447,7 +1447,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_22 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1513,7 +1513,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_23 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1579,7 +1579,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_24 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1645,7 +1645,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_25 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1711,7 +1711,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_26 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1777,7 +1777,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_27 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1843,7 +1843,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_28 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1909,7 +1909,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_29 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -1975,7 +1975,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_30 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -2041,7 +2041,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_31 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
@@ -2107,7 +2107,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_ULTRAMAR_
     };
 
 const lv_img_dsc_t ultramar_32 = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.always_zero = 0,
     .header.reserved = 0,
     .header.w = 69,
