@@ -8,24 +8,24 @@
 
 // -------------------------------------------------------------------------------
 // Declare Crystal Animation
-LV_IMAGE_DECLARE(crystal_01);
-LV_IMAGE_DECLARE(crystal_02);
-LV_IMAGE_DECLARE(crystal_03);
-LV_IMAGE_DECLARE(crystal_04);
-LV_IMAGE_DECLARE(crystal_05);
-LV_IMAGE_DECLARE(crystal_06);
-LV_IMAGE_DECLARE(crystal_07);
-LV_IMAGE_DECLARE(crystal_08);
-LV_IMAGE_DECLARE(crystal_09);
-LV_IMAGE_DECLARE(crystal_10);
-LV_IMAGE_DECLARE(crystal_11);
-LV_IMAGE_DECLARE(crystal_12);
-LV_IMAGE_DECLARE(crystal_13);
-LV_IMAGE_DECLARE(crystal_14);
-LV_IMAGE_DECLARE(crystal_15);
-LV_IMAGE_DECLARE(crystal_16);
+LV_IMG_DECLARE(crystal_01);
+LV_IMG_DECLARE(crystal_02);
+LV_IMG_DECLARE(crystal_03);
+LV_IMG_DECLARE(crystal_04);
+LV_IMG_DECLARE(crystal_05);
+LV_IMG_DECLARE(crystal_06);
+LV_IMG_DECLARE(crystal_07);
+LV_IMG_DECLARE(crystal_08);
+LV_IMG_DECLARE(crystal_09);
+LV_IMG_DECLARE(crystal_10);
+LV_IMG_DECLARE(crystal_11);
+LV_IMG_DECLARE(crystal_12);
+LV_IMG_DECLARE(crystal_13);
+LV_IMG_DECLARE(crystal_14);
+LV_IMG_DECLARE(crystal_15);
+LV_IMG_DECLARE(crystal_16);
 
-static const lv_image_dsc_t *crystal_imgs[] = {
+static const lv_img_dsc_t *crystal_imgs[] = {
     &crystal_01, &crystal_02, &crystal_03, &crystal_04, 
     &crystal_05, &crystal_06, &crystal_07, &crystal_08, 
     &crystal_09, &crystal_10, &crystal_11, &crystal_12,
@@ -34,19 +34,19 @@ static const lv_image_dsc_t *crystal_imgs[] = {
 
 // -------------------------------------------------------------------------------
 // Declare Transmutation Animation
-LV_IMAGE_DECLARE(transmutation_01);
-LV_IMAGE_DECLARE(transmutation_02);
-LV_IMAGE_DECLARE(transmutation_03);
-LV_IMAGE_DECLARE(transmutation_04);
-LV_IMAGE_DECLARE(transmutation_05);
-LV_IMAGE_DECLARE(transmutation_06);
-LV_IMAGE_DECLARE(transmutation_07);
-LV_IMAGE_DECLARE(transmutation_08);
-LV_IMAGE_DECLARE(transmutation_09);
-LV_IMAGE_DECLARE(transmutation_10);
-LV_IMAGE_DECLARE(transmutation_11);
+LV_IMG_DECLARE(transmutation_01);
+LV_IMG_DECLARE(transmutation_02);
+LV_IMG_DECLARE(transmutation_03);
+LV_IMG_DECLARE(transmutation_04);
+LV_IMG_DECLARE(transmutation_05);
+LV_IMG_DECLARE(transmutation_06);
+LV_IMG_DECLARE(transmutation_07);
+LV_IMG_DECLARE(transmutation_08);
+LV_IMG_DECLARE(transmutation_09);
+LV_IMG_DECLARE(transmutation_10);
+LV_IMG_DECLARE(transmutation_11);
 
-static const lv_image_dsc_t *transmutation_imgs[] = {
+static const lv_img_dsc_t *transmutation_imgs[] = {
     &transmutation_09, &transmutation_08, &transmutation_02, &transmutation_01,
     &transmutation_03, &transmutation_10, &transmutation_04, &transmutation_11, 
     &transmutation_05, &transmutation_06, &transmutation_07,
@@ -54,7 +54,7 @@ static const lv_image_dsc_t *transmutation_imgs[] = {
 
 // -------------------------------------------------------------------------------
 // Lookup Table
-const lv_image_dsc_t * const *nice_view_anim_sets[NICE_VIEW_THEME_COUNT] = {
+const lv_img_dsc_t * const *nice_view_anim_sets[NICE_VIEW_THEME_COUNT] = {
     [NICE_VIEW_THEME_TRANSMUTATION] = transmutation_imgs,
     [NICE_VIEW_THEME_CRYSTAL]       = crystal_imgs,
 };

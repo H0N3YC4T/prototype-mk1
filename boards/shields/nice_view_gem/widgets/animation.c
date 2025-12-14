@@ -107,7 +107,7 @@ void nice_view_animation_on(void) {
 /* -------------------------------------------------------------------------- */
 static void calc_offset_for_theme(enum nice_view_theme theme) {
     const lv_coord_t max_width = 120;
-    const lv_image_dsc_t * const *frames = nice_view_anim_sets[theme];
+    const lv_img_dsc_t * const *frames = nice_view_anim_sets[theme];
 
     if (!frames || !frames[0]) {
         nice_view_theme_offset = 1;
@@ -133,7 +133,7 @@ void draw_animation(lv_obj_t *canvas) {
     }
 
     enum nice_view_theme theme = nice_view_theme_get();
-    const lv_image_dsc_t * const *frames = nice_view_anim_sets[theme];
+    const lv_img_dsc_t * const *frames = nice_view_anim_sets[theme];
     const size_t frame_count = nice_view_anim_lengths[theme];
 
     if (!frames || frame_count == 0) {

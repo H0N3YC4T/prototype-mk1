@@ -62,8 +62,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_01 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_01_map,
@@ -127,8 +129,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_02 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_02_map,
@@ -192,8 +196,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_03 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_03_map,
@@ -257,8 +263,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_04 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_04_map,
@@ -322,8 +330,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_05 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_05_map,
@@ -387,8 +397,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_06 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_06_map,
@@ -452,8 +464,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_07 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_07_map,
@@ -517,8 +531,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_08 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_08_map,
@@ -582,8 +598,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_09 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_09_map,
@@ -647,8 +665,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_10 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_10_map,
@@ -712,8 +732,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_11 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_11_map,
@@ -777,8 +799,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_12 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_12_map,
@@ -842,8 +866,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_13 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_13_map,
@@ -907,8 +933,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_14 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_14_map,
@@ -972,8 +1000,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_15 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_15_map,
@@ -1037,8 +1067,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_16 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_16_map,
@@ -1102,8 +1134,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_17 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_17_map,
@@ -1167,8 +1201,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_18 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_18_map,
@@ -1232,8 +1268,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_19 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_19_map,
@@ -1297,8 +1335,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_20 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_20_map,
@@ -1362,8 +1402,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_21 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_21_map,
@@ -1427,8 +1469,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_22 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_22_map,
@@ -1492,8 +1536,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_23 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_23_map,
@@ -1557,8 +1603,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_24 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_24_map,
@@ -1622,8 +1670,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_25 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_25_map,
@@ -1687,8 +1737,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_26 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_26_map,
@@ -1752,8 +1804,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_27 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_27_map,
@@ -1817,8 +1871,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_28 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_28_map,
@@ -1882,8 +1938,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_29 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_29_map,
@@ -1947,8 +2005,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_30 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_30_map,
@@ -2012,8 +2072,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_31 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_31_map,
@@ -2077,8 +2139,10 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_OMNISSIAH
     };
 
 const lv_img_dsc_t omnissiah_32 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 69,
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 69,
     .header.h = 68,
     .data_size = 620,
     .data = omnissiah_32_map,

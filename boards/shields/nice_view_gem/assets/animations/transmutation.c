@@ -84,9 +84,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x3f, 0xfe, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 
 0x55, 0x55, 0x55, 0x14, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-const lv_image_dsc_t transmutation_01 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_01 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_01_map,
@@ -173,9 +175,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x80, 0x20, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x11, 0x75, 
 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-const lv_image_dsc_t transmutation_02 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_02 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_02_map,
@@ -262,9 +266,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x00, 0x00, 0x22, 0x3f, 0xfa, 0x2e, 0x0a, 0xa3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 0x00, 0x01, 0x77, 0xff, 0xf5, 0x55, 0x57, 0x7d, 0x01, 0x00, 0x14, 0x10, 
 };
-const lv_image_dsc_t transmutation_03 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_03 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_03_map,
@@ -351,9 +357,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0xa0, 0x02, 0xea, 0xff, 0xfe, 0x8a, 0x20, 0x0b, 0x2f, 0xba, 0x80, 0x00, 0x00, 0x04, 0x05, 
 0x74, 0x05, 0x5d, 0xd7, 0xfd, 0x47, 0x60, 0x1f, 0xdf, 0xff, 0xd0, 0x00, 
 };
-const lv_image_dsc_t transmutation_04 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_04 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_04_map,
@@ -440,9 +448,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0xa0, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xc0, 
 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-const lv_image_dsc_t transmutation_05 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_05 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_05_map,
@@ -529,9 +539,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x82, 0xa0, 0x00, 0x3f, 0xfe, 0x00, 0x08, 0x00, 0x00, 0xba, 0x00, 0x00, 0x11, 0x15, 0x42, 
 0x01, 0xd5, 0x01, 0x3f, 0xff, 0x14, 0x14, 0x02, 0x05, 0x55, 0x00, 0x50, 
 };
-const lv_image_dsc_t transmutation_06 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_06 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_06_map,
@@ -618,9 +630,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x00, 0x02, 0x03, 0xa8, 0x20, 0x00, 0x2e, 0x7a, 0x20, 0x02, 0x02, 0x80, 0x70, 0x11, 0x94, 
 0x41, 0x11, 0x41, 0x51, 0x51, 0x40, 0x47, 0x7f, 0x74, 0x01, 0x1f, 0x50, 
 };
-const lv_image_dsc_t transmutation_07 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_07 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_07_map,
@@ -707,9 +721,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x03, 0xfe, 0xbf, 0xef, 0xb0, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x17, 0x50, 0x13, 
 0xff, 0x7f, 0xc7, 0xf4, 0x14, 0x00, 0x00, 0x00, 0x01, 0x50, 0x00, 0x00,
 };
-const lv_image_dsc_t transmutation_08 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_08 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_08_map,
@@ -795,9 +811,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-const lv_image_dsc_t transmutation_09 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_09 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_09_map,
@@ -885,9 +903,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x03, 0xa0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 0x01, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-const lv_image_dsc_t transmutation_10 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_10 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_10_map,
@@ -978,9 +998,11 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TRANSMUTA
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x01, 0x10, 
 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x55, 0x10, 0x00, 0x00, 0x00,
 };
-const lv_image_dsc_t transmutation_11 = {
-    .header.cf = LV_COLOR_FORMAT_I1,
-.header.w = 120,
+const lv_img_dsc_t transmutation_11 = {
+    .header.cf = LV_IMG_CF_INDEXED_1BIT,
+    .header.always_zero = 0,
+    .header.reserved = 0,
+    .header.w = 120,
     .header.h = 68,
     .data_size = 1028,
     .data = transmutation_11_map,
