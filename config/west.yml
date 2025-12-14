@@ -23,6 +23,6 @@ manifest:
       revision: main
     - name: nice-view-elemental
       remote: kevinpastor
-      revision: main
+      revision: develop
   self:
     path: config
