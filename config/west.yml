@@ -8,6 +8,8 @@ manifest:
       url-base: https://github.com/mctechnology17
     - name: englmaxi
       url-base: https://github.com/englmaxi
+    - name: kevinpastor
+      url-base: https://github.com/kevinpastor
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -18,6 +20,9 @@ manifest:
       revision: main
     - name: zmk-dongle-display
       remote: englmaxi
+      revision: main
+    - name: nice-view-elemental
+      remote: kevinpastor
       revision: main
   self:
     path: config
