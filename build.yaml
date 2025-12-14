@@ -26,9 +26,9 @@ include:
     artifact-name: right-peripheral
 
   - board: nice_nano@2.0.0
-    shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
-    artifact-name: left-peripheral
+    shield: prototype_mk1_periph_left nice_view_adapter nice_view_elemental
+    artifact-name: left-peripheral_nice_view_elemental
 
   - board: nice_nano@2.0.0
-    shield: prototype_mk1_periph_right nice_view_adapter nice_view_gem
-    artifact-name: right-peripheral
+    shield: prototype_mk1_periph_right nice_view_adapter nice_view_elemental
+    artifact-name: right-peripheral_nice_view_elemental
