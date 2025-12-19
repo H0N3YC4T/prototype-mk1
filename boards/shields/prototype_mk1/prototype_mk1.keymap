@@ -85,11 +85,12 @@
             mods = <(MOD_RALT|MOD_LALT)>;
         };
 
-        at_encoder: at_encoder {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "AT_ENCODER";
-            #sensor-binding-cells = <0>;
-            bindings = <&none>, <&none>;
+        del_bks: del_bks {
+            compatible = "zmk,behavior-mod-morph";
+            label = "DEL_BKS";
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            bindings = <&kp DELETE>, <&kp BACKSPACE>;
         };
     };
 
@@ -100,6 +101,34 @@
             bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
             label = "ALT_TAB_INIT";
         };
+
+        gm_cht_all: gm_cht_all {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp ENTER &kp FSLH &kp A &kp L &kp L &kp SPACE>;
+            label = "GM_CHT_ALL";
+        };
+
+        gm_gg_ez: gm_gg_ez {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp G &kp G &kp SPACE &kp E &kp Z &kp ENTER>;
+            label = "GM_GG_EZ";
+        };
+
+        dnd_r20: dnd_r20 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH &kp R &kp O &kp L &kp L &kp SPACE &kp N1 &kp D &kp N2 &kp N0 &kp RET>;
+            label = "DND_R20";
+        };
+
+        dnd_r20plus: dnd_r20plus {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH &kp R &kp O &kp L &kp L &kp SPACE &kp N1 &kp D &kp N2 &kp N0 &kp PLUS>;
+            label = "DND_R20PLUS";
+        };
     };
 
     keymap {
@@ -109,7 +138,7 @@
             display-name = "Base";
             bindings = <
 &hold_esc ESCAPE GRAVE  &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                        &kp N6  &kp N7    &kp N8        &kp N9   &kp N0    &kp MINUS
-&kp TAB                 &kp Q   &kp W   &kp E     &kp R     &kp T                         &kp Y   &kp U     &kp I         &kp O    &kp P     &kp DELETE
+&kp TAB                 &kp Q   &kp W   &kp E     &kp R     &kp T                         &kp Y   &kp U     &kp I         &kp O    &kp P     &del_bks
 &kp LCTRL               &kp A   &kp S   &kp D     &kp F     &kp G                         &kp H   &kp J     &kp K         &kp L    &kp SEMI  &kp SQT
 &kp LSHFT               &kp Z   &kp X   &kp C     &kp V     &kp B   &tog 4     &tog 5     &kp N   &kp M     &kp COMMA     &kp DOT  &kp FSLH  &shift_capslock
                                         &kp LALT  &kp LGUI  &mo 1   &kp ENTER  &kp SPACE  &mo 2   &kp BSPC  &kp LEFT_GUI
@@ -149,11 +178,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &tog 4  &tog 5    &tog 6        &none  &none  &none
-&sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none   &none     &none         &none  &none  &none
-&ext_power EP_TOG  &none         &none         &none         &none         &none                                 &none   &none     &none         &none  &none  &none
-&studio_unlock     &none         &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &none   &none     &none         &none  &none  &none
-                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 2   &kp BSPC  &kp LEFT_GUI
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none     &none         &none         &none  &none  &none
+&sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none     &none         &none         &none  &none  &none
+&ext_power EP_TOG  &none         &none         &tog 4        &tog 5        &tog 6                                &dnd_r20  &dnd_r20plus  &none         &none  &none  &none
+&studio_unlock     &none         &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &none     &none         &none         &none  &none  &none
+                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 2     &kp BSPC      &kp LEFT_GUI
             >;
 
             sensor-bindings =
@@ -194,11 +223,11 @@
         layer_gaming {
             display-name = "Gaming";
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                              &kp N6       &kp N7   &kp N8     &kp N9   &kp N0    &tog 6
-&kp TAB     &kp Q   &kp W   &kp E             &kp R         &kp T                               &kp Y        &kp U    &kp I      &kp O    &kp P     &kp BSLH
-&kp LSHFT   &kp A   &kp S   &kp D             &kp F         &kp G                               &kp H        &kp J    &kp K      &kp L    &kp RET   &kp RET
-&kp LCTRL   &kp Z   &kp X   &kp C             &kp V         &kp B         &tog 6     &tog 6     &kp N        &kp M    &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                            &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LEFT_ALT  &kp SPACE  &kp ENTER  &kp LA(TAB)  &kp DEL  &none
+&kp ESCAPE  &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                &kp N6       &kp N7         &kp N8     &kp N9   &kp N0         &tog 6
+&kp TAB     &kp Q   &kp W   &kp E             &kp R         &kp T                                 &kp Y        &kp U          &kp I      &kp O    &kp P          &kp DELETE
+&kp LSHFT   &kp A   &kp S   &kp D             &kp F         &kp G                                 &kp H        &kp J          &kp K      &kp L    &kp SEMICOLON  &kp RET
+&kp LCTRL   &kp Z   &kp X   &kp C             &kp V         &kp B         &gm_cht_all  &gm_gg_ez  &kp N        &kp M          &kp COMMA  &kp DOT  &kp FSLH       &kp RSHFT
+                            &kp LEFT_CONTROL  &kp LEFT_WIN  &kp LEFT_ALT  &kp SPACE    &kp SPACE  &kp LA(TAB)  &kp BACKSPACE  &kp ENTER
             >;
 
             sensor-bindings =
