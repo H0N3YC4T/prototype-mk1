@@ -11,6 +11,7 @@ void to_uppercase(char *str) {
 
 void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
     static lv_color_t cbuf_tmp[BUFFER_SIZE * BUFFER_SIZE];
+
     memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
 
     lv_img_dsc_t img;
@@ -20,7 +21,7 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
     img.header.h = BUFFER_SIZE;
 
     lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
-    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0, BUFFER_SIZE / 2,
+    lv_canvas_transform(canvas, &img, ROT_ANGLE, LV_IMG_ZOOM_NONE, -1, 0, BUFFER_SIZE / 2,
                         BUFFER_SIZE / 2, false);
 }
 

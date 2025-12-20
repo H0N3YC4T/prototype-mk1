@@ -10,6 +10,13 @@
 #define BUFFER_OFFSET_MIDDLE -44
 #define BUFFER_OFFSET_BOTTOM -129
 
+#if IS_ENABLED(CONFIG_DISPLAY_SCREEN_FLIP)
+    #define ROT_ANGLE 2700   // 270.0°
+#else
+    #define ROT_ANGLE 900    //  90.0°
+#endif
+
+
 #define LVGL_BACKGROUND                                                                            \
     IS_ENABLED(CONFIG_NICE_VIEW_WIDGET_INVERTED) ? lv_color_black() : lv_color_white()
 #define LVGL_FOREGROUND                                                                            \

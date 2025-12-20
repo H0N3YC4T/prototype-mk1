@@ -60,6 +60,12 @@ config NICE_VIEW_WIDGET_STATUS
 config NICE_VIEW_WIDGET_INVERTED
     bool "Invert display colors"
 
+if ZMK_SPLIT_ROLE_CENTRAL
+config DISPLAY_SCREEN_FLIP
+    bool "Flip screen 180 degree"
+    default n
+endif
+
 if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
 
 config NICE_VIEW_WIDGET_STATUS
