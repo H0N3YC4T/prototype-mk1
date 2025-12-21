@@ -10,7 +10,6 @@
     chosen {
         zmk,kscan = &mock_kscan;
         zmk,physical-layout = &h0n3yc4t_prototype_mk1_layout;
-        zephyr,display = &nice_view;
     };
 
     mock_kscan: kscan_1 {
@@ -53,16 +52,5 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(4,5) RC(4,6) RC(3,6) RC(3,7) 
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
         triggers-per-rotation = <20>;
-    };
-};
-
-&nice_view_spi {
-    status = "okay";
-    nice_view: ls0xx@0 {
-        compatible = "sharp,ls0xx";
-        spi-max-frequency = <1000000>;
-        reg = <0>;
-        width = <160>;
-        height = <68>;
     };
 };
