@@ -1,6 +1,6 @@
 if(CONFIG_ZMK_DISPLAY AND CONFIG_NICE_VIEW_WIDGET_STATUS)
 
-  zephyr_library_include_directories(${ZMK_CONFIG}/include)
+
 
   zephyr_library_sources(custom_status_screen.c)
   zephyr_library_sources(assets/images.c)
