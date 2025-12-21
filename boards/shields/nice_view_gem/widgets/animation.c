@@ -68,37 +68,7 @@ enum nice_view_theme nice_view_theme_get(void) {
     return current_theme;
 }
 
-void nice_view_theme_next(void) {
-    enum nice_view_theme theme = nice_view_theme_get();
-    theme = (theme + 1) % NICE_VIEW_THEME_COUNT;
-    nice_view_theme_set(theme);
-    nice_view_theme_redraw();
-}
 
-void nice_view_animation_toggle(void) {
-    nice_view_animation = !nice_view_animation;
-        if (!nice_view_screen) {
-            draw_animation(nice_view_screen);
-        }
-}
-
-void nice_view_animation_off(void) {
-    if (nice_view_animation) {
-        nice_view_animation = false;
-        if (!nice_view_screen) {
-            draw_animation(nice_view_screen);
-        }
-    }
-}
-
-void nice_view_animation_on(void) {
-    if (!nice_view_animation) {
-        nice_view_animation = true;
-        if (!nice_view_screen) {
-            draw_animation(nice_view_screen);
-        }
-    }
-}
 
 /* -------------------------------------------------------------------------- */
 /* Offset calculation                                                         */
@@ -162,36 +132,3 @@ void draw_animation(lv_obj_t *canvas) {
 }
 
 
-/* -------------------------------------------------------------------------- */
-/* Event listener: respond to cycle_animation_state_changed                   */
-/* -------------------------------------------------------------------------- */
-static void handle_cycle_animation_type(int type) {
-    switch (type) {
-    case NVC_TOGGLE:
-        nice_view_animation_toggle();
-        break;
-
-    case NVC_NEXT:
-        nice_view_theme_next();
-        break;
-
-    default:
-        /* Unknown type; ignore silently. */
-        break;
-    }
-}
-
-static int nice_view_cycle_animation_listener(const zmk_event_t *eh)
-{
-    const struct cycle_animation_state_changed *evt =
-        as_cycle_animation_state_changed(eh);
-    if (!evt) {
-        return 0;
-    }
-
-    handle_cycle_animation_type(evt->type);
-    return 0;
-}
-
-// ZMK_LISTENER(nice_view_cycle_animation_listener, nice_view_cycle_animation_listener);
-// ZMK_SUBSCRIPTION(nice_view_cycle_animation_listener, cycle_animation_state_changed);
