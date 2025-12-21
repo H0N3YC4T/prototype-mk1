@@ -10,7 +10,7 @@
     chosen {
         zmk,kscan = &mock_kscan;
         zmk,physical-layout = &h0n3yc4t_prototype_mk1_layout;
-        zephyr,display = &oled;
+        zephyr,display = &nice_view;
     };
 
     mock_kscan: kscan_1 {
@@ -56,26 +56,13 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(4,5) RC(4,6) RC(3,6) RC(3,7) 
     };
 };
 
-&pro_micro_i2c {
+&nice_view_spi {
     status = "okay";
-
-    oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
-        reg = <0x3c>;
-
-        /* 128x32 panel geometry */
-        width  = <128>;
-        height = <32>;
-
-        segment-offset  = <0>;
-        page-offset     = <0>;
-        display-offset  = <0>;
-        multiplex-ratio = <31>;
-
-        /* Orientation / contrast tweaks */
-        segment-remap;
-        com-invdir;
-        inversion-on;
-        prechargep = <0x22>;
+    nice_view: ls0xx@0 {
+        compatible = "sharp,ls0xx";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        width = <160>;
+        height = <68>;
     };
 };
