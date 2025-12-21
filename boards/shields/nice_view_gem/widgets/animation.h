@@ -49,22 +49,3 @@ void nice_view_theme_set(enum nice_view_theme theme);
  */
 enum nice_view_theme nice_view_theme_get(void);
 
-/**
- * @brief Advance to the next theme (wraps at NICE_VIEW_THEME_COUNT) and redraw.
- */
-void nice_view_theme_next(void);
-
-/**
- * @brief Toggle animation on/off and redraw.
- */
-void nice_view_animation_toggle(void);
-
-/**
- * @brief Force animation off and redraw (if it was on).
- */
-void nice_view_animation_off(void);
-
-/**
- * @brief Force animation on and redraw (if it was off).
- */
-void nice_view_animation_on(void);
