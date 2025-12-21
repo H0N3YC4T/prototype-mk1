@@ -1,0 +1,21 @@
+---
+include:
+  - board: nice_nano_v2
+    shield: settings_reset
+    artifact-name: reset
+
+  - board: nice_nano_v2
+    shield: prototype_mk1_dongle nice_view_adapter dongle_display
+    artifact-name: dongle
+
+  - board: nice_nano_v2
+    shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
+    artifact-name: left-central
+
+  - board: nice_nano_v2
+    shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
+    artifact-name: left-peripheral
+
+  - board: nice_nano_v2
+    shield: prototype_mk1_periph_right nice_view_adapter nice_view_gem
+    artifact-name: right-peripheral
