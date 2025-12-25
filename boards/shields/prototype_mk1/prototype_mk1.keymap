@@ -11,24 +11,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-#define default_layer 0
-
-#define layer_lower 1
-
-#define layer_settings 2
-
-#define layer_mouse 3
-
-#define layer_gaming 4
-
-#define layer_arrows 5
-
-#define layer_upper 6
-
-
-
-#define GAMES 7
-
 / {
     // Activate ADJUST layer by pressing raise and lower
 
@@ -36,7 +18,7 @@
         compatible = "zmk,conditional-layers";
 
         condition_settings {
-            if-layers = <1 7>;
+            if-layers = <1 6>;
             then-layer = <2>;
         };
     };
@@ -150,7 +132,7 @@
 &kp TAB                 &kp Q   &kp W   &kp E     &kp R     &kp T                         &kp Y   &kp U     &kp I         &kp O    &kp P     &del_bks
 &kp LCTRL               &kp A   &kp S   &kp D     &kp F     &kp G                         &kp H   &kp J     &kp K         &kp L    &kp SEMI  &kp SQT
 &kp LSHFT               &kp Z   &kp X   &kp C     &kp V     &kp B   &tog 6     &tog 3     &kp N   &kp M     &kp COMMA     &kp DOT  &kp FSLH  &shift_capslock
-                                        &kp LALT  &kp LGUI  &mo 1   &kp ENTER  &kp SPACE  &mo 7   &kp BSPC  &kp LEFT_GUI
+                                        &kp LALT  &kp LGUI  &mo 1   &kp ENTER  &kp SPACE  &mo 6   &kp BSPC  &kp LEFT_GUI
             >;
 
             sensor-bindings = <&inc_dec_kp UP DOWN>, <&inc_dec_kp RIGHT LEFT>;
@@ -163,7 +145,7 @@
 &kp TAB              &kp LG(E)        &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)                                             &none      &kp HOME          &kp UP_ARROW    &kp END               &none                  &kp DELETE
 &kp LEFT_CONTROL     &kp LC(A)        &kp LC(S)         &kp LC(D)         &kp LC(F)         &kp LC(G)                                              &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW       &none                  &none
 &kp LEFT_SHIFT       &kp LC(Z)        &kp LC(X)         &kp LC(C)         &kp LC(V)         &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)      &kp LEFT_WIN           &kp RIGHT_SHIFT
-                                                        &kp LALT          &kp LEFT_WIN      &mo 1                 &kp RET             &kp SPACE    &mo 7      &kp BACKSPACE     &kp LEFT_WIN
+                                                        &kp LALT          &kp LEFT_WIN      &mo 1                 &kp RET             &kp SPACE    &mo 6      &kp BACKSPACE     &kp LEFT_WIN
             >;
 
             sensor-bindings = <&encoder_undo_redo>, <&inc_dec_kp RIGHT LEFT>;
@@ -174,9 +156,9 @@
             bindings = <
 &bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none     &none         &none         &none  &none  &none
 &sys_reset         &none         &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none     &none         &none         &none  &none  &none
-&ext_power EP_TOG  &none         &none         &tog 6        &tog 3        &tog 4                                &dnd_r20  &dnd_r20plus  &none         &none  &none  &none
+&ext_power EP_TOG  &none         &none         &tog 3        &tog 5        &tog 4                                &dnd_r20  &dnd_r20plus  &none         &none  &none  &none
 &studio_unlock     &none         &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &none     &none         &none         &none  &none  &none
-                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 7     &kp BSPC      &kp LEFT_GUI
+                                               &kp LALT      &kp LGUI      &mo 1         &kp ENTER   &kp SPACE   &mo 6     &kp BSPC      &kp LEFT_GUI
             >;
 
             sensor-bindings =
@@ -190,7 +172,7 @@
 &kp ESCAPE        &kp LS(TAB)     &kp ENTER       &kp TAB          &none          &none                      &none  &none          &kp LS(TAB)     &kp ENTER       &kp TAB          &kp ESC
 &kp TAB           &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp PAGE_UP    &none                      &none  &kp PAGE_UP    &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp TAB
 &kp LEFT_CONTROL  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp PAGE_DOWN  &none                      &none  &kp PAGE_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &none           &none           &none            &none          &none  &tog 3    &tog 3    &none  &none          &none           &none           &none            &kp LEFT_SHIFT
+&kp LEFT_SHIFT    &none           &none           &none            &none          &none  &tog 0    &tog 0    &none  &none          &none           &none           &none            &kp LEFT_SHIFT
                                                   &kp LEFT_ALT     &kp LWIN       &none  &mkp MB1  &mkp MB1  &none  &kp BACKSPACE  &kp LWIN
             >;
 
@@ -202,7 +184,7 @@
         layer_gaming {
             display-name = "Gaming";
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                &kp N6       &kp N7         &kp N8     &kp N9   &kp N0         &tog 4
+&kp ESCAPE  &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                &kp N6       &kp N7         &kp N8     &kp N9   &kp N0         &tog 0
 &kp TAB     &kp Q   &kp W   &kp E             &kp R         &kp T                                 &kp Y        &kp U          &kp I      &kp O    &kp P          &kp DELETE
 &kp LSHFT   &kp A   &kp S   &kp D             &kp F         &kp G                                 &kp H        &kp J          &kp K      &kp L    &kp SEMICOLON  &kp RET
 &kp LCTRL   &kp Z   &kp X   &kp C             &kp V         &kp B         &gm_cht_all  &gm_gg_ez  &kp N        &kp M          &kp COMMA  &kp DOT  &kp FSLH       &kp RSHFT
@@ -220,7 +202,7 @@
 &kp ESCAPE        &kp N1            &kp N2          &kp N3            &kp N4    &kp N5                        &kp N6  &kp N7            &kp N8          &kp N9           &kp N0  &kp MINUS
 &kp TAB           &kp HOME          &kp UP_ARROW    &kp END           &none     &none                         &none   &kp HOME          &kp UP_ARROW    &kp END          &none   &kp TAB
 &kp LEFT_CONTROL  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW   &none     &none                         &none   &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &none     &none   &tog 6     &tog 6     &none   &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LWIN)     &none   &kp LEFT_SHIFT
+&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &none     &none   &tog 0     &tog 0     &none   &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LWIN)     &none   &kp LEFT_SHIFT
                                                     &kp LEFT_ALT      &kp LWIN  &none   &kp ENTER  &kp ENTER  &none   &kp BACKSPACE     &kp LWIN
             >;
 
@@ -236,7 +218,7 @@
 &kp TAB              &mkp MB2        &mmv MOVE_UP    &mkp MB1         &none         &none                                                             &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp PLUS       &kp EQUAL  &none    &kp F12
 &kp LEFT_CONTROL     &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none         &none                                                             &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp PIPE   &none    &none
 &kp LEFT_SHIFT       &none           &none           &none            &none         &none   &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LESS_THAN     &kp GREATER_THAN   &none          &none      &none    &kp RIGHT_SHIFT
-                                                     &kp LEFT_ALT     &kp LEFT_WIN  &mo 1   &kp ENTER                                     &kp SPACE   &mo 7             &kp BACKSPACE      &kp LEFT_WIN
+                                                     &kp LEFT_ALT     &kp LEFT_WIN  &mo 1   &kp ENTER                                     &kp SPACE   &mo 6             &kp BACKSPACE      &kp LEFT_WIN
             >;
 
             sensor-bindings =
