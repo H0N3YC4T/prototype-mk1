@@ -5,12 +5,8 @@ include:
     artifact-name: reset
 
   - board: nice_nano
-    shield: nice_view_adapter prototype_mk1_dongle dongle_display
+    shield: prototype_mk1_dongle nice_view_adapter dongle_display
     artifact-name: dongle
-
-  - board: nice_nano
-    shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
-    artifact-name: left-central
 
   - board: nice_nano
     shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
