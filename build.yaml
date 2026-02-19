@@ -9,9 +9,9 @@ include:
     artifact-name: dongle
 
   - board: nice_nano
-    shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
-    artifact-name: left-peripheral
+    shield: prototype_mk1_left nice_view_adapter nice_view_gem
+    artifact-name: left
 
   - board: nice_nano
-    shield: prototype_mk1_periph_right nice_view_adapter nice_view_gem
-    artifact-name: right-peripheral
+    shield: prototype_mk1_right nice_view_adapter nice_view_gem
+    artifact-name: right
