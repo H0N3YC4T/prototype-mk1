@@ -1,6 +1,6 @@
 name: Keyboard-Prototype_Mk1
 
 build:
-  kconfig: Kconfig
+
   settings:
     board_root: .

@@ -18,8 +18,8 @@
         compatible = "zmk,conditional-layers";
 
         condition_settings {
-            if-layers = <1 2>;
-            then-layer = <3>;
+            if-layers = <layer_lower layer_upper>;
+            then-layer = <layer_settings>;
         };
     };
 
