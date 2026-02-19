@@ -106,20 +106,6 @@
             bindings = <&kp G &kp G &kp SPACE &kp E &kp Z &kp ENTER>;
             label = "GM_GG_EZ";
         };
-
-        dnd_r20: dnd_r20 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp FSLH &kp R &kp O &kp L &kp L &kp SPACE &kp N1 &kp D &kp N2 &kp N0 &kp RET>;
-            label = "DND_R20";
-        };
-
-        dnd_r20plus: dnd_r20plus {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp FSLH &kp R &kp O &kp L &kp L &kp SPACE &kp N1 &kp D &kp N2 &kp N0 &kp PLUS>;
-            label = "DND_R20PLUS";
-        };
     };
 
     keymap {
