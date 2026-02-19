@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 
-SHIELD_PROTOTYPE_MK1_DONGLE
+if SHIELD_PROTOTYPE_MK1_DONGLE
 config ZMK_KEYBOARD_NAME
     default "Prototype_Mk1"
 config ZMK_SPLIT_ROLE_CENTRAL
