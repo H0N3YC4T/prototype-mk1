@@ -39,7 +39,7 @@ if LVGL
 
 
 config LV_Z_VDB_SIZE
-    default 64
+    default 100
 
 if SHIELD_PROTOTYPE_MK1_DONGLE || SHIELD_PROTOTYPE_MK1_CLEFT
 choice ZMK_DISPLAY_WORK_QUEUE
@@ -48,7 +48,7 @@ endchoice
 endif
 
 config LV_DPI_DEF
-    default 148
+    default 161
 
 config LV_Z_BITS_PER_PIXEL
     default 1
