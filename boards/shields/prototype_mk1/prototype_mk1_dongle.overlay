@@ -10,6 +10,7 @@
     chosen {
         zmk,kscan = &mock_kscan;
         zmk,physical-layout = &h0n3yc4t_prototype_mk1_layout;
+        zephyr,display = &oled;
     };
 
     mock_kscan: kscan_1 {
