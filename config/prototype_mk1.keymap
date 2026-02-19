@@ -18,8 +18,8 @@
         compatible = "zmk,conditional-layers";
 
         condition_settings {
-            if-layers = <layer_lower layer_upper>;
-            then-layer = <layer_settings>;
+            if-layers = <1 2>;
+            then-layer = <3>;
         };
     };
 
@@ -27,7 +27,7 @@
         hold_esc: hold_esc {
             compatible = "zmk,behavior-hold-tap";
             label = "HOLD_ESC";
-            bindings = <&kp &kp>;
+            bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
             flavor = "tap-preferred";
@@ -53,7 +53,7 @@
         desktop_create_destroy: desktop_create_destroy {
             compatible = "zmk,behavior-hold-tap";
             label = "DESKTOP_CREATE_DESTROY";
-            bindings = <&kp &kp>;
+            bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
             flavor = "tap-preferred";
