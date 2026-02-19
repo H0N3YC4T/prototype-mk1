@@ -52,14 +52,16 @@ enum output_symbol {
 };
 
 enum selection_line_state {
+    selection_line_state_none,
     selection_line_state_usb,
     selection_line_state_bt
 } current_selection_line_state;
 
-lv_point_t selection_line_points[] = { {0, 0}, {13, 0} }; // will be replaced with lv_point_precise_t 
+lv_point_precise_t selection_line_points[] = { {0, 0}, {0, 0} };
 
 struct output_status_state {
     struct zmk_endpoint_instance selected_endpoint;
+    enum zmk_transport preferred_transport;
     int active_profile_index;
     bool active_profile_connected;
     bool active_profile_bonded;
@@ -69,7 +71,8 @@ struct output_status_state {
 static struct output_status_state get_state(const zmk_event_t *_eh) {
     struct output_status_state st;
 
-    st.selected_endpoint = zmk_endpoints_selected();
+    st.selected_endpoint = zmk_endpoint_get_selected();
+    st.preferred_transport = zmk_endpoint_get_preferred_transport();
 
 #if IS_ENABLED(CONFIG_ZMK_BLE)
     st.active_profile_index     = zmk_ble_active_profile_index();
@@ -97,7 +100,7 @@ static void move_object_x(void *obj, int32_t from, int32_t to) {
     lv_anim_t a;
     lv_anim_init(&a);
     lv_anim_set_var(&a, obj);
-    lv_anim_set_time(&a, 200); // will be replaced with lv_anim_set_duration
+    lv_anim_set_duration(&a, 200);
     lv_anim_set_exec_cb(&a, anim_x_cb);
     lv_anim_set_path_cb(&a, lv_anim_path_overshoot);
     lv_anim_set_values(&a, from, to);
@@ -108,7 +111,7 @@ static void change_size_object(void *obj, int32_t from, int32_t to) {
     lv_anim_t a;
     lv_anim_init(&a);
     lv_anim_set_var(&a, obj);
-    lv_anim_set_time(&a, 200); // will be replaced with lv_anim_set_duration
+    lv_anim_set_duration(&a, 200);
     lv_anim_set_exec_cb(&a, anim_size_cb);
     lv_anim_set_path_cb(&a, lv_anim_path_ease_in_out);
     lv_anim_set_values(&a, from, to);
@@ -123,7 +126,14 @@ static void set_status_symbol(lv_obj_t *widget, struct output_status_state state
     lv_obj_t *bt_status = lv_obj_get_child(widget, output_symbol_bt_status);
     lv_obj_t *selection_line = lv_obj_get_child(widget, output_symbol_selection_line);
 
-    switch (state.selected_endpoint.transport) {
+    enum zmk_transport transport = state.selected_endpoint.transport;
+    bool connected = transport != ZMK_TRANSPORT_NONE;
+
+    if (!connected) {
+        transport = state.preferred_transport;
+    }
+
+    switch (transport) {
     case ZMK_TRANSPORT_USB:
         if (current_selection_line_state != selection_line_state_usb) {
             move_object_x(selection_line, lv_obj_get_x(bt) - 1, lv_obj_get_x(usb) - 1);
@@ -138,9 +148,18 @@ static void set_status_symbol(lv_obj_t *widget, struct output_status_state state
             current_selection_line_state = selection_line_state_bt;
         }
         break;
+    case ZMK_TRANSPORT_NONE:
+        if (current_selection_line_state != selection_line_state_none) {
+            if (current_selection_line_state == selection_line_state_usb) {
+                change_size_object(selection_line, 11, 0);
+            } else {
+                change_size_object(selection_line, 18, 0);
+            }
+            current_selection_line_state = selection_line_state_none;
+        }
     }
 
-    if (state.usb_is_hid_ready) {
+    if (state.usb_is_hid_ready && connected) {
         lv_img_set_src(usb_hid_status, &sym_ok);
     } else {
         lv_img_set_src(usb_hid_status, &sym_nok);
@@ -206,7 +225,7 @@ int zmk_widget_output_status_init(struct zmk_widget_output_status *widget, lv_ob
     selection_line = lv_line_create(widget->obj);
     lv_line_set_points(selection_line, selection_line_points, 2);
     lv_obj_add_style(selection_line, &style_line, 0);
-    lv_obj_align_to(selection_line, usb, LV_ALIGN_OUT_TOP_LEFT, 3, -1);
+    lv_obj_align_to(selection_line, usb, LV_ALIGN_OUT_TOP_LEFT, 3, -2);
  
     sys_slist_append(&widgets, &widget->node);
 
