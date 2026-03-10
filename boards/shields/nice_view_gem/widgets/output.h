@@ -4,6 +4,7 @@
 #include <zmk/endpoints.h>
 #include "util.h"
 
+
 #if !IS_ENABLED(CONFIG_ZMK_SPLIT) || IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 struct output_status_state {
     struct zmk_endpoint_instance selected_endpoint;

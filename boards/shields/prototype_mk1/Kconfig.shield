@@ -2,11 +2,13 @@
 # SPDX-License-Identifier: MIT
 
 config SHIELD_PROTOTYPE_MK1_PLEFT
-    def_bool $(shields_list_contains,prototype_mk1_left)
+    def_bool $(shields_list_contains,prototype_mk1_periph_left)
 
 config SHIELD_PROTOTYPE_MK1_PRIGHT
-    def_bool $(shields_list_contains,prototype_mk1_right)
+    def_bool $(shields_list_contains,prototype_mk1_periph_right)
 
 config SHIELD_PROTOTYPE_MK1_DONGLE
     def_bool $(shields_list_contains,prototype_mk1_dongle)
 
+config SHIELD_PROTOTYPE_MK1_CLEFT
+    def_bool $(shields_list_contains,prototype_mk1_central_left)

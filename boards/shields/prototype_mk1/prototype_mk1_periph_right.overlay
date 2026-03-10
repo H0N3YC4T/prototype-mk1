@@ -26,12 +26,3 @@
     status = "okay";
 };
 
-&spi0 {
-    status = "okay";
-};
-
-/ {
-    aliases {
-        nice_view_spi = &spi0;
-    };
-};
