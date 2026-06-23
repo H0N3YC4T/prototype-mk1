@@ -52,28 +52,18 @@ static const struct behavior_parameter_metadata metadata = {
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event)
 {
-    struct cycle_animation_state_changed *evt =
-        new_cycle_animation_state_changed();
-
-    if (!evt) {
-        return -ENOMEM;
-    }
-
     switch (binding->param1) {
     case NVC_TOGGLE:
-        evt->type = NVC_TOGGLE;
-        break;
-
     case NVC_NEXT:
-        evt->type = NVC_NEXT;
-        break;
+        // ZMK 4.1: raise_<event>(struct) replaces the old
+        // new_<event>() + ZMK_EVENT_RAISE(*evt) pattern.
+        return raise_cycle_animation_state_changed(
+            (struct cycle_animation_state_changed){.type = binding->param1});
 
     default:
         LOG_ERR("Unknown animation command param1=%d", binding->param1);
         return -ENOTSUP;
     }
-
-    return ZMK_EVENT_RAISE(*evt);
 }
 
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,

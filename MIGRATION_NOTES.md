@@ -50,6 +50,14 @@ Second dongle option: XIAO nRF52840 + Waveshare 1.69" via carrefinho/prospector
 - Watch: prospector warns of RAM overflow on XIAO → if linker `region RAM overflowed`,
   add `CONFIG_LV_Z_VDB_SIZE=25` to prototype_mk1_waveshare.conf.
 
+## ZMK 4.1 event API change (cycle_animation behavior)
+The dormant behavior used the old `new_<event>()` + `ZMK_EVENT_RAISE(*evt)` pattern.
+ZMK 4.1 removed `new_<name>()`; `ZMK_EVENT_DECLARE` now generates
+`int raise_<name>(struct <name>)` and builds the event header internally. Fix:
+`raise_cycle_animation_state_changed((struct cycle_animation_state_changed){.type=...})`.
+The event header/impl (ZMK_EVENT_DECLARE/IMPL) and the `as_<name>()` listener side
+were already 4.1-correct; behavior parameter metadata also compiled fine.
+
 ## Reference configs (validated patterns from migrated/real configs)
 - `englmaxi/zmk-config` (ZMK main / 4.1): board ids `nice_nano//zmk` + `xiao_ble//zmk`;
   west.yml modules at `revision: main`; lists `<dongle_shield> dongle_display`
