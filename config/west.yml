@@ -1,13 +1,13 @@
 manifest:
-  defaults:
-    revision: v0.3
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3-branch
+      # zeph-4.1 migration: track main during migration, pin to the green
+      # commit once the build is stable (see MIGRATION_NOTES.md).
+      revision: main
       import: app/west.yml
   self:
     path: config
