@@ -9,20 +9,20 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      # zeph-4.1 migration: track main during migration, pin to the green
-      # commit once the build is stable (see MIGRATION_NOTES.md).
-      revision: main
+      # Pinned to a validated ZMK main commit (Zephyr 4.1 / LVGL 9.3).
+      # Bump deliberately and re-test; see MIGRATION_NOTES.md.
+      revision: 64daf698e073e37b6748ac54f4eb48d8666af0b9
       import: app/west.yml
     # Dongle display — LVGL-9/Zephyr-4.1. Replaces the previously-vendored
     # boards/shields/dongle_display copy. Known-good HEAD: 2bb333f (pin at end).
     - name: zmk-dongle-display
       remote: englmaxi
-      revision: main
+      revision: 2bb333f87136d33e94a49d86236ed9ec254a8060
     # nice!view_gem display — LVGL-9/Zephyr-4.1. Replaces the previously-vendored
     # boards/shields/nice_view_gem copy; the custom theme work is preserved in
     # deferred-features/nice_view_gem_theme/. Known-good HEAD: 0a50fe2 (pin at end).
     - name: nice-view-gem
       remote: M165437
-      revision: main
+      revision: 0a50fe209d929c916c5664c6affd0f4977c6b012
   self:
     path: config

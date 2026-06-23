@@ -47,6 +47,25 @@ decisions, and hardware-verify items. Remove (or move to `docs/`) before final m
   (160x68 horizontal). Better long-term fit for our nice!view dongle than englmaxi's
   OLED(128x64)-oriented module. Future option (we kept the englmaxi-based copy for now).
 
+## Status: CORE MIGRATION COMPLETE
+All five targets green on ZMK main / Zephyr 4.1 / LVGL 9.3: `reset`, `dongle`,
+`left`, `right`, `central-left` (1f965a7). Revisions then pinned for reproducibility:
+- zmk            → `64daf698e073e37b6748ac54f4eb48d8666af0b9`
+- nice-view-gem  → `0a50fe209d929c916c5664c6affd0f4977c6b012`
+- zmk-dongle-display → `2bb333f87136d33e94a49d86236ed9ec254a8060`
+
+### Remaining / next phases
+- Optional cleanup of leftover non-fatal warnings: vestigial SSD1306/I2C forcing
+  + `exposes: i2c_oled` in the prototype_mk1 shield; deprecated `label` on
+  behaviors/macros/keymap nodes.
+- Hardware-flash verification (CI can't catch): NFC-pin columns P0.09/P0.10;
+  backlight + underglow; nice!view orientation (gem rotate 90 vs 270); dongle
+  widget fit on 160x68 (englmaxi is OLED-oriented).
+- Secondary scope: XIAO + Waveshare prospector dongle; controller-option
+  architecture (dongle/left-as-central, halves-as-peripheral via role cmake-arg).
+- Rebuild the deferred gem theme system (deferred-features/) + wire cycle_animation.
+- README; eventually merge upgrade/zeph-4-1 → main.
+
 ## Build staging
 1. **Canary (current):** build.yaml reduced to `reset` only → validates manifest +
    workflow + `nice_nano//zmk` board id with zero LVGL involvement.
