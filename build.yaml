@@ -12,8 +12,10 @@ include:
 
   # -------------- CONTROLLERS --------------
 
+  # nice_view_adapter is listed before prototype_mk1_dongle so its &nice_view_spi
+  # bus label is defined before prototype_mk1_dongle.overlay references it.
   - board: nice_nano//zmk
-    shield: prototype_mk1_dongle nice_view_adapter dongle_display
+    shield: nice_view_adapter prototype_mk1_dongle dongle_display
     artifact-name: dongle
 
   # - board: nice_nano//zmk

@@ -80,3 +80,12 @@ _(append each CI failure + its fix here so debugging stays referenceable)_
   to `prototype_mk1_dongle.overlay` (its proper home) on the nice_view_adapter
   `&nice_view_spi` bus, 160x68. (So the dongle wasn't fully stock — englmaxi is
   OLED-oriented; widget fit on the 160x68 nice!view is a hardware-verify item.)
+  CONFIRMED by user: all THREE displays (both halves + dongle) are nice!views
+  (Sharp LS0xx 160x68); no OLEDs anywhere.
+- **b4b5301 — dongle FAILED** (DT parse): `undefined node label 'nice_view_spi'`
+  at prototype_mk1_dongle.overlay. Overlay ordering: `&nice_view_spi` is provided
+  by the nice_view_adapter shield, but prototype_mk1_dongle was listed BEFORE it,
+  so the label wasn't defined when referenced. The gem works because nice_view_gem
+  (the label consumer) is listed AFTER the adapter. Fix: reorder the dongle build
+  shields to `nice_view_adapter prototype_mk1_dongle dongle_display`. (config/
+  prototype_mk1.conf still merges last, so Kconfig precedence is unaffected.)
