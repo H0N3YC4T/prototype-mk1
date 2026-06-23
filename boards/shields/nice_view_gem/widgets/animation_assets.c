@@ -7,7 +7,7 @@
 #define NICE_VIEW_ANIM_ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
 // -------------------------------------------------------------------------------
-// Declare Crystal Animation
+// Crystal theme (crystal.c)
 LV_IMG_DECLARE(crystal_01);
 LV_IMG_DECLARE(crystal_02);
 LV_IMG_DECLARE(crystal_03);
@@ -33,30 +33,29 @@ static const lv_img_dsc_t *crystal_imgs[] = {
 };
 
 // -------------------------------------------------------------------------------
-// Frames live in transmutation.c (named transmutation_NN); see the per-image
-// comments there for what each one is. They are grouped into two themes below.
-LV_IMG_DECLARE(transmutation_01);
-LV_IMG_DECLARE(transmutation_02);
-LV_IMG_DECLARE(transmutation_03);
-LV_IMG_DECLARE(transmutation_04);
-LV_IMG_DECLARE(transmutation_05);
-LV_IMG_DECLARE(transmutation_06);
-LV_IMG_DECLARE(transmutation_07);
-LV_IMG_DECLARE(transmutation_08);
-LV_IMG_DECLARE(transmutation_09);
-LV_IMG_DECLARE(transmutation_10);
-LV_IMG_DECLARE(transmutation_11);
+// Landscape theme (landscape.c): dunes, dunes 2, pyramids, mountain, mountains 2
+LV_IMG_DECLARE(landscape_01);
+LV_IMG_DECLARE(landscape_03);
+LV_IMG_DECLARE(landscape_06);
+LV_IMG_DECLARE(landscape_07);
+LV_IMG_DECLARE(landscape_08);
 
-// Landscape theme: 01 dunes, 03 dunes 2, 06 pyramids, 07 mountain, 08 mountains 2
 static const lv_img_dsc_t *landscape_imgs[] = {
-    &transmutation_01, &transmutation_03, &transmutation_06,
-    &transmutation_07, &transmutation_08,
+    &landscape_01, &landscape_03, &landscape_06, &landscape_07, &landscape_08,
 };
 
-// Evangelion theme: 02/04/05 spaceships, 09/10/11 evangelion
+// -------------------------------------------------------------------------------
+// Evangelion theme (evangelion.c): spaceships 1-3, evangelion 1-3
+LV_IMG_DECLARE(evangelion_02);
+LV_IMG_DECLARE(evangelion_04);
+LV_IMG_DECLARE(evangelion_05);
+LV_IMG_DECLARE(evangelion_09);
+LV_IMG_DECLARE(evangelion_10);
+LV_IMG_DECLARE(evangelion_11);
+
 static const lv_img_dsc_t *evangelion_imgs[] = {
-    &transmutation_02, &transmutation_04, &transmutation_05,
-    &transmutation_09, &transmutation_10, &transmutation_11,
+    &evangelion_02, &evangelion_04, &evangelion_05,
+    &evangelion_09, &evangelion_10, &evangelion_11,
 };
 
 // -------------------------------------------------------------------------------
