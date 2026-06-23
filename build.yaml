@@ -18,9 +18,9 @@ include:
     shield: nice_view_adapter prototype_mk1_dongle dongle_display
     artifact-name: dongle
 
-  # - board: nice_nano//zmk
-  #   shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
-  #   artifact-name: central-left
+  - board: nice_nano//zmk
+    shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
+    artifact-name: central-left
 
   # -------------- PERIPHERALS --------------
 
