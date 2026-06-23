@@ -1,2 +1,4 @@
 *.psd
 extra/KeymapGuide/prototype_mk1-keymap.psd
+.vscode
+.vscode/*
