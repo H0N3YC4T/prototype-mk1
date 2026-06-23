@@ -57,3 +57,17 @@ _(append each CI failure + its fix here so debugging stays referenceable)_
 - **cd13044 — canary GREEN.** `reset` built against ZMK main/Zephyr 4.1.
   Confirms: `revision: main` resolves + fetches Zephyr 4.1; `@main` workflow runs;
   board id `nice_nano//zmk` is correct. Plumbing migration validated.
+- **3af04c9 — dongle FAILED** at `src/backlight.c`:
+  `"CONFIG_ZMK_BACKLIGHT is enabled but no zmk,backlight chosen node found"`.
+  Root cause: HWMv2 board-overlay naming. The shield board overlay must be named
+  after the board *target*, which for nice!nano v2 on Zephyr 4.1 is
+  **`nice_nano_nrf52840_zmk.overlay`** (as ZMK core's nice_view_adapter does), NOT
+  `nice_nano.overlay` (bare name doesn't match) and NOT `nice_nano_v2.overlay`
+  (old pre-HWMv2 name). My earlier rename to `nice_nano.overlay` meant the
+  PWM-backlight + WS2812-underglow overlay never applied → no `zmk,backlight`
+  node. NOTE: the correct-named file is the one the cleanup pass deleted as a
+  "byte-identical duplicate" — it existed to cover the HWMv2 board name.
+  Fix: rename board overlay → `nice_nano_nrf52840_zmk.overlay`. (Also clears the
+  `drivers__pwm` "No SOURCES" warning — same missing &pwm0 node.)
+  Non-fatal warnings seen (deferred): vestigial SSD1306; `label` deprecated on
+  behaviors/macros/keymap; KSCAN debounce unsatisfied-dep on the mock-kscan dongle.
