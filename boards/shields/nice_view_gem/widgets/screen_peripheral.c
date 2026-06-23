@@ -113,6 +113,9 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, CANVAS_COLOR_FORMAT);
 
+    // Bind the screen so the theme system can redraw on theme/animation changes
+    // (e.g. from the cycle_animation hotkey), then draw the initial frame(s).
+    nice_view_bind_screen(widget->obj);
     draw_animation(widget->obj);
 
     sys_slist_append(&widgets, &widget->node);

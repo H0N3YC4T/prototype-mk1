@@ -1,50 +1,134 @@
+// widgets/animation.c
 #include <stdlib.h>
 #include <zephyr/kernel.h>
+#include <lvgl.h>
+#include <zmk/display.h>
+
+#include <zmk/event_manager.h>
 #include "animation.h"
+#include "animation_assets.h"
 
-LV_IMG_DECLARE(crystal_01);
-LV_IMG_DECLARE(crystal_02);
-LV_IMG_DECLARE(crystal_03);
-LV_IMG_DECLARE(crystal_04);
-LV_IMG_DECLARE(crystal_05);
-LV_IMG_DECLARE(crystal_06);
-LV_IMG_DECLARE(crystal_07);
-LV_IMG_DECLARE(crystal_08);
-LV_IMG_DECLARE(crystal_09);
-LV_IMG_DECLARE(crystal_10);
-LV_IMG_DECLARE(crystal_11);
-LV_IMG_DECLARE(crystal_12);
-LV_IMG_DECLARE(crystal_13);
-LV_IMG_DECLARE(crystal_14);
-LV_IMG_DECLARE(crystal_15);
-LV_IMG_DECLARE(crystal_16);
-
-const lv_img_dsc_t *anim_imgs[] = {
-    &crystal_01, &crystal_02, &crystal_03, &crystal_04, &crystal_05, &crystal_06,
-    &crystal_07, &crystal_08, &crystal_09, &crystal_10, &crystal_11, &crystal_12,
-    &crystal_13, &crystal_14, &crystal_15, &crystal_16,
-};
-
-void draw_animation(lv_obj_t *canvas) {
-#if IS_ENABLED(CONFIG_NICE_VIEW_GEM_ANIMATION)
-    lv_obj_t *art = lv_animimg_create(canvas);
-    lv_obj_center(art);
-
-    lv_animimg_set_src(art, (const void **)anim_imgs, 16);
-    lv_animimg_set_duration(art, CONFIG_NICE_VIEW_GEM_ANIMATION_MS);
-    lv_animimg_set_repeat_count(art, LV_ANIM_REPEAT_INFINITE);
-    lv_animimg_start(art);
-#else
-    lv_obj_t *art = lv_img_create(canvas);
-
-    int length = sizeof(anim_imgs) / sizeof(anim_imgs[0]);
-    srand(k_uptime_get_32());
-    int random_index = rand() % length;
-    int configured_index = (CONFIG_NICE_VIEW_GEM_ANIMATION_FRAME - 1) % length;
-    int anim_imgs_index = CONFIG_NICE_VIEW_GEM_ANIMATION_FRAME > 0 ? configured_index : random_index;
-
-    lv_img_set_src(art, anim_imgs[anim_imgs_index]);
+// Current theme and animation state
+#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_TRANSMUTATION)
+static enum nice_view_theme current_theme = NICE_VIEW_THEME_TRANSMUTATION;
 #endif
 
-    lv_obj_align(art, LV_ALIGN_TOP_LEFT, 36, 0);
+#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_CRYSTAL)
+static enum nice_view_theme current_theme = NICE_VIEW_THEME_CRYSTAL;
+#endif
+
+// Animation movement state
+#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION)
+static bool nice_view_animation = true;
+#else
+static bool nice_view_animation = false;
+#endif
+
+// Horizontal offset for centering the animation
+static lv_coord_t nice_view_theme_offset = 1;
+
+// The LVGL parent/screen we draw into (bound from outside)
+static lv_obj_t *nice_view_screen = NULL;
+
+// The current LVGL object that holds the art (animimg or img)
+static lv_obj_t *art_obj = NULL;
+
+// Forward decl
+static void calc_offset_for_theme(enum nice_view_theme theme);
+
+/* -------------------------------------------------------------------------- */
+/* Public helpers                                                             */
+/* -------------------------------------------------------------------------- */
+
+bool nice_view_animation_is_enabled(void) {
+    return nice_view_animation;
 }
+
+void nice_view_bind_screen(lv_obj_t *screen) {
+    nice_view_screen = screen;
+}
+
+/* Internal helper: redraw on the bound screen, if any */
+void nice_view_theme_redraw(void) {
+    if (!nice_view_screen) {
+        return;
+    }
+    calc_offset_for_theme(nice_view_theme_get());
+    draw_animation(nice_view_screen);
+}
+
+void nice_view_theme_set(enum nice_view_theme theme) {
+    if (theme >= NICE_VIEW_THEME_COUNT) {
+        theme = NICE_VIEW_THEME_TRANSMUTATION;
+    }
+    current_theme = theme;
+}
+
+enum nice_view_theme nice_view_theme_get(void) {
+    return current_theme;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Offset calculation                                                         */
+/* -------------------------------------------------------------------------- */
+static void calc_offset_for_theme(enum nice_view_theme theme) {
+    const lv_coord_t max_width = 120;
+    const lv_img_dsc_t * const *frames = nice_view_anim_sets[theme];
+
+    if (!frames || !frames[0]) {
+        nice_view_theme_offset = 1;
+        return;
+    }
+
+    lv_coord_t img_w = frames[0]->header.w;
+
+    if (img_w >= max_width) {
+        nice_view_theme_offset = 1;
+    } else {
+        nice_view_theme_offset = (max_width - img_w + 1) / 2;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Main draw implementation                                                   */
+/* -------------------------------------------------------------------------- */
+
+void draw_animation(lv_obj_t *canvas) {
+    if (!canvas) {
+        return;
+    }
+
+    enum nice_view_theme theme = nice_view_theme_get();
+    const lv_img_dsc_t * const *frames = nice_view_anim_sets[theme];
+    const size_t frame_count = nice_view_anim_lengths[theme];
+
+    if (!frames || frame_count == 0) {
+        return; /* nothing to draw */
+    }
+
+    /* Delete previous art object, if any, so we don't accumulate LVGL objects. */
+    if (art_obj) {
+        lv_obj_del(art_obj);
+        art_obj = NULL;
+    }
+
+    if (nice_view_animation) {
+        art_obj = lv_animimg_create(canvas);
+        lv_obj_center(art_obj);
+
+        lv_animimg_set_src(art_obj, (const void **)frames, frame_count);
+        lv_animimg_set_duration(art_obj, CONFIG_NICE_VIEW_ANIMATION_MS);
+        lv_animimg_set_repeat_count(art_obj, LV_ANIM_REPEAT_INFINITE);
+        lv_animimg_start(art_obj);
+    } else {
+        art_obj = lv_img_create(canvas);
+        uint32_t idx = k_uptime_get_32() % frame_count;
+        lv_img_set_src(art_obj, frames[idx]);
+    }
+
+    lv_obj_align(art_obj, LV_ALIGN_TOP_LEFT, nice_view_theme_offset, 0);
+}
+
+

@@ -47,6 +47,26 @@ config NICE_VIEW_GEM_ANIMATION_MS
     int "Animation length in milliseconds"
     default 960
 
+# --- Custom theme system (crystal + transmutation) used by the local
+# --- animation.c / animation_assets.c. The cycle_animation hotkey switches
+# --- between these themes (and toggles movement) at runtime.
+config NICE_VIEW_ANIMATION
+    bool "Animate the peripheral artwork (vs. a single static frame)"
+    default y
+
+config NICE_VIEW_ANIMATION_MS
+    int "Animation length in milliseconds"
+    default 1200
+
+choice NICE_VIEW_ANIMATION_THEME
+    prompt "Default peripheral animation theme"
+    default NICE_VIEW_ANIMATION_THEME_TRANSMUTATION
+config NICE_VIEW_ANIMATION_THEME_TRANSMUTATION
+    bool "Transmutation"
+config NICE_VIEW_ANIMATION_THEME_CRYSTAL
+    bool "Crystal"
+endchoice
+
 config NICE_VIEW_WIDGET_STATUS
     select LV_USE_LABEL
     select LV_USE_IMAGE
