@@ -71,3 +71,12 @@ _(append each CI failure + its fix here so debugging stays referenceable)_
   `drivers__pwm` "No SOURCES" warning — same missing &pwm0 node.)
   Non-fatal warnings seen (deferred): vestigial SSD1306; `label` deprecated on
   behaviors/macros/keymap; KSCAN debounce unsatisfied-dep on the mock-kscan dongle.
+- **0770952 — dongle FAILED** at `src/display/main.c`:
+  `'__device_dts_ord_DT_CHOSEN_zephyr_display_ORD' undeclared` (no resolvable
+  `chosen { zephyr,display }`). Root cause: englmaxi's `dongle_display.overlay`
+  is empty by design — the module ships ONLY the status-screen widgets and
+  expects the dongle's own shield to define the display device. The vendored
+  copy we removed had carried the nice!view (LS0xx) node + chosen; relocating it
+  to `prototype_mk1_dongle.overlay` (its proper home) on the nice_view_adapter
+  `&nice_view_spi` bus, 160x68. (So the dongle wasn't fully stock — englmaxi is
+  OLED-oriented; widget fit on the 160x68 nice!view is a hardware-verify item.)
