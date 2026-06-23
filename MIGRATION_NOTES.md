@@ -30,6 +30,23 @@ decisions, and hardware-verify items. Remove (or move to `docs/`) before final m
 - Verify the "just images" claim by diffing vendored vs upstream BEFORE replacing
   (don't lose any customization). Preserve the dormant cycle_animation hook plan.
 
+## Reference configs (validated patterns from migrated/real configs)
+- `englmaxi/zmk-config` (ZMK main / 4.1): board ids `nice_nano//zmk` + `xiao_ble//zmk`;
+  west.yml modules at `revision: main`; lists `<dongle_shield> dongle_display`
+  (keyboard FIRST) — works for them because their dongle OLED is on a board-level
+  i2c label (`xiao_i2c`), available from overlay start. Our nice!view uses the
+  `nice_view_adapter` SHIELD (provides `&nice_view_spi`), so the consumer shield
+  must come AFTER it → our reorder is correct for the nice!view case.
+- `DarrenVictoriano/zmk-config` (v0.3, same architecture as ours): nice!nano v2 +
+  nice!view_gem + XIAO dongle. Order `corne_left nice_view_adapter nice_view_gem`;
+  nice-view-gem pulled as a west module (M165437, `v0.3.0` on v0.3 / `main` on 4.1).
+  Architecture: XIAO dongle = central, BOTH halves = peripherals via cmake-arg
+  `-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n` on one shield (cleaner than separate
+  `_periph_left/_right` shields) — adopt for the "dongle/left-as-controller" goal.
+- `mctechnology17/zmk-dongle-display-view`: nice!VIEW-native dongle widgets
+  (160x68 horizontal). Better long-term fit for our nice!view dongle than englmaxi's
+  OLED(128x64)-oriented module. Future option (we kept the englmaxi-based copy for now).
+
 ## Build staging
 1. **Canary (current):** build.yaml reduced to `reset` only → validates manifest +
    workflow + `nice_nano//zmk` board id with zero LVGL involvement.
@@ -89,3 +106,14 @@ _(append each CI failure + its fix here so debugging stays referenceable)_
   (the label consumer) is listed AFTER the adapter. Fix: reorder the dongle build
   shields to `nice_view_adapter prototype_mk1_dongle dongle_display`. (config/
   prototype_mk1.conf still merges last, so Kconfig precedence is unaffected.)
+- **bc68592 — dongle GREEN.** Dongle target fully migrated to Zephyr 4.1 / LVGL 9:
+  englmaxi dongle_display module + display node in prototype_mk1_dongle.overlay +
+  shield reorder. Build sequence of fixes: backlight node → overlay HWMv2 name →
+  display node location → shield order.
+- **Gem modularization** (this commit): vendored nice_view_gem → M165437 module
+  (LVGL-9 main); custom theme/artwork preserved to deferred-features/; periph_left
+  + periph_right targets re-enabled; periph/central confs switched off the custom
+  NICE_VIEW_ANIMATION* names (stock uses NICE_VIEW_GEM_ANIMATION, default on);
+  removed vestigial `zephyr,display = &oled` from prototype_mk1.dtsi (gem sets
+  &nice_view). Periph order `..periph_left nice_view_adapter nice_view_gem` needs
+  NO reorder — the gem (label consumer) is already last, after the adapter.

@@ -24,10 +24,10 @@ include:
 
   # -------------- PERIPHERALS --------------
 
-  # - board: nice_nano//zmk
-  #   shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
-  #   artifact-name: left
+  - board: nice_nano//zmk
+    shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
+    artifact-name: left
 
-  # - board: nice_nano//zmk
-  #   shield: prototype_mk1_periph_right nice_view_adapter nice_view_gem
-  #   artifact-name: right
+  - board: nice_nano//zmk
+    shield: prototype_mk1_periph_right nice_view_adapter nice_view_gem
+    artifact-name: right
