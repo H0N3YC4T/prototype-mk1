@@ -18,6 +18,15 @@ include:
     shield: nice_view_adapter prototype_mk1_dongle dongle_display
     artifact-name: dongle
 
+  # XIAO nRF52840 + Waveshare 1.69" prospector dongle. Display/brightness/themes
+  # come from prospector_adapter. Backlight + ext-power are disabled here because
+  # config/prototype_mk1.conf enables them globally for the nice!nano halves, but
+  # the XIAO dongle has no such hardware (would otherwise hit a build assert).
+  - board: xiao_ble//zmk
+    shield: prototype_mk1_waveshare prospector_adapter
+    cmake-args: -DCONFIG_ZMK_BACKLIGHT=n -DCONFIG_ZMK_EXT_POWER=n
+    artifact-name: dongle-waveshare
+
   - board: nice_nano//zmk
     shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
     artifact-name: central-left

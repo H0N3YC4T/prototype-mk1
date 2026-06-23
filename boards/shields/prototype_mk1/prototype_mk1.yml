@@ -12,6 +12,7 @@ features:
   - studio
 siblings:
   - prototype_mk1_dongle
+  - prototype_mk1_waveshare
   - prototype_mk1_central_left
   - prototype_mk1_periph_left
   - prototype_mk1_periph_right

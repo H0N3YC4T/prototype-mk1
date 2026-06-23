@@ -30,6 +30,26 @@ decisions, and hardware-verify items. Remove (or move to `docs/`) before final m
 - Verify the "just images" claim by diffing vendored vs upstream BEFORE replacing
   (don't lose any customization). Preserve the dormant cycle_animation hook plan.
 
+## Waveshare/XIAO prospector dongle (added on upgrade/zeph-4-1)
+Second dongle option: XIAO nRF52840 + Waveshare 1.69" via carrefinho/prospector
+(feat/new-status-screens), OPERATOR theme. Implemented as a shared-base refactor:
+- `prototype_mk1_dongle_base.dtsi` — common dongle DT (mock kscan + transform +
+  central chosen). Included by BOTH dongle shields.
+- `prototype_mk1_dongle.overlay` (nice!view) = base + nice_view display + encoders.
+- `prototype_mk1_waveshare.overlay` (XIAO) = base only; prospector_adapter provides
+  the ST7789V display (240x280 = Waveshare 1.69"), PWM backlight, sensor, themes.
+- New shield registered: Kconfig.shield + Kconfig.defconfig (central/split/BT block,
+  deliberately NOT in the nice!view mono-LVGL block) + prototype_mk1.yml sibling +
+  prototype_mk1_waveshare.conf (OPERATOR theme; fixed brightness, sensor OFF — the
+  likely cause of the v0.3 "backlight didn't work").
+- west.yml: carrefinho/prospector-zmk-module (revision feat/new-status-screens, WIP;
+  tracked not pinned). build.yaml: `xiao_ble//zmk` + `prototype_mk1_waveshare
+  prospector_adapter`, cmake-args `-DCONFIG_ZMK_BACKLIGHT=n -DCONFIG_ZMK_EXT_POWER=n`
+  (globals from config/prototype_mk1.conf target the nice!nano halves; XIAO lacks
+  that hardware → would assert).
+- Watch: prospector warns of RAM overflow on XIAO → if linker `region RAM overflowed`,
+  add `CONFIG_LV_Z_VDB_SIZE=25` to prototype_mk1_waveshare.conf.
+
 ## Reference configs (validated patterns from migrated/real configs)
 - `englmaxi/zmk-config` (ZMK main / 4.1): board ids `nice_nano//zmk` + `xiao_ble//zmk`;
   west.yml modules at `revision: main`; lists `<dongle_shield> dongle_display`

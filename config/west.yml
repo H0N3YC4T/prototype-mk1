@@ -6,6 +6,8 @@ manifest:
       url-base: https://github.com/englmaxi
     - name: M165437
       url-base: https://github.com/M165437
+    - name: carrefinho
+      url-base: https://github.com/carrefinho
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -24,5 +26,11 @@ manifest:
     - name: nice-view-gem
       remote: M165437
       revision: 0a50fe209d929c916c5664c6affd0f4977c6b012
+    # Prospector display dongle (XIAO + Waveshare 1.69"). feat/new-status-screens
+    # is an upstream WIP branch targeting ZMK main / Zephyr 4.1 — tracked (not
+    # pinned) until it stabilizes; pin to a SHA once it's settled.
+    - name: prospector-zmk-module
+      remote: carrefinho
+      revision: feat/new-status-screens
   self:
     path: config

@@ -1,0 +1,12 @@
+/*
+ * Copyright (c) 2020 Ryan Cross
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * XIAO nRF52840 + Waveshare 1.69" prospector receiver dongle.
+ * Shared dongle DT comes from prototype_mk1_dongle_base.dtsi. The display
+ * (ST7789V), PWM backlight, ambient sensor, and color themes are all provided
+ * by the prospector_adapter shield, so nothing display-related is defined here.
+ */
+
+#include "prototype_mk1_dongle_base.dtsi"
