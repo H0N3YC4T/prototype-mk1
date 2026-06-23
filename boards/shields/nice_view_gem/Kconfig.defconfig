@@ -67,6 +67,12 @@ config NICE_VIEW_ANIMATION_THEME_LANDSCAPE
     bool "Landscape (dunes / pyramids / mountains)"
 config NICE_VIEW_ANIMATION_THEME_EVANGELION
     bool "Evangelion (spaceships / eva units)"
+config NICE_VIEW_ANIMATION_THEME_TRANSMUTATION
+    bool "Transmutation"
+config NICE_VIEW_ANIMATION_THEME_OMNISSIAH
+    bool "Omnissiah"
+config NICE_VIEW_ANIMATION_THEME_ULTRAMAR
+    bool "Ultramar"
 endchoice
 
 config NICE_VIEW_WIDGET_STATUS
