@@ -10,11 +10,11 @@
 #include "animation_assets.h"
 
 // Current theme and animation state
-#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_TRANSMUTATION)
-static enum nice_view_theme current_theme = NICE_VIEW_THEME_TRANSMUTATION;
-#endif
-
-#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_CRYSTAL)
+#if IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_LANDSCAPE)
+static enum nice_view_theme current_theme = NICE_VIEW_THEME_LANDSCAPE;
+#elif IS_ENABLED(CONFIG_NICE_VIEW_ANIMATION_THEME_EVANGELION)
+static enum nice_view_theme current_theme = NICE_VIEW_THEME_EVANGELION;
+#else
 static enum nice_view_theme current_theme = NICE_VIEW_THEME_CRYSTAL;
 #endif
 
@@ -60,7 +60,7 @@ void nice_view_theme_redraw(void) {
 
 void nice_view_theme_set(enum nice_view_theme theme) {
     if (theme >= NICE_VIEW_THEME_COUNT) {
-        theme = NICE_VIEW_THEME_TRANSMUTATION;
+        theme = NICE_VIEW_THEME_CRYSTAL;
     }
     current_theme = theme;
 }

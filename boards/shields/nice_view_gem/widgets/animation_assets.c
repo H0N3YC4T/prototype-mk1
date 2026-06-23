@@ -26,14 +26,15 @@ LV_IMG_DECLARE(crystal_15);
 LV_IMG_DECLARE(crystal_16);
 
 static const lv_img_dsc_t *crystal_imgs[] = {
-    &crystal_01, &crystal_02, &crystal_03, &crystal_04, 
-    &crystal_05, &crystal_06, &crystal_07, &crystal_08, 
+    &crystal_01, &crystal_02, &crystal_03, &crystal_04,
+    &crystal_05, &crystal_06, &crystal_07, &crystal_08,
     &crystal_09, &crystal_10, &crystal_11, &crystal_12,
     &crystal_13, &crystal_14, &crystal_15, &crystal_16,
 };
 
 // -------------------------------------------------------------------------------
-// Declare Transmutation Animation
+// Frames live in transmutation.c (named transmutation_NN); see the per-image
+// comments there for what each one is. They are grouped into two themes below.
 LV_IMG_DECLARE(transmutation_01);
 LV_IMG_DECLARE(transmutation_02);
 LV_IMG_DECLARE(transmutation_03);
@@ -46,22 +47,29 @@ LV_IMG_DECLARE(transmutation_09);
 LV_IMG_DECLARE(transmutation_10);
 LV_IMG_DECLARE(transmutation_11);
 
-static const lv_img_dsc_t *transmutation_imgs[] = {
-    &transmutation_09, &transmutation_08, &transmutation_02, &transmutation_01,
-    &transmutation_03, &transmutation_10, &transmutation_04, &transmutation_11, 
-    &transmutation_05, &transmutation_06, &transmutation_07, &transmutation_08,
-    &transmutation_03, &transmutation_10, &transmutation_04, &transmutation_11, 
+// Landscape theme: 01 dunes, 03 dunes 2, 06 pyramids, 07 mountain, 08 mountains 2
+static const lv_img_dsc_t *landscape_imgs[] = {
+    &transmutation_01, &transmutation_03, &transmutation_06,
+    &transmutation_07, &transmutation_08,
+};
+
+// Evangelion theme: 02/04/05 spaceships, 09/10/11 evangelion
+static const lv_img_dsc_t *evangelion_imgs[] = {
+    &transmutation_02, &transmutation_04, &transmutation_05,
+    &transmutation_09, &transmutation_10, &transmutation_11,
 };
 
 // -------------------------------------------------------------------------------
 // Lookup Table
 const lv_img_dsc_t * const *nice_view_anim_sets[NICE_VIEW_THEME_COUNT] = {
-    [NICE_VIEW_THEME_TRANSMUTATION] = transmutation_imgs,
-    [NICE_VIEW_THEME_CRYSTAL]       = crystal_imgs,
+    [NICE_VIEW_THEME_CRYSTAL]    = crystal_imgs,
+    [NICE_VIEW_THEME_LANDSCAPE]  = landscape_imgs,
+    [NICE_VIEW_THEME_EVANGELION] = evangelion_imgs,
 };
 
 // Frame Counter
 const size_t nice_view_anim_lengths[NICE_VIEW_THEME_COUNT] = {
-    [NICE_VIEW_THEME_TRANSMUTATION] = NICE_VIEW_ANIM_ARRAY_SIZE(transmutation_imgs),
-    [NICE_VIEW_THEME_CRYSTAL]       = NICE_VIEW_ANIM_ARRAY_SIZE(crystal_imgs),
+    [NICE_VIEW_THEME_CRYSTAL]    = NICE_VIEW_ANIM_ARRAY_SIZE(crystal_imgs),
+    [NICE_VIEW_THEME_LANDSCAPE]  = NICE_VIEW_ANIM_ARRAY_SIZE(landscape_imgs),
+    [NICE_VIEW_THEME_EVANGELION] = NICE_VIEW_ANIM_ARRAY_SIZE(evangelion_imgs),
 };
