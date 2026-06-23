@@ -2,6 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: englmaxi
+      url-base: https://github.com/englmaxi
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -9,5 +11,10 @@ manifest:
       # commit once the build is stable (see MIGRATION_NOTES.md).
       revision: main
       import: app/west.yml
+    # Dongle display — LVGL-9/Zephyr-4.1. Replaces the previously-vendored
+    # boards/shields/dongle_display copy. Known-good HEAD: 2bb333f (pin at end).
+    - name: zmk-dongle-display
+      remote: englmaxi
+      revision: main
   self:
     path: config

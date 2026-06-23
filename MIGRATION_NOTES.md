@@ -22,12 +22,28 @@ decisions, and hardware-verify items. Remove (or move to `docs/`) before final m
 | LED strip `CONFIG_WS2812_STRIP` removal | N/A (not set; DT-driver auto-enables) |
 | "features no longer auto-enabled" regression (zmk#3234) | WATCH build warnings |
 
+## Display strategy (decided: HYBRID)
+- `dongle_display`: stock copy of `englmaxi/zmk-dongle-display` → drop vendored copy,
+  add as west.yml module (LVGL-9 `main`), reference shield in build.yaml.
+- `nice_view_gem`: copy of `M165437/nice-view-gem` with **custom images only** →
+  rebase onto M165437 LVGL-9 `main`, re-apply the custom image assets on top.
+- Verify the "just images" claim by diffing vendored vs upstream BEFORE replacing
+  (don't lose any customization). Preserve the dormant cycle_animation hook plan.
+
 ## Build staging
 1. **Canary (current):** build.yaml reduced to `reset` only → validates manifest +
    workflow + `nice_nano//zmk` board id with zero LVGL involvement.
 2. Re-enable a keyboard target + migrate `nice_view_gem` LVGL widgets.
 3. Re-enable `dongle` + migrate `dongle_display` LVGL widgets.
 4. Restore full target set; pin ZMK revision.
+
+## LVGL 8 → 9.3 translation pattern (from ZMK core nice_view on `main`)
+Reference: `zmkfirmware/zmk` `app/boards/shields/nice_view/widgets/util.c`.
+- Core adds local wrappers so widgets change minimally: `lv_canvas_draw_rect/line/text/img(...)` → `canvas_draw_rect/line/text/img(...)` (wrappers do `lv_canvas_init_layer` → `lv_draw_*` on the layer → `lv_canvas_finish_layer`).
+- `rotate_canvas(canvas, cbuf)` → `rotate_canvas(canvas)`; reads `lv_canvas_get_draw_buf(canvas)->data` (uint8_t*), copies, `lv_draw_sw_rotate(..., LV_DISPLAY_ROTATION_270, CANVAS_COLOR_FORMAT)`. Gem rotates 90° (flip→270°) — map to `LV_DISPLAY_ROTATION_90`/`_270`; absolute orientation is a hardware-verify item.
+- Canvas color format: `LV_IMG_CF_TRUE_COLOR` → **`LV_COLOR_FORMAT_L8`**; canvas buffers become `uint8_t[CANVAS_BUF_SIZE]` (not `lv_color_t[]`); `lv_canvas_set_buffer(..., LV_COLOR_FORMAT_L8)`.
+- Draw descriptors: `lv_draw_img_dsc_t`/`_init` → `lv_draw_image_dsc_t`/`_init`; set `.src` on the dsc; line dsc uses `.p1/.p2`; arc dsc uses `.center/.radius/.start_angle/.end_angle`.
+- Image assets (`images.c`, `crystal.c`, `bongo_cat_images.c`, `animations/*`): `lv_img_dsc_t` → `lv_image_dsc_t`; `.header.cf = LV_IMG_CF_INDEXED_1BIT` → `LV_COLOR_FORMAT_I1`; drop `.header.always_zero/.reserved`; add `.header.magic = LV_IMAGE_HEADER_MAGIC` + `.header.stride`. (Match ZMK core's migrated `images.c` exactly.)
 
 ## Hardware-verify (cannot be caught by CI — needs flashing the physical board)
 - **NFC pins as GPIO:** columns use P0.09 (NFC1) and P0.10 (NFC2). Upstream
@@ -38,4 +54,6 @@ decisions, and hardware-verify items. Remove (or move to `docs/`) before final m
 ## Errors & resolutions log
 _(append each CI failure + its fix here so debugging stays referenceable)_
 
-- _(none yet — first canary push pending)_
+- **cd13044 — canary GREEN.** `reset` built against ZMK main/Zephyr 4.1.
+  Confirms: `revision: main` resolves + fetches Zephyr 4.1; `@main` workflow runs;
+  board id `nice_nano//zmk` is correct. Plumbing migration validated.

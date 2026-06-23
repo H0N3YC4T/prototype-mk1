@@ -12,9 +12,9 @@ include:
 
   # -------------- CONTROLLERS --------------
 
-  # - board: nice_nano//zmk
-  #   shield: prototype_mk1_dongle nice_view_adapter dongle_display
-  #   artifact-name: dongle
+  - board: nice_nano//zmk
+    shield: prototype_mk1_dongle nice_view_adapter dongle_display
+    artifact-name: dongle
 
   # - board: nice_nano//zmk
   #   shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
