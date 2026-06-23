@@ -87,7 +87,7 @@ static const struct behavior_driver_api behavior_cycle_animation_driver_api = {
                             NULL,                                               \
                             NULL,                                               \
                             NULL,                                               \
-                            APPLICATION,                                        \
+                            POST_KERNEL,                                        \
                             CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,                \
                             &behavior_cycle_animation_driver_api);
 

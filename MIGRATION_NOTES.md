@@ -57,6 +57,10 @@ ZMK 4.1 removed `new_<name>()`; `ZMK_EVENT_DECLARE` now generates
 `raise_cycle_animation_state_changed((struct cycle_animation_state_changed){.type=...})`.
 The event header/impl (ZMK_EVENT_DECLARE/IMPL) and the `as_<name>()` listener side
 were already 4.1-correct; behavior parameter metadata also compiled fine.
+Second behavior fix: `BEHAVIOR_DT_INST_DEFINE` init level must be `POST_KERNEL`,
+NOT `APPLICATION` — Zephyr 4.1's `Z_DEVICE_CHECK_INIT_LEVEL` only accepts
+PRE_KERNEL_1/2 or POST_KERNEL for devices, so APPLICATION hits a
+`ZERO_OR_COMPILE_ERROR`. (All upstream ZMK behaviors use POST_KERNEL.)
 
 ## Reference configs (validated patterns from migrated/real configs)
 - `englmaxi/zmk-config` (ZMK main / 4.1): board ids `nice_nano//zmk` + `xiao_ble//zmk`;
