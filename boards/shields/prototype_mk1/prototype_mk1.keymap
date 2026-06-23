@@ -20,6 +20,10 @@
 #define MOUSE 5
 #define GAMES 6
 
+// nice!view animation hotkey params (cycle_animation behavior)
+#define NVC_TOGGLE 0
+#define NVC_NEXT   1
+
 / {
     // Activate ADJUST layer by pressing raise and lower
 
@@ -33,6 +37,13 @@
     };
 
     behaviors {
+        // Cycles the nice!view peripheral animation theme (NVC_NEXT) or toggles
+        // movement (NVC_TOGGLE). Handled by the gem animation widget listener.
+        cycle_animation: cycle_animation {
+            compatible = "zmk,behavior-cycle-animation";
+            #binding-cells = <1>;
+        };
+
         hold_esc: hold_esc {
             compatible = "zmk,behavior-hold-tap";
             label = "HOLD_ESC";
@@ -250,7 +261,7 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none       &none       &none        &none  &none  &none
+&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &cycle_animation NVC_NEXT  &cycle_animation NVC_TOGGLE  &none        &none  &none  &none
 &bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &ssh_pi     &ssh_emby   &ssh_mirror  &none  &none  &none
 &ext_power EP_TOG  &none           &none         &to 4         &to 5         &to 6                                 &term_htop  &term_home  &upshell     &none  &none  &none
 &sys_reset         &none           &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &apt_full   &none       &none        &none  &none  &none

@@ -5,6 +5,7 @@
 #include <zmk/display.h>
 
 #include <zmk/event_manager.h>
+#include <zmk/events/cycle_animation_state_changed.h>
 #include "animation.h"
 #include "animation_assets.h"
 
@@ -130,5 +131,34 @@ void draw_animation(lv_obj_t *canvas) {
 
     lv_obj_align(art_obj, LV_ALIGN_TOP_LEFT, nice_view_theme_offset, 0);
 }
+
+/* -------------------------------------------------------------------------- */
+/* Hotkey: cycle_animation behavior event                                     */
+/* -------------------------------------------------------------------------- */
+
+static int nice_view_cycle_animation_listener(const zmk_event_t *eh) {
+    const struct cycle_animation_state_changed *ev = as_cycle_animation_state_changed(eh);
+    if (ev == NULL) {
+        return ZMK_EV_EVENT_BUBBLE;
+    }
+
+    switch (ev->type) {
+    case NVC_NEXT:
+        nice_view_theme_set((nice_view_theme_get() + 1) % NICE_VIEW_THEME_COUNT);
+        nice_view_theme_redraw();
+        break;
+    case NVC_TOGGLE:
+        nice_view_animation = !nice_view_animation;
+        nice_view_theme_redraw();
+        break;
+    default:
+        break;
+    }
+
+    return ZMK_EV_EVENT_BUBBLE;
+}
+
+ZMK_LISTENER(nice_view_anim_hotkey, nice_view_cycle_animation_listener);
+ZMK_SUBSCRIPTION(nice_view_anim_hotkey, cycle_animation_state_changed);
 
 
