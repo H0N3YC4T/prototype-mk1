@@ -16,14 +16,13 @@
 #define LOWER 1
 #define RAISE 2
 #define SETTINGS 3
-#define ARROWS 4
-#define MOUSE 5
-#define GAMES 6
+#define GAMES 4
 
 // nice!view animation hotkey params (cycle_animation behavior)
 
-#define NVC_TOGGLE 0
-#define NVC_NEXT   1
+#define NVC_PAUSE 0
+#define NVC_NEXT  1
+#define NVC_PREV  2
 
 / {
     // Activate ADJUST layer by pressing raise and lower
@@ -38,8 +37,9 @@
     };
 
     behaviors {
-        // Cycles the nice!view peripheral animation theme (NVC_NEXT) or toggles
-        // movement (NVC_TOGGLE). Handled by the gem animation widget listener.
+        // nice!view peripheral animation control: NVC_NEXT/NVC_PREV cycle themes
+        // (forwards/backwards), NVC_PAUSE freezes on a random static frame.
+        // Handled by the gem animation widget listener.
 
         cycle_animation: cycle_animation {
             compatible = "zmk,behavior-cycle-animation";
@@ -218,8 +218,8 @@
             bindings = <
 &out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none   &none   &none   &none  &none  &none
 &bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none   &none   &none   &none  &none  &none
-&ext_power EP_TOG  &none           &none         &none         &none         &cycle_animation                      &none   &none   &none   &none  &none  &none
-&sys_reset         &none           &none         &none         &none         &none             &kp K_MUTE  &to 0   &none   &none   &none   &none  &none  &none
+&ext_power EP_TOG  &none           &none         &cycle_animation NVC_PREV  &cycle_animation NVC_PAUSE  &cycle_animation NVC_NEXT             &none   &none   &none   &none  &none  &none
+&sys_reset         &bootloader     &none         &none         &none         &none             &kp K_MUTE  &to 0   &none   &none   &none   &none  &none  &none
                                                  &trans        &trans        &trans            &trans      &trans  &trans  &trans  &trans
             >;
 

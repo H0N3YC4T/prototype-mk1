@@ -152,11 +152,18 @@ static int nice_view_cycle_animation_listener(const zmk_event_t *eh) {
 
     switch (ev->type) {
     case NVC_NEXT:
+        nice_view_animation = true;
         nice_view_theme_set((nice_view_theme_get() + 1) % NICE_VIEW_THEME_COUNT);
         nice_view_theme_redraw();
         break;
-    case NVC_TOGGLE:
-        nice_view_animation = !nice_view_animation;
+    case NVC_PREV:
+        nice_view_animation = true;
+        nice_view_theme_set((nice_view_theme_get() + NICE_VIEW_THEME_COUNT - 1) %
+                            NICE_VIEW_THEME_COUNT);
+        nice_view_theme_redraw();
+        break;
+    case NVC_PAUSE:
+        nice_view_animation = false;
         nice_view_theme_redraw();
         break;
     default:

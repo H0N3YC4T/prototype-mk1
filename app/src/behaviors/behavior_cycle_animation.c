@@ -26,13 +26,18 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 static const struct behavior_parameter_value_metadata param_values[] = {
     {
-        .display_name = "Toggle Animation Movement",
-        .value = NVC_TOGGLE,
+        .display_name = "Next Theme",
+        .value = NVC_NEXT,
         .type = BEHAVIOR_PARAMETER_VALUE_TYPE_VALUE,
     },
     {
-        .display_name = "Go To Next Theme",
-        .value = NVC_NEXT,
+        .display_name = "Previous Theme",
+        .value = NVC_PREV,
+        .type = BEHAVIOR_PARAMETER_VALUE_TYPE_VALUE,
+    },
+    {
+        .display_name = "Pause (Static Frame)",
+        .value = NVC_PAUSE,
         .type = BEHAVIOR_PARAMETER_VALUE_TYPE_VALUE,
     },
 };
@@ -53,8 +58,9 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event)
 {
     switch (binding->param1) {
-    case NVC_TOGGLE:
     case NVC_NEXT:
+    case NVC_PREV:
+    case NVC_PAUSE:
         // ZMK 4.1: raise_<event>(struct) replaces the old
         // new_<event>() + ZMK_EVENT_RAISE(*evt) pattern.
         return raise_cycle_animation_state_changed(
