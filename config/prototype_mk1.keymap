@@ -21,6 +21,7 @@
 #define GAMES 6
 
 // nice!view animation hotkey params (cycle_animation behavior)
+
 #define NVC_TOGGLE 0
 #define NVC_NEXT   1
 
@@ -39,6 +40,7 @@
     behaviors {
         // Cycles the nice!view peripheral animation theme (NVC_NEXT) or toggles
         // movement (NVC_TOGGLE). Handled by the gem animation widget listener.
+
         cycle_animation: cycle_animation {
             compatible = "zmk,behavior-cycle-animation";
             #binding-cells = <1>;
@@ -217,7 +219,7 @@
 &hold_esc GRAVE ESCAPE  &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                        &kp N6  &kp N7         &kp N8        &kp N9   &kp N0    &kp MINUS
 &kp TAB                 &kp Q   &kp W   &kp E     &kp R     &kp T                         &kp Y   &kp U          &kp I         &kp O    &kp P     &del_bks
 &kp LEFT_CONTROL        &kp A   &kp S   &kp D     &kp F     &kp G                         &kp H   &kp J          &kp K         &kp L    &kp SEMI  &kp SQT
-&kp LSHIFT              &kp Z   &kp X   &kp C     &kp V     &kp B   &to 4      &to 5      &kp N   &kp M          &kp COMMA     &kp DOT  &kp FSLH  &shift_capslock
+&kp LSHIFT              &kp Z   &kp X   &kp C     &kp V     &kp B   &to 4      &to 3      &kp N   &kp M          &kp COMMA     &kp DOT  &kp FSLH  &shift_capslock
                                         &kp LALT  &kp LGUI  &mo 1   &kp ENTER  &kp SPACE  &mo 2   &kp BACKSPACE  &kp LEFT_GUI
             >;
 
@@ -229,14 +231,16 @@
         layer_lower {
             display-name = "Lower";
             bindings = <
-&kp ESCAPE        &kp F1     &kp F2            &kp F3            &kp F4            &kp F5                                                 &kp F6     &kp F7          &kp F8          &kp F9           &kp F10           &kp F11
-&kp TAB           &kp LG(E)  &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)                                             &kp SPACE  &kp BACKSPACE   &kp UP_ARROW    &kp DEL          &kp LWIN          &kp F12
-&kp LEFT_CONTROL  &kp LC(A)  &kp LC(S)         &kp LC(D)         &kp LC(F)         &kp LC(G)                                              &kp ENTER  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LS(LEFT_WIN)  &kp LA(LEFT_WIN)
-&kp LSHIFT        &kp LC(Z)  &kp LC(X)         &kp LC(C)         &kp LC(V)         &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp HOME   &kp END         &kp LC(LEFT)    &kp LC(RIGHT)    &kp LG(Z)         &kp LEFT_ALT
-                                               &kp LALT          &kp LWIN          &mo 1                 &mo 0               &kp SPACE    &mo 2      &bks_del        &kp LWIN
+&hold_esc ESCAPE GRAVE  &kp F1     &kp F2            &kp F3            &kp F4            &kp F5                                                 &kp F6     &kp F7          &kp F8          &kp F9           &kp F10           &kp F11
+&kp TAB                 &kp LG(E)  &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)                                             &kp SPACE  &kp BACKSPACE   &kp UP_ARROW    &kp DEL          &kp LWIN          &kp F12
+&kp LEFT_CONTROL        &kp LC(A)  &kp LC(S)         &kp LC(D)         &kp LC(F)         &kp LC(G)                                              &kp ENTER  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LS(LEFT_WIN)  &kp LA(LEFT_WIN)
+&kp LSHIFT              &kp LC(Z)  &kp LC(X)         &kp LC(C)         &kp LC(V)         &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp HOME   &kp END         &kp LC(LEFT)    &kp LC(RIGHT)    &kp LG(Z)         &kp LEFT_ALT
+                                                     &kp LALT          &kp LWIN          &mo 1                 &mo 0               &kp SPACE    &mo 2      &kp BACKSPACE   &kp LWIN
             >;
 
-            sensor-bindings = <&encoder_undo_redo>, <&inc_dec_kp RIGHT LEFT>;
+            sensor-bindings =
+                <&encoder_undo_redo>,
+                <&inc_dec_kp UP_ARROW DOWN_ARROW>;
 
             label = "LOWER";
         };
@@ -244,11 +248,11 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&kp ESCAPE        &kp F1          &kp F2          &kp F3           &kp F4          &kp F5                                                            &kp F6                &kp F7                 &kp F8         &kp F9            &kp F10        &kp F11
-&kp TAB           &mkp MB2        &mmv MOVE_UP    &mkp MB1         &none           &none                                                             &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PLUS       &kp EQUAL         &kp TILDE      &kp F12
-&kp LEFT_CONTROL  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &msc SCRL_UP    &none                                                             &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp MINUS      &kp UNDER         &kp PIPE       &kp GRAVE
-&kp LSHIFT        &none           &cut_line       &copy_line       &msc SCRL_DOWN  &none   &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp LESS_THAN  &kp GREATER_THAN  &kp BACKSLASH  &shift_capslock
-                                                  &kp LALT         &kp LWIN        &mo 1   &kp ENTER                                     &mo 0       &mo 2                 &bks_del               &kp LWIN
+&hold_esc ESCAPE GRAVE  &kp F1          &kp F2          &kp F3           &kp F4          &kp F5                                                            &kp F6                &kp F7                 &kp F8         &kp F9            &kp F10        &kp F11
+&kp TAB                 &mkp MB2        &mmv MOVE_UP    &mkp MB1         &none           &none                                                             &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PLUS       &kp EQUAL         &kp TILDE      &kp F12
+&kp LEFT_CONTROL        &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &msc SCRL_UP    &none                                                             &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp MINUS      &kp UNDER         &kp PIPE       &kp GRAVE
+&kp LSHIFT              &none           &cut_line       &copy_line       &msc SCRL_DOWN  &none   &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp LESS_THAN  &kp GREATER_THAN  &kp BACKSLASH  &shift_capslock
+                                                        &kp LALT         &kp LWIN        &mo 1   &kp ENTER                                     &kp SPACE   &mo 2                 &kp BACKSPACE          &kp LWIN
             >;
 
             sensor-bindings =
@@ -261,11 +265,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &cycle_animation NVC_NEXT  &cycle_animation NVC_TOGGLE  &none        &none  &none  &none
-&bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &ssh_pi     &ssh_emby   &ssh_mirror  &none  &none  &none
-&ext_power EP_TOG  &none           &none         &to 4         &to 5         &to 6                                 &term_htop  &term_home  &upshell     &none  &none  &none
-&sys_reset         &none           &none         &none         &none         &none         &kp K_MUTE  &kp K_MUTE  &apt_full   &none       &none        &none  &none  &none
-                                                 &none         &none         &mo 1         &kp ENTER   &kp SPACE   &mo 2       &none       &none
+&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                             &none       &none       &none        &none  &none  &none
+&bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                               &ssh_pi     &ssh_emby   &ssh_mirror  &none  &none  &none
+&ext_power EP_TOG  &none           &none         &none         &none         &cycle_animation                         &term_htop  &term_home  &upshell     &none  &none  &none
+&sys_reset         &none           &none         &none         &none         &none             &kp K_MUTE  &to 0      &apt_full   &none       &none        &none  &none  &none
+                                                 &none         &none         &mo 1             &kp ENTER   &kp SPACE  &mo 2       &none       &none
             >;
 
             sensor-bindings =
@@ -275,48 +279,14 @@
             label = "SETTINGS";
         };
 
-        layer_arrows {
-            display-name = "Arrows";
-            bindings = <
-&kp ESCAPE        &kp N1            &kp N2          &kp N3            &kp N4         &kp N5                           &kp N6     &kp N7            &kp N8          &kp N9           &kp N0  &kp MINUS
-&kp TAB           &kp HOME          &kp UP_ARROW    &kp END           &kp BACKSPACE  &none                            &none      &kp HOME          &kp UP_ARROW    &kp END          &none   &kp TAB
-&kp LEFT_CONTROL  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW   &none          &none                            &none      &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LEFT_WIN)  &none          &none      &to 0      &to 0      &none      &kp LA(LEFT_WIN)  &kp LG(Z)       &kp LS(LWIN)     &none   &kp LEFT_SHIFT
-                                                    &kp LEFT_ALT      &kp LWIN       &kp SPACE  &kp ENTER  &kp ENTER  &kp SPACE  &kp BACKSPACE     &kp LWIN
-            >;
-
-            sensor-bindings =
-                <&inc_dec_kp UP DOWN>,
-                <&inc_dec_kp RIGHT LEFT_ARROW>;
-
-            label = "ARROWS";
-        };
-
-        layer_mouse {
-            display-name = "Mouse";
-            bindings = <
-&kp ESCAPE        &kp LS(TAB)     &kp ENTER       &kp TAB          &none          &none                      &none  &none          &kp LS(TAB)     &kp ENTER       &kp TAB          &kp ESC
-&kp TAB           &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp PAGE_UP    &none                      &none  &kp PAGE_UP    &mkp MB1        &mmv MOVE_UP    &mkp MB2         &kp TAB
-&kp LEFT_CONTROL  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp PAGE_DOWN  &none                      &none  &kp PAGE_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LEFT_CONTROL
-&kp LEFT_SHIFT    &none           &none           &none            &none          &none  &to 0     &to 0     &none  &none          &none           &none           &none            &kp LEFT_SHIFT
-                                                  &kp LEFT_ALT     &kp LWIN       &to 0  &mkp MB1  &mkp MB1  &to 0  &kp BACKSPACE  &kp LWIN
-            >;
-
-            sensor-bindings =
-                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>,
-                <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
-
-            label = "MOUSE";
-        };
-
         layer_gaming {
             display-name = "Gaming";
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2  &kp N3            &kp N4          &kp N5                                &kp N6          &kp N7         &kp N8        &kp N9   &kp N0         &to 0
-&kp TAB     &kp Q   &kp W   &kp E             &kp R           &kp T                                 &kp Y           &kp U          &kp I         &kp O    &kp P          &kp DELETE
-&kp LSHFT   &kp A   &kp S   &kp D             &kp F           &kp G                                 &kp H           &kp J          &kp K         &kp L    &kp SEMICOLON  &kp RET
-&kp LCTRL   &kp Z   &kp X   &kp C             &kp V           &kp B         &gm_cht_all  &gm_gg_ez  &kp N           &kp M          &kp COMMA     &kp DOT  &kp FSLH       &kp RSHFT
-                            &kp LEFT_CONTROL  &kp LEFT_SHIFT  &kp LEFT_ALT  &kp SPACE    &kp ENTER  &delay_alt_tab  &kp BACKSPACE  &kp LEFT_WIN
+&kp ESCAPE  &kp N1  &kp N2  &kp N3            &kp N4        &kp N5                                &kp N6          &kp N7         &kp N8        &kp N9   &kp N0         &kp MINUS
+&kp TAB     &kp Q   &kp W   &kp E             &kp R         &kp T                                 &kp Y           &kp U          &kp I         &kp O    &kp P          &kp TAB
+&kp LSHFT   &kp A   &kp S   &kp D             &kp F         &kp G                                 &kp H           &kp J          &kp K         &kp L    &kp SEMICOLON  &kp SINGLE_QUOTE
+&kp ENTER   &kp Z   &kp X   &kp C             &kp V         &kp B           &to 0      &to 3      &kp N           &kp M          &kp COMMA     &kp DOT  &kp FSLH       &kp RSHFT
+                            &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &kp SPACE  &kp ENTER  &delay_alt_tab  &kp BACKSPACE  &kp LEFT_WIN
             >;
 
             sensor-bindings =
