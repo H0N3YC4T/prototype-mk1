@@ -316,7 +316,7 @@ const uint32_t nice_view_anim_frame_ms[NICE_VIEW_THEME_COUNT] = {
     [NICE_VIEW_THEME_CRYSTAL]       = 33,     // animation (~30 fps)
     [NICE_VIEW_THEME_LANDSCAPE]     = 15000,  // slideshow (15 s/frame)
     [NICE_VIEW_THEME_EVANGELION]    = 15000,  // slideshow (15 s/frame)
-    [NICE_VIEW_THEME_TRANSMUTATION] = 33,     // animation (~30 fps)
+    [NICE_VIEW_THEME_TRANSMUTATION] = 66,     // animation (~15 fps)
     [NICE_VIEW_THEME_OMNISSIAH]     = 33,     // animation (~30 fps)
     [NICE_VIEW_THEME_ULTRAMAR]      = 33,     // animation (~30 fps)
 };

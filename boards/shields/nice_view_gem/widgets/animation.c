@@ -65,6 +65,10 @@ void nice_view_theme_redraw(void) {
 }
 
 void nice_view_theme_set(enum nice_view_theme theme) {
+    // TEMP: extra themes disabled -- lock the gem to transmutation only.
+    // Cycling (next/prev) is funnelled through here, so forcing the value here
+    // keeps the gem on transmutation. Delete this line to restore all themes.
+    theme = NICE_VIEW_THEME_TRANSMUTATION;
     if (theme >= NICE_VIEW_THEME_COUNT) {
         theme = NICE_VIEW_THEME_CRYSTAL;
     }
