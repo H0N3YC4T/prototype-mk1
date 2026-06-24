@@ -4,11 +4,8 @@ include:
     shield: settings_reset
     artifact-name: reset
 
-  # NOTE (zeph-4.1 migration): the display-bearing targets below are
-  # temporarily disabled until the nice_view_gem / dongle_display widgets are
-  # migrated to LVGL 9.3. Board IDs are already updated to the HWMv2
-  # `nice_nano//zmk` form. Re-enable these incrementally as the LVGL migration
-  # lands. See MIGRATION_NOTES.md.
+  # Zephyr 4.1 / LVGL 9.3 migration complete: all display-bearing targets below
+  # build green on the HWMv2 `nice_nano//zmk` board id. See MIGRATION_NOTES.md.
 
   # -------------- CONTROLLERS --------------
 

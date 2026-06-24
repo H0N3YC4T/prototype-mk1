@@ -3,7 +3,6 @@ id: prototype_mk1
 name: Prototype_Mk1
 type: shield
 url: https://github.com/H0N3YC4T/zmk-prototype_mk1
-exposes: [i2c_oled]
 features:
   - keys
   - display
