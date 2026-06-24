@@ -124,20 +124,6 @@
             label = "ALT_TAB_INIT";
         };
 
-        gm_cht_all: gm_cht_all {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp ENTER &kp FSLH &kp A &kp L &kp L &kp SPACE>;
-            label = "GM_CHT_ALL";
-        };
-
-        gm_gg_ez: gm_gg_ez {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp G &kp G &kp SPACE &kp E &kp Z &kp ENTER>;
-            label = "GM_GG_EZ";
-        };
-
         copy_line: copy_line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -160,53 +146,18 @@
             wait-ms = <100>;
         };
 
-        ssh_pi: ssh_pi {
+        binary_and: binary_and {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp S &kp S &kp H &kp SPACE &kp P &kp I &kp RET>;
-            label = "SSH_PI";
+            bindings = <&kp AMPS &kp AMPS>;
+            label = "&&";
         };
 
-        ssh_mirror: ssh_mirror {
+        binary_or: binary_or {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp S &kp S &kp H &kp SPACE &kp M &kp I &kp R &kp R &kp O &kp R &kp RET>;
-            label = "SSH_MIRROR";
-        };
-
-        ssh_emby: ssh_emby {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp S &kp S &kp H &kp SPACE &kp E &kp M &kp B &kp Y &kp RET>;
-            label = "SSH_EMBY";
-        };
-
-        apt_full: apt_full {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp S &kp U &kp D &kp O &kp SPACE &kp A &kp P &kp T &kp SPACE &kp U &kp P &kp D &kp A &kp T &kp E &kp SPACE &kp AMPS &kp AMPS &kp SPACE &kp S &kp U &kp D &kp O &kp SPACE &kp A &kp P &kp T &kp SPACE &kp U &kp P &kp G &kp R &kp A &kp D &kp E &kp SPACE &kp MINUS &kp Y &kp RET>;
-            label = "APT_FULL";
-        };
-
-        upshell: upshell {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp U &kp P &kp S &kp H &kp E &kp L &kp L &kp RET>;
-            label = "UPSHELL";
-        };
-
-        term_home: term_home {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp C &kp D &kp SPACE &kp DLLR &kp LS(H) &kp LS(O) &kp LS(M) &kp LS(E) &kp SPACE &kp AMPS &kp AMPS &kp SPACE &kp C &kp L &kp E &kp A &kp R &kp SPACE &kp AMPS &kp AMPS &kp SPACE &kp L &kp S &kp RET>;
-            label = "TERM_HOME";
-        };
-
-        term_htop: term_htop {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp H &kp T &kp O &kp P &kp RET>;
-            label = "TERM_HTOP";
+            bindings = <&kp PIPE &kp PIPE>;
+            label = "||";
         };
     };
 
@@ -231,11 +182,11 @@
         layer_lower {
             display-name = "Lower";
             bindings = <
-&hold_esc ESCAPE GRAVE  &kp F1     &kp F2            &kp F3            &kp F4            &kp F5                                                 &kp F6     &kp F7          &kp F8          &kp F9           &kp F10           &kp F11
-&kp TAB                 &kp LG(E)  &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)                                             &kp SPACE  &kp BACKSPACE   &kp UP_ARROW    &kp DEL          &kp LWIN          &kp F12
-&kp LEFT_CONTROL        &kp LC(A)  &kp LC(S)         &kp LC(D)         &kp LC(F)         &kp LC(G)                                              &kp ENTER  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LS(LEFT_WIN)  &kp LA(LEFT_WIN)
-&kp LSHIFT              &kp LC(Z)  &kp LC(X)         &kp LC(C)         &kp LC(V)         &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp HOME   &kp END         &kp LC(LEFT)    &kp LC(RIGHT)    &kp LG(Z)         &kp LEFT_ALT
-                                                     &kp LALT          &kp LWIN          &mo 1                 &mo 0               &kp SPACE    &mo 2      &kp BACKSPACE   &kp LWIN
+&hold_esc ESCAPE TILDE  &kp F1          &kp F2          &kp F3           &kp F4     &kp F5                                                 &kp F6         &kp F7                    &kp F8         &kp F9  &kp F10  &kp F11
+&kp TAB                 &kp BACKSPACE   &kp UP_ARROW    &kp ENTER        &kp SPACE  &kp LA(UP_ARROW)                                       &kp LC(LS(P))  &kp LC(NON_US_BACKSLASH)  &kp LC(W)      &none   &none    &kp F12
+&kp LEFT_CONTROL        &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LC(F)  &kp LA(DOWN_ARROW)                                     &kp LC(J)      &kp LC(B)                 &kp LC(LA(B))  &none   &none    &none
+&kp LSHIFT              &kp LC(Z)       &kp LC(Y)       &kp LC(C)        &kp LC(V)  &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp LC(F)      &kp LC(G)                 &kp LC(P)      &none   &none    &kp LEFT_ALT
+                                                        &trans           &trans     &trans                &trans              &trans       &trans         &trans                    &trans
             >;
 
             sensor-bindings =
@@ -248,11 +199,11 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&hold_esc ESCAPE GRAVE  &kp F1          &kp F2          &kp F3           &kp F4          &kp F5                                                            &kp F6                &kp F7                 &kp F8         &kp F9            &kp F10        &kp F11
-&kp TAB                 &mkp MB2        &mmv MOVE_UP    &mkp MB1         &none           &none                                                             &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PLUS       &kp EQUAL         &kp TILDE      &kp F12
-&kp LEFT_CONTROL        &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &msc SCRL_UP    &none                                                             &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp MINUS      &kp UNDER         &kp PIPE       &kp GRAVE
-&kp LSHIFT              &none           &cut_line       &copy_line       &msc SCRL_DOWN  &none   &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp LESS_THAN  &kp GREATER_THAN  &kp BACKSLASH  &shift_capslock
-                                                        &kp LALT         &kp LWIN        &mo 1   &kp ENTER                                     &kp SPACE   &mo 2                 &kp BACKSPACE          &kp LWIN
+&kp GRAVE         &kp F1            &kp F2          &kp F3           &kp F4         &kp F5                                                                &kp F6                &kp F7                 &kp F8         &kp F9            &kp F10            &kp F11
+&kp TAB           &kp LG(LS(LEFT))  &kp UP_ARROW    &mkp MB1         &kp AMPERSAND  &kp PIPE                                                              &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PLUS       &kp EQUAL         &kp DOUBLE_QUOTES  &kp F12
+&kp LEFT_CONTROL  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp CARET      &kp EXCL                                                              &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp MINUS      &kp ASTRK         &kp SINGLE_QUOTE   &kp GRAVE
+&kp LSHIFT        &kp LC(Y)         &cut_line       &copy_line       &binary_and    &binary_or  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp LESS_THAN  &kp GREATER_THAN  &kp GRAVE          &kp RIGHT_SHIFT
+                                                    &trans           &trans         &trans      &trans                                        &trans      &trans                &trans                 &trans
             >;
 
             sensor-bindings =
@@ -265,11 +216,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                             &none       &none       &none        &none  &none  &none
-&bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                               &ssh_pi     &ssh_emby   &ssh_mirror  &none  &none  &none
-&ext_power EP_TOG  &none           &none         &none         &none         &cycle_animation                         &term_htop  &term_home  &upshell     &none  &none  &none
-&sys_reset         &none           &none         &none         &none         &none             &kp K_MUTE  &to 0      &apt_full   &none       &none        &none  &none  &none
-                                                 &none         &none         &mo 1             &kp ENTER   &kp SPACE  &mo 2       &none       &none
+&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &none   &none   &none   &none  &none  &none
+&bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC    &bl BL_TOG    &bl BL_INC                            &none   &none   &none   &none  &none  &none
+&ext_power EP_TOG  &none           &none         &none         &none         &cycle_animation                      &none   &none   &none   &none  &none  &none
+&sys_reset         &none           &none         &none         &none         &none             &kp K_MUTE  &to 0   &none   &none   &none   &none  &none  &none
+                                                 &trans        &trans        &trans            &trans      &trans  &trans  &trans  &trans
             >;
 
             sensor-bindings =
