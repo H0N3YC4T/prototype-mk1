@@ -185,7 +185,7 @@
 &hold_esc ESCAPE TILDE  &kp F1          &kp F2          &kp F3           &kp F4     &kp F5                                                 &kp F6         &kp F7                    &kp F8         &kp F9  &kp F10  &kp F11
 &kp TAB                 &kp BACKSPACE   &kp UP_ARROW    &kp ENTER        &kp SPACE  &kp LA(UP_ARROW)                                       &kp LC(LS(P))  &kp LC(NON_US_BACKSLASH)  &kp LC(W)      &none   &none    &kp F12
 &kp LEFT_CONTROL        &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LC(F)  &kp LA(DOWN_ARROW)                                     &kp LC(J)      &kp LC(B)                 &kp LC(LA(B))  &none   &none    &none
-&kp LSHIFT              &kp LC(Z)       &kp LC(Y)       &kp LC(C)        &kp LC(V)  &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp LC(F)      &kp LC(G)                 &kp LC(P)      &none   &none    &kp LEFT_ALT
+&kp LSHIFT              &kp LC(Z)       &kp LC(Y)       &kp LC(C)        &kp LC(V)  &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp LC(F)      &kp LC(G)                 &kp LC(P)      &none   &none    &kp RIGHT_SHIFT
                                                         &trans           &trans     &trans                &trans              &trans       &trans         &trans                    &trans
             >;
 
