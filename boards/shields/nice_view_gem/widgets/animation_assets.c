@@ -308,3 +308,15 @@ const size_t nice_view_anim_lengths[NICE_VIEW_THEME_COUNT] = {
     [NICE_VIEW_THEME_OMNISSIAH]     = NICE_VIEW_ANIM_ARRAY_SIZE(omnissiah_imgs),
     [NICE_VIEW_THEME_ULTRAMAR]      = NICE_VIEW_ANIM_ARRAY_SIZE(ultramar_imgs),
 };
+
+// -------------------------------------------------------------------------------
+// Per-theme per-frame dwell time (ms). Animations play fast/smooth; slideshows
+// (landscape, evangelion) hold each image for several seconds.
+const uint32_t nice_view_anim_frame_ms[NICE_VIEW_THEME_COUNT] = {
+    [NICE_VIEW_THEME_CRYSTAL]       = 60,    // animation
+    [NICE_VIEW_THEME_LANDSCAPE]     = 5000,  // slideshow
+    [NICE_VIEW_THEME_EVANGELION]    = 5000,  // slideshow
+    [NICE_VIEW_THEME_TRANSMUTATION] = 60,    // animation
+    [NICE_VIEW_THEME_OMNISSIAH]     = 60,    // animation
+    [NICE_VIEW_THEME_ULTRAMAR]      = 60,    // animation
+};

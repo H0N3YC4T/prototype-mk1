@@ -126,7 +126,9 @@ void draw_animation(lv_obj_t *canvas) {
         lv_obj_center(art_obj);
 
         lv_animimg_set_src(art_obj, (const void **)frames, frame_count);
-        lv_animimg_set_duration(art_obj, CONFIG_NICE_VIEW_ANIMATION_MS);
+        // Total loop time = per-frame dwell * frame count, so adding/removing
+        // frames keeps the same speed and slideshows stay slow.
+        lv_animimg_set_duration(art_obj, nice_view_anim_frame_ms[theme] * frame_count);
         lv_animimg_set_repeat_count(art_obj, LV_ANIM_REPEAT_INFINITE);
         lv_animimg_start(art_obj);
     } else {

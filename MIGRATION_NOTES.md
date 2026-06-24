@@ -10,6 +10,29 @@ decisions, and hardware-verify items. Remove (or move to `docs/`) before final m
 - The XIAO/Waveshare dongle (secondary) uses `carrefinho/prospector-zmk-module`
   `feat/new-status-screens` (OPERATOR theme), which also targets ZMK `main`/Zephyr 4.1.
 
+## Future features (planned, not yet implemented)
+Do these on a dedicated `waveshare-custom` branch, AFTER the XIAO dongle is
+hardware-verified (display lights up + shows the OPERATOR screen).
+
+### XIAO/Waveshare dongle — display brightness via keypress
+- Prospector drives the display backlight as a standard Zephyr PWM-LED: `disp_bl`
+  (pwm1, P1.11), set via `led_set_brightness(pwm_leds, DISP_BL, v)`. Only fixed/
+  sensor modes ship — no key binding.
+- DO NOT reuse ZMK's backlight (`&bl`): that channel is already the keyboard
+  lighting, and ZMK backlight state SYNCS across the split — so it would weld the
+  display brightness to the keyboard glow (one key changes both, relayed).
+- Instead: a DEDICATED behavior (e.g. `&disp_bri UP/DN`) that targets `disp_bl`
+  by node label and calls `led_set_brightness`. Guard with
+  `DT_NODE_EXISTS(DT_NODELABEL(disp_bl))` so it's a no-op on the nice!nano builds
+  (safe to keep in the shared keymap). Add settings persistence if wanted.
+
+### XIAO/Waveshare dongle — touch (CST816S) support
+- Decided wiring (no ambient-light sensor): touch SDA→D4, SCL→D5 (shared `i2c1`),
+  IRQ→D0, RST→D1. (Display uses D3/D6/D7/D8/D9/D10; D2 left free.)
+- Firmware: add a `hynitron,cst816s` node on `&i2c1` (addr 0x15) with
+  `irq-gpios = <&xiao_d 0 ...>`, `reset-gpios = <&xiao_d 1 ...>`, plus ZMK input
+  plumbing. Not wired in firmware yet.
+
 ## Checklist applicability (this project = upstream nice!nano v2 + shields)
 | Item | Status |
 |---|---|
