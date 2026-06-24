@@ -42,6 +42,13 @@ config NICE_VIEW_ANIMATION
     bool "Animate the peripheral artwork (vs. a single static frame)"
     default y
 
+# TEMP: compile ONLY the transmutation theme's bitmaps into the peripheral build
+# (drops crystal/landscape/evangelion/omnissiah/ultramar to save flash). Set to n
+# to restore all themes. Pairs with the transmutation lock in animation.c.
+config NICE_VIEW_GEM_TRANSMUTATION_ONLY
+    bool "Compile only the transmutation theme (slim the peripheral build)"
+    default y
+
 choice NICE_VIEW_ANIMATION_THEME
     prompt "Default peripheral animation theme"
     default NICE_VIEW_ANIMATION_THEME_TRANSMUTATION

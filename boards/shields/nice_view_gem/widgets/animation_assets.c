@@ -6,6 +6,9 @@
 
 #define NICE_VIEW_ANIM_ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
+// TEMP (CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY): gate out the non-transmutation
+// theme bitmaps to slim the peripheral build. Set the Kconfig to n to restore.
+#if !CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY
 // -------------------------------------------------------------------------------
 // crystal theme (assets/animations/crystal.c)
 LV_IMG_DECLARE(crystal_01);
@@ -77,6 +80,7 @@ static const lv_img_dsc_t *evangelion_imgs[] = {
     &evangelion_10,
     &evangelion_11,
 };
+#endif /* !CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY */
 
 // -------------------------------------------------------------------------------
 // transmutation theme (assets/animations/transmutation.c)
@@ -148,6 +152,7 @@ static const lv_img_dsc_t *transmutation_imgs[] = {
     &transmutation_32,
 };
 
+#if !CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY
 // -------------------------------------------------------------------------------
 // omnissiah theme (assets/animations/omnissiah.c)
 LV_IMG_DECLARE(omnissiah_01);
@@ -287,26 +292,31 @@ static const lv_img_dsc_t *ultramar_imgs[] = {
     &ultramar_31,
     &ultramar_32,
 };
+#endif /* !CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY */
 
 // -------------------------------------------------------------------------------
 // Lookup Table
 const lv_img_dsc_t * const *nice_view_anim_sets[NICE_VIEW_THEME_COUNT] = {
+    [NICE_VIEW_THEME_TRANSMUTATION] = transmutation_imgs,
+#if !CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY
     [NICE_VIEW_THEME_CRYSTAL]       = crystal_imgs,
     [NICE_VIEW_THEME_LANDSCAPE]     = landscape_imgs,
     [NICE_VIEW_THEME_EVANGELION]    = evangelion_imgs,
-    [NICE_VIEW_THEME_TRANSMUTATION] = transmutation_imgs,
     [NICE_VIEW_THEME_OMNISSIAH]     = omnissiah_imgs,
     [NICE_VIEW_THEME_ULTRAMAR]      = ultramar_imgs,
+#endif
 };
 
 // Frame Counter
 const size_t nice_view_anim_lengths[NICE_VIEW_THEME_COUNT] = {
+    [NICE_VIEW_THEME_TRANSMUTATION] = NICE_VIEW_ANIM_ARRAY_SIZE(transmutation_imgs),
+#if !CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY
     [NICE_VIEW_THEME_CRYSTAL]       = NICE_VIEW_ANIM_ARRAY_SIZE(crystal_imgs),
     [NICE_VIEW_THEME_LANDSCAPE]     = NICE_VIEW_ANIM_ARRAY_SIZE(landscape_imgs),
     [NICE_VIEW_THEME_EVANGELION]    = NICE_VIEW_ANIM_ARRAY_SIZE(evangelion_imgs),
-    [NICE_VIEW_THEME_TRANSMUTATION] = NICE_VIEW_ANIM_ARRAY_SIZE(transmutation_imgs),
     [NICE_VIEW_THEME_OMNISSIAH]     = NICE_VIEW_ANIM_ARRAY_SIZE(omnissiah_imgs),
     [NICE_VIEW_THEME_ULTRAMAR]      = NICE_VIEW_ANIM_ARRAY_SIZE(ultramar_imgs),
+#endif
 };
 
 // -------------------------------------------------------------------------------
