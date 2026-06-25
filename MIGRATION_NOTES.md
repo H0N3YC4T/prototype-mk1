@@ -3,6 +3,38 @@
 Working branch: `upgrade/zeph-4-1`. Scratchpad for the migration — error→fix log,
 decisions, and hardware-verify items. Remove (or move to `docs/`) before final merge.
 
+## CURRENT STATUS (supersedes the in-progress notes further below)
+Migration **complete**: all **6** targets green on ZMK main / Zephyr 4.1 / LVGL
+9.3 — `reset`, `dongle` (nice!nano + nice!view), `dongle-waveshare` (XIAO +
+prospector), `central-left`, `left`, `right`. Displays modularised; the gem theme
+system + cycle_animation hotkey are built; `deferred-features/` and the
+upstream-ref clones are removed. Pins: zmk `64daf698`, zmk-dongle-display
+`2bb333f8`; nice-view-gem is vendored locally; **prospector still tracks the
+`feat/new-status-screens` branch, not a commit** (reproducibility risk — pin it).
+
+**Waveshare dongle "battery shows but no keys" — SOLVED (ZMK #3156).** Both
+halves connected and reported battery on the prospector, but no keypress
+registered. Root cause: with `ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING` on,
+the central's *concurrent* GATT discovery of both peripherals shares one ATT TX
+buffer pool; the battery-characteristic discovery races the key-position one and
+exhausts the pool before the position characteristic is found, so it's never
+subscribed (battery is a separate active read → still works). ZMK #3216 bumps
+`BT_ATT_TX_COUNT` to 10 for a split central, but the heavy prospector colour
+display on the XIAO tightens timing so 10 is insufficient. **Fix:**
+`CONFIG_BT_ATT_TX_COUNT=20` in `prototype_mk1_waveshare.conf`. Guaranteed
+fallback: `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=n` (drops the
+battery widget). **Pending hardware confirmation.**
+
+**TEMP (revert when done):** gem locked to the transmutation theme at ~15 fps —
+`CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY=y` (drops the other 5 themes' bitmaps
+from the peripheral build) + a transmutation lock in `nice_view_theme_set()` +
+`frame_ms 33→66`. Touch-screen work is scaffolded on `dev/touch-easy` /
+`dev/touch-testing` (CST816S input pipeline; actions stubbed).
+
+**Open (decisions, not bugs):** `CONFIG_ZMK_STUDIO=y` but no `studio_unlock`/USB
+RPC snippet → Studio is dead flash (wire it or drop it); 19 deprecated `label=`
+props on keymap/behaviors (cosmetic 4.1 warnings); `bks_del` behavior unbound.
+
 ## Target
 - **ZMK:** `zmkfirmware/zmk` `revision: main` (Zephyr **4.1**, LVGL **9.3.0**).
   Tracking `main` during migration; **pin to the green commit at the end**.
