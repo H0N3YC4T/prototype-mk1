@@ -8,7 +8,6 @@ features:
   - display
   - encoder
   - underglow
-  - studio
 siblings:
   - prototype_mk1_dongle
   - prototype_mk1_waveshare

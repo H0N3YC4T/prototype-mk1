@@ -48,7 +48,6 @@
 
         hold_esc: hold_esc {
             compatible = "zmk,behavior-hold-tap";
-            label = "HOLD_ESC";
             bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
@@ -58,7 +57,6 @@
 
         shift_capslock: shift_capslock {
             compatible = "zmk,behavior-tap-dance";
-            label = "SHIFT_CAPSLOCK";
             #binding-cells = <0>;
             bindings = <&sk RIGHT_SHIFT>, <&caps_word>;
 
@@ -67,14 +65,12 @@
 
         encoder_undo_redo: encoder_undo_redo {
             compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_UNDO_REDO";
             #sensor-binding-cells = <0>;
             bindings = <&kp LC(Y)>, <&kp LC(Z)>;
         };
 
         desktop_create_destroy: desktop_create_destroy {
             compatible = "zmk,behavior-hold-tap";
-            label = "DESKTOP_CREATE_DESTROY";
             bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
@@ -84,14 +80,12 @@
 
         encoder_change_desktop: encoder_change_desktop {
             compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_CHANGE_DESKTOP";
             #sensor-binding-cells = <0>;
             bindings = <&kp LC(LG(RIGHT))>, <&kp LG(LC(LEFT))>;
         };
 
         at_tog_mod: at_tog_mod {
             compatible = "zmk,behavior-mod-morph";
-            label = "AT_TOG_MOD";
             bindings = <&alt_tab_init>, <&kt LEFT_ALT>;
 
             #binding-cells = <0>;
@@ -100,19 +94,9 @@
 
         del_bks: del_bks {
             compatible = "zmk,behavior-mod-morph";
-            label = "DEL_BKS";
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
             bindings = <&kp DELETE>, <&kp BACKSPACE>;
-        };
-
-        bks_del: bks_del {
-            compatible = "zmk,behavior-mod-morph";
-            label = "BKS_DEL";
-            bindings = <&kp BACKSPACE>, <&kp DELETE>;
-
-            #binding-cells = <0>;
-            mods = <(MOD_RSFT|MOD_LSFT)>;
         };
     };
 
@@ -121,28 +105,24 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
-            label = "ALT_TAB_INIT";
         };
 
         copy_line: copy_line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp END &kp LS(HOME) &kp LC(C)>;
-            label = "COPY_LINE";
         };
 
         cut_line: cut_line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp END &kp LS(HOME) &kp LC(X)>;
-            label = "CUT_LINE";
         };
 
         delay_alt_tab: delay_alt_tab {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LA(TAB)>;
-            label = "DELAY_ALT_TAB";
             wait-ms = <100>;
         };
 
@@ -150,14 +130,12 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp AMPS &kp AMPS>;
-            label = "&&";
         };
 
         binary_or: binary_or {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp PIPE &kp PIPE>;
-            label = "||";
         };
     };
 
@@ -176,7 +154,6 @@
 
             sensor-bindings = <&inc_dec_kp UP DOWN>, <&inc_dec_kp RIGHT LEFT>;
 
-            label = "BASE";
         };
 
         layer_lower {
@@ -193,7 +170,6 @@
                 <&encoder_undo_redo>,
                 <&inc_dec_kp UP_ARROW DOWN_ARROW>;
 
-            label = "LOWER";
         };
 
         layer_upper {
@@ -210,7 +186,6 @@
                 <&encoder_change_desktop>,
                 <&inc_dec_kp LC(KP_PLUS) LC(KP_MINUS)>;
 
-            label = "RAISE";
         };
 
         layer_settings {
@@ -227,7 +202,6 @@
                 <&inc_dec_kp C_VOLUME_UP C_VOL_DN>,
                 <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
 
-            label = "SETTINGS";
         };
 
         layer_gaming {
@@ -244,7 +218,6 @@
                 <&inc_dec_kp C_VOLUME_UP C_VOL_DN>,
                 <&inc_dec_kp K_NEXT K_PREV>;
 
-            label = "GAMES";
         };
     };
 };
