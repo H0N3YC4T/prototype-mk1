@@ -4,6 +4,16 @@ include:
     shield: settings_reset
     artifact-name: reset
 
+  # Settings-reset for the XIAO dongle. A UF2 flash does NOT wipe the
+  # settings/NVS partition, so stale BLE bonds from earlier pairing attempts
+  # persist on the XIAO and cause "Security failed ... level 1 err 2"
+  # (PIN_OR_KEY_MISSING) -> the key-position subscription is torn down -> no
+  # keys. The `reset` artifact above is nice_nano-only, so the XIAO could never
+  # be cleared. Flash this to the XIAO to wipe its bonds, then flash the dongle.
+  - board: xiao_ble//zmk
+    shield: settings_reset
+    artifact-name: reset-waveshare
+
   # Zephyr 4.1 / LVGL 9.3 migration complete: all display-bearing targets below
   # build green on the HWMv2 `nice_nano//zmk` board id. See MIGRATION_NOTES.md.
 
