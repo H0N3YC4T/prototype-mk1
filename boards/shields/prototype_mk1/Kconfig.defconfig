@@ -30,6 +30,9 @@ config ZMK_SPLIT
     default y
 config BT_MAX_CONN
     default 5
+# 3 host BLE profiles -- matches the Settings layer's BT_SEL 0..2 and the
+# prospector UI. ZMK derives ZMK_BLE_PROFILE_COUNT = BT_MAX_PAIRED -
+# ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS, i.e. 5 - 2 = 3.
 config BT_MAX_PAIRED
     default 5
 config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS

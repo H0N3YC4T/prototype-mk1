@@ -12,18 +12,20 @@ upstream-ref clones are removed. Pins: zmk `64daf698`, zmk-dongle-display
 `2bb333f8`; nice-view-gem is vendored locally; **prospector still tracks the
 `feat/new-status-screens` branch, not a commit** (reproducibility risk — pin it).
 
-**Waveshare dongle "battery shows but no keys" — SOLVED (ZMK #3156).** Both
-halves connected and reported battery on the prospector, but no keypress
-registered. Root cause: with `ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING` on,
-the central's *concurrent* GATT discovery of both peripherals shares one ATT TX
-buffer pool; the battery-characteristic discovery races the key-position one and
-exhausts the pool before the position characteristic is found, so it's never
-subscribed (battery is a separate active read → still works). ZMK #3216 bumps
-`BT_ATT_TX_COUNT` to 10 for a split central, but the heavy prospector colour
-display on the XIAO tightens timing so 10 is insufficient. **Fix:**
-`CONFIG_BT_ATT_TX_COUNT=20` in `prototype_mk1_waveshare.conf`. Guaranteed
-fallback: `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=n` (drops the
-battery widget). **Pending hardware confirmation.**
+**Waveshare dongle "battery shows but no keys" — SOLVED (stale BLE bond).**
+Both halves connected and reported battery, but no keypress registered. The
+dongle serial log showed the central DID find + subscribe to the key-position
+characteristic, then immediately `Security failed ... level 1 err 2`
+(BT_SECURITY_ERR_PIN_OR_KEY_MISSING) and the subscription was torn down. Root
+cause: a Bluetooth bond-key MISMATCH between the XIAO and the halves — the split
+service needs an encrypted (L2) link, and with stale/mismatched keys encryption
+never elevates so the key subscription drops (battery still shows because that
+read happens at L1 first). Reset-PROOF because a UF2 flash does NOT wipe the
+settings/NVS partition, so the XIAO kept stale bonds from earlier attempts and
+there was no xiao_ble settings_reset to clear them. **Fix:** added a
+`reset-waveshare` (xiao_ble settings_reset) build; wipe bonds on ALL THREE
+devices, then re-pair dongle → left → right. CONFIRMED working on hardware.
+NB: ZMK #3156 / battery-fetch / BT_ATT_TX_COUNT was a RED HERRING (reverted).
 
 **TEMP (revert when done):** gem locked to the transmutation theme at ~15 fps —
 `CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY=y` (drops the other 5 themes' bitmaps
@@ -31,9 +33,10 @@ from the peripheral build) + a transmutation lock in `nice_view_theme_set()` +
 `frame_ms 33→66`. Touch-screen work is scaffolded on `dev/touch-easy` /
 `dev/touch-testing` (CST816S input pipeline; actions stubbed).
 
-**Open (decisions, not bugs):** `CONFIG_ZMK_STUDIO=y` but no `studio_unlock`/USB
-RPC snippet → Studio is dead flash (wire it or drop it); 19 deprecated `label=`
-props on keymap/behaviors (cosmetic 4.1 warnings); `bks_del` behavior unbound.
+**Done since:** removed ZMK Studio (was dead flash), the unbound `bks_del`, and
+all deprecated `label=` props; settings layer trimmed to 3 BT profiles. **Still
+open:** pin prospector to a commit; revert the TEMP transmutation-only gem when
+other themes are wanted again.
 
 ## Target
 - **ZMK:** `zmkfirmware/zmk` `revision: main` (Zephyr **4.1**, LVGL **9.3.0**).

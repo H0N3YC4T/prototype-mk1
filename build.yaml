@@ -34,30 +34,6 @@ include:
     cmake-args: -DCONFIG_ZMK_BACKLIGHT=n -DCONFIG_ZMK_EXT_POWER=n
     artifact-name: dongle-waveshare
 
-  # -------------- DIAGNOSTIC (temporary; remove once the dongle types) --------
-  # The XIAO/prospector dongle connects + shows battery but registers no keys on
-  # BOTH halves. Per ZMK's split central source, the key-position characteristic
-  # only gets subscribed if the full-range GATT discovery reaches it before
-  # aborting; with battery-fetch on, the concurrent discovery of both peripherals
-  # plus the battery subscribe/read competes for the ATT TX pool (ZMK #3156).
-  # These variants make the cause testable in one flash-and-compare.
-
-  # (A) battery-fetch OFF -> removes the competing discovery. If THIS types but
-  # plain dongle-waveshare does not, #3156 is confirmed (cost: no battery widget).
-  - board: xiao_ble//zmk
-    shield: prototype_mk1_waveshare prospector_adapter
-    cmake-args: -DCONFIG_ZMK_BACKLIGHT=n -DCONFIG_ZMK_EXT_POWER=n -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=n
-    artifact-name: dongle-waveshare-nobat
-
-  # (B) battery OFF + USB serial logging (open the XIAO COM port @115200; logs
-  # start ~8 s after boot). VDB shrunk so the logging stack fits in RAM. Watch at
-  # connect for "Found position state characteristic" + "[SUBSCRIBED]": present =
-  # subscription works, look downstream; absent = discovery never reaches it.
-  - board: xiao_ble//zmk
-    shield: prototype_mk1_waveshare prospector_adapter
-    cmake-args: -DCONFIG_ZMK_BACKLIGHT=n -DCONFIG_ZMK_EXT_POWER=n -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=n -DCONFIG_ZMK_USB_LOGGING=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000 -DCONFIG_LV_Z_VDB_SIZE=25
-    artifact-name: dongle-waveshare-log
-
   - board: nice_nano//zmk
     shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
     artifact-name: central-left
