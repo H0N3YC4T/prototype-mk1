@@ -22,11 +22,11 @@ manifest:
     # re-vendored from M165437/nice-view-gem @ 0a50fe2 (LVGL 9) so the custom theme
     # system + images can be layered on. The M165437 module reference was removed.
     # Prospector display dongle (XIAO + Waveshare 1.69"). FORK of carrefinho's
-    # prospector-zmk-module @ feat/new-status-screens, carrying our custom OPERATOR
-    # theme (lilac WPM, battery tiers). Tracked (not pinned) while we iterate the
-    # theme; pin to a SHA once it settles.
+    # prospector-zmk-module (feat/new-status-screens) carrying our custom OPERATOR
+    # theme (lilac WPM + 3-tier battery colours). Pinned per-iteration to the fork
+    # commit so each theme change triggers a reproducible CI build.
     - name: prospector-zmk-module
       remote: honeycat
-      revision: feat/new-status-screens
+      revision: a21074e80ddac7c777c0b4c5500a911d7e0c53bc
   self:
     path: config
