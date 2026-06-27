@@ -4,8 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: englmaxi
       url-base: https://github.com/englmaxi
-    - name: carrefinho
-      url-base: https://github.com/carrefinho
+    - name: honeycat
+      url-base: https://github.com/H0N3YC4T
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -21,11 +21,12 @@ manifest:
     # nice_view_gem is now a LOCAL vendored shield (boards/shields/nice_view_gem),
     # re-vendored from M165437/nice-view-gem @ 0a50fe2 (LVGL 9) so the custom theme
     # system + images can be layered on. The M165437 module reference was removed.
-    # Prospector display dongle (XIAO + Waveshare 1.69"). feat/new-status-screens
-    # is an upstream WIP branch targeting ZMK main / Zephyr 4.1 — tracked (not
-    # pinned) until it stabilizes; pin to a SHA once it's settled.
+    # Prospector display dongle (XIAO + Waveshare 1.69"). FORK of carrefinho's
+    # prospector-zmk-module @ feat/new-status-screens, carrying our custom OPERATOR
+    # theme (lilac WPM, battery tiers). Tracked (not pinned) while we iterate the
+    # theme; pin to a SHA once it settles.
     - name: prospector-zmk-module
-      remote: carrefinho
+      remote: honeycat
       revision: feat/new-status-screens
   self:
     path: config
