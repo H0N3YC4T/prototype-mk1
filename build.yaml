@@ -26,12 +26,14 @@ include:
     artifact-name: dongle
 
   # XIAO nRF52840 + Waveshare 1.69" prospector dongle. Display/brightness/themes
-  # come from prospector_adapter. Backlight + ext-power are disabled here because
-  # config/prototype_mk1.conf enables them globally for the nice!nano halves, but
-  # the XIAO dongle has no such hardware (would otherwise hit a build assert).
+  # come from prospector_adapter. Backlight stays ENABLED (from the global
+  # config/prototype_mk1.conf) so the GLOBAL-locality &bl behaviour relays to the
+  # halves; the XIAO has no backlight LED, so prototype_mk1_waveshare.overlay adds
+  # a placeholder zmk,backlight node to satisfy ZMK's build assert. Ext-power is
+  # still disabled here (no such hardware on the XIAO, and no &ext_power key).
   - board: xiao_ble//zmk
     shield: prototype_mk1_waveshare prospector_adapter
-    cmake-args: -DCONFIG_ZMK_BACKLIGHT=n -DCONFIG_ZMK_EXT_POWER=n
+    cmake-args: -DCONFIG_ZMK_EXT_POWER=n
     artifact-name: dongle-waveshare
 
   - board: nice_nano//zmk

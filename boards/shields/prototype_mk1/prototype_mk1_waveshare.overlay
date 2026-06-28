@@ -5,8 +5,51 @@
  *
  * XIAO nRF52840 + Waveshare 1.69" prospector receiver dongle.
  * Shared dongle DT comes from prototype_mk1_dongle_base.dtsi. The display
- * (ST7789V), PWM backlight, ambient sensor, and color themes are all provided
- * by the prospector_adapter shield, so nothing display-related is defined here.
+ * (ST7789V), its own backlight, ambient sensor, and colour themes are all
+ * provided by the prospector_adapter shield, so nothing display-related is
+ * defined here.
+ *
+ * Keyboard backlight (the &bl behaviour) is a nice!nano-halves feature: each
+ * half drives its own PWM LED. The XIAO dongle has no such LED, but enabling
+ * CONFIG_ZMK_BACKLIGHT on it is required so the GLOBAL-locality &bl behaviour
+ * relays brightness changes to both halves. ZMK BUILD_ASSERTs that a
+ * zmk,backlight chosen node exists whenever the feature is on, so we point it
+ * at a placeholder PWM-LED on a free, unconnected XIAO pad (D0 / P0.02). The
+ * dongle's own channel drives nothing; only the relayed halves light up.
  */
 
 #include "prototype_mk1_dongle_base.dtsi"
+
+&pinctrl {
+    pwm0_default: pwm0_default {
+        group1 {
+            psels = <NRF_PSEL(PWM_OUT0, 0, 2)>;
+        };
+    };
+    pwm0_sleep: pwm0_sleep {
+        group1 {
+            psels = <NRF_PSEL(PWM_OUT0, 0, 2)>;
+            low-power-enable;
+        };
+    };
+};
+
+&pwm0 {
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-1 = <&pwm0_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    backlight: pwmleds {
+        compatible = "pwm-leds";
+        pwm_led_0 {
+            pwms = <&pwm0 0 PWM_MSEC(10) PWM_POLARITY_NORMAL>;
+        };
+    };
+};
+
+/ {
+    chosen {
+        zmk,backlight = &backlight;
+    };
+};
