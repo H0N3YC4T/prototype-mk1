@@ -27,16 +27,29 @@ there was no xiao_ble settings_reset to clear them. **Fix:** added a
 devices, then re-pair dongle → left → right. CONFIRMED working on hardware.
 NB: ZMK #3156 / battery-fetch / BT_ATT_TX_COUNT was a RED HERRING (reverted).
 
-**TEMP (revert when done):** gem locked to the transmutation theme at ~15 fps —
-`CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY=y` (drops the other 5 themes' bitmaps
-from the peripheral build) + a transmutation lock in `nice_view_theme_set()` +
-`frame_ms 33→66`. Touch-screen work is scaffolded on `dev/touch-easy` /
-`dev/touch-testing` (CST816S input pipeline; actions stubbed).
+**Settings-layer fixes (theme switching / backlight / output):**
+- *Theme switching* — `CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY` is now a real
+  Kconfig toggle, **default n** = all 6 gem themes compiled and `cycle_animation`
+  (next/prev) cycles them. The lock in `nice_view_theme_set()` is gated on the
+  same symbol; set it =y to slim the peripheral build back to transmutation-only
+  (transmutation still runs at ~15 fps, `frame_ms 66`).
+- *Backlight* — `&bl` is GLOBAL-locality and relays to the halves, but the XIAO
+  had `CONFIG_ZMK_BACKLIGHT` disabled (no LED → BUILD_ASSERT). Now kept enabled,
+  with a placeholder `zmk,backlight` PWM-LED on free pad D0/P0.02 in
+  `prototype_mk1_waveshare.overlay` purely to satisfy the assert; only ext-power
+  stays disabled via build.yaml cmake-args. Placeholder is separate from the
+  prospector `disp_bl` display backlight — no welding (see warning below).
+- *Output* — `&out` is central-only and needs no code change: USB+BLE are both
+  enabled by default so it toggles correctly. Toggling to BLE only looks dead when
+  no host is bonded/connected on the active profile (a USB-cabled dongle wants USB).
+
+Touch-screen work is scaffolded on `dev/touch-easy` / `dev/touch-testing`
+(CST816S input pipeline; actions stubbed).
 
 **Done since:** removed ZMK Studio (was dead flash), the unbound `bks_del`, and
-all deprecated `label=` props; settings layer trimmed to 3 BT profiles. **Still
-open:** pin prospector to a commit; revert the TEMP transmutation-only gem when
-other themes are wanted again.
+all deprecated `label=` props; settings layer trimmed to 3 BT profiles; pinned
+prospector to our fork (lilac WPM + 3-tier battery colours); restored gem theme
+switching + waveshare-dongle backlight relay (above).
 
 ## Target
 - **ZMK:** `zmkfirmware/zmk` `revision: main` (Zephyr **4.1**, LVGL **9.3.0**).
