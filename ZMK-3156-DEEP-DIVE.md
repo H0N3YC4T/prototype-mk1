@@ -171,6 +171,14 @@ dongle runs**. Their trace:
 This nails the exact log signature people see: `Discover complete` with **no** `Found position
 state characteristic`, and (at DBG) a CCC discovery starting mid-walk + a `-12`.
 
+**Confirmed against Zephyr source** (`subsys/bluetooth/host/gatt.c`): `gatt_discover_next()` is
+literally `if (!bt_gatt_discover(conn, params)) { return; }  done:  params->func(conn, NULL,
+params);`. When the re-issued continuation `bt_gatt_discover()` fails (the buffer-alloc `-ENOMEM`
+from `gatt_req_send` propagates up as a non-zero return), control falls through to `done:`, which
+calls the user callback with `attr == NULL` — **the identical signal used for a clean finish**.
+The low-level alloc failure itself just `return -ENOMEM`s (no callback), so there is no separate
+error notification ZMK could have keyed on. Hence the silent "complete-on-failure".
+
 ### 3.5 Two fixes: the merged buffer bump vs the unmerged code fix
 
 1. **Merged (PR #3216): enlarge the pool.** `BT_ATT_TX_COUNT 3 → 10` for centrals. More buffers
