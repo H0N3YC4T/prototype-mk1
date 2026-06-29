@@ -25,7 +25,12 @@ settings/NVS partition, so the XIAO kept stale bonds from earlier attempts and
 there was no xiao_ble settings_reset to clear them. **Fix:** added a
 `reset-waveshare` (xiao_ble settings_reset) build; wipe bonds on ALL THREE
 devices, then re-pair dongle → left → right. CONFIRMED working on hardware.
-NB: ZMK #3156 / battery-fetch / BT_ATT_TX_COUNT was a RED HERRING (reverted).
+NB: that FIRST-PAIRING failure was a stale bond. The separate RECONNECT-AFTER-
+SLEEP failure (half links but no keys until the dongle is reset) IS ZMK #3156 --
+battery-level fetching's battery subscribe triggers a nested CCC discovery that
+aborts the peripheral position-state discovery. Real fix = CONFIG_BT_ATT_TX_COUNT
+(ZMK PR #3216, already in pinned zmk 64daf698 at default 10 for a central); we set
+20 in prototype_mk1_waveshare.conf. NOT BT_MAX_CONN -- that was my wrong guess.
 
 **Settings-layer fixes (theme switching / backlight / output):**
 - *Theme switching* — `CONFIG_NICE_VIEW_GEM_TRANSMUTATION_ONLY` is now a real
