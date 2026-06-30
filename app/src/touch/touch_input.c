@@ -32,10 +32,21 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #define PANEL_H 280
 #define TOUCH_TAP_MAX_TRAVEL 24
 
-/* Y band (panel coords) approximating the wpm_meter strip; taps outside it are
- * ignored so the rest of the screen (battery/output) isn't touch-active. */
-#define ZONE_Y_MIN 40
-#define ZONE_Y_MAX 140
+/* The OPERATOR screen renders rotated 90 deg CLOCKWISE vs the CST816S panel axes
+ * (confirmed on hardware: panel-X runs along the screen's vertical). Map raw
+ * panel (tx,ty) -> rendered screen (sx,sy); the screen is 280 wide x 240 tall.
+ * If the 3 keys come out left<->right mirrored, flip sx to (PANEL_H - ty). */
+#define SCREEN_W 280
+#define SCREEN_H 240
+static inline int32_t panel_to_screen_x(int32_t tx, int32_t ty) { return ty; }
+static inline int32_t panel_to_screen_y(int32_t tx, int32_t ty) { return PANEL_W - tx; }
+
+/* The 3 macro keys occupy the wpm_meter rect (status_screen.c: pos 10,42,
+ * size 260x90), split along screen-X into 3 columns: 0=Vol- 1=Mute 2=Vol+. */
+#define WPM_X 10
+#define WPM_Y 42
+#define WPM_W 260
+#define WPM_H 90
 
 /* One ZMK macro behavior per zone -- defined in prototype_mk1_waveshare.overlay.
  * Customise what they type there; this file only dispatches by zone. */
@@ -51,12 +62,15 @@ static int pending_zone = -1;
 
 static inline int32_t iabs32(int32_t v) { return v < 0 ? -v : v; }
 
-/* Returns 0..2 for a hit, or -1 outside the macro-key strip. */
-static int touch_zone(int32_t x, int32_t y) {
-    if (y < ZONE_Y_MIN || y > ZONE_Y_MAX) {
+/* Returns 0..2 for a hit in the strip (screen coords), or -1 outside it. */
+static int touch_zone(int32_t sx, int32_t sy) {
+    if (sx < WPM_X || sx >= WPM_X + WPM_W) {
         return -1;
     }
-    int z = (x * 3) / PANEL_W;
+    if (sy < WPM_Y || sy >= WPM_Y + WPM_H) {
+        return -1;
+    }
+    int z = ((sx - WPM_X) * 3) / WPM_W;
     if (z < 0) z = 0;
     if (z > 2) z = 2;
     return z;
@@ -106,8 +120,11 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             active = false;
             if (iabs32(cur_x - start_x) < TOUCH_TAP_MAX_TRAVEL &&
                 iabs32(cur_y - start_y) < TOUCH_TAP_MAX_TRAVEL) {
-                int zone = touch_zone(cur_x, cur_y);
-                LOG_INF("tap x=%d y=%d -> zone %d", cur_x, cur_y, zone);
+                int32_t sx = panel_to_screen_x(cur_x, cur_y);
+                int32_t sy = panel_to_screen_y(cur_x, cur_y);
+                int zone = touch_zone(sx, sy);
+                LOG_INF("tap raw(%d,%d) screen(%d,%d) -> zone %d",
+                        cur_x, cur_y, sx, sy, zone);
                 if (zone >= 0) {
                     pending_zone = zone;
                     k_work_submit(&touch_work);
