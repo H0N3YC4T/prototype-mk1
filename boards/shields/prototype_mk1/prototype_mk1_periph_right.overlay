@@ -6,6 +6,21 @@
 
 #include "prototype_mk1.dtsi"
 
+/ {
+    behaviors {
+        // Register cycle_animation on the peripheral so the dongle's
+        // GLOBAL-locality &cycle_animation hotkey (NVC_PAUSE/NEXT/PREV) can be
+        // relayed here and the nice_view_gem animation listener can act on it.
+        // The halves don't compile the keymap, so without this node the relayed
+        // invocation has no behavior to resolve (zmk_behavior_get_binding fails)
+        // and the theme never pauses/cycles on the half's display.
+        cycle_animation: cycle_animation {
+            compatible = "zmk,behavior-cycle-animation";
+            #binding-cells = <1>;
+        };
+    };
+};
+
 &default_transform {
     col-offset = <6>;
 };
