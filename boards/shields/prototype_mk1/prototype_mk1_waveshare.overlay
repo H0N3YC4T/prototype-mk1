@@ -6,29 +6,32 @@
  * XIAO nRF52840 + Waveshare 1.69" prospector receiver dongle.
  * Shared dongle DT comes from prototype_mk1_dongle_base.dtsi. The display
  * (ST7789V), its own backlight, ambient sensor, and colour themes are all
- * provided by the prospector_adapter shield, so nothing display-related is
- * defined here.
+ * provided by the prospector_adapter shield.
  *
- * Keyboard backlight (the &bl behaviour) is a nice!nano-halves feature: each
- * half drives its own PWM LED. The XIAO dongle has no such LED, but enabling
- * CONFIG_ZMK_BACKLIGHT on it is required so the GLOBAL-locality &bl behaviour
- * relays brightness changes to both halves. ZMK BUILD_ASSERTs that a
- * zmk,backlight chosen node exists whenever the feature is on, so we point it
- * at a placeholder PWM-LED on a free, unconnected XIAO pad (D0 / P0.02). The
- * dongle's own channel drives nothing; only the relayed halves light up.
+ * Keyboard backlight relay placeholder: the XIAO has no backlight LED, but
+ * CONFIG_ZMK_BACKLIGHT must be on so the GLOBAL-locality &bl behaviour relays to
+ * the halves, and ZMK BUILD_ASSERTs a zmk,backlight chosen node. We point it at
+ * a placeholder PWM-LED on a free, unconnected internal pad. It used to sit on
+ * D0/P0.02, but D0 is now the CST816S touch IRQ, so it was moved to P0.08.
+ *
+ * CST816S capacitive touch (Waveshare panel): SDA->D4, SCL->D5 on the shared
+ * &i2c1 bus (alongside the prospector apds9960), IRQ->D0, RST->D1. Decoded into
+ * 3 macro-key zones by app/src/touch/touch_input.c. See TOUCH-SCREEN-NOTES.md.
  */
 
 #include "prototype_mk1_dongle_base.dtsi"
+#include <dt-bindings/zmk/keys.h>
 
+/* --- keyboard-backlight relay placeholder (moved off D0 -> P0.08) --- */
 &pinctrl {
     pwm0_default: pwm0_default {
         group1 {
-            psels = <NRF_PSEL(PWM_OUT0, 0, 2)>;
+            psels = <NRF_PSEL(PWM_OUT0, 0, 8)>;
         };
     };
     pwm0_sleep: pwm0_sleep {
         group1 {
-            psels = <NRF_PSEL(PWM_OUT0, 0, 2)>;
+            psels = <NRF_PSEL(PWM_OUT0, 0, 8)>;
             low-power-enable;
         };
     };
@@ -48,8 +51,40 @@
     };
 };
 
+/* --- CST816S touch controller on the shared XIAO I2C (D4/D5) --- */
+&i2c1 {
+    status = "okay";
+
+    cst816s: cst816s@15 {
+        compatible = "hynitron,cst816s";
+        reg = <0x15>;
+        irq-gpios = <&xiao_d 0 GPIO_ACTIVE_LOW>;
+        rst-gpios = <&xiao_d 1 GPIO_ACTIVE_LOW>;
+    };
+};
+
 / {
     chosen {
         zmk,backlight = &backlight;
+    };
+
+    /* Three macro keys fired by the touch zones (app/src/touch/touch_input.c).
+     * Placeholders -- customise the bindings to taste. */
+    macros {
+        touch_macro_0: touch_macro_0 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(C)>;   /* Copy */
+        };
+        touch_macro_1: touch_macro_1 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(V)>;   /* Paste */
+        };
+        touch_macro_2: touch_macro_2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(L)>;   /* Lock (Win+L) */
+        };
     };
 };
