@@ -74,17 +74,17 @@
         touch_macro_0: touch_macro_0 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LC(C)>;   /* Copy */
+            bindings = <&kp C_VOL_DN>;   /* Volume Down */
         };
         touch_macro_1: touch_macro_1 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LC(V)>;   /* Paste */
+            bindings = <&kp C_MUTE>;     /* Mute */
         };
         touch_macro_2: touch_macro_2 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LG(L)>;   /* Lock (Win+L) */
+            bindings = <&kp C_VOL_UP>;   /* Volume Up */
         };
     };
 };
