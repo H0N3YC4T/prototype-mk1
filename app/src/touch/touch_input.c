@@ -41,12 +41,13 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 static inline int32_t panel_to_screen_x(int32_t tx, int32_t ty) { return ty; }
 static inline int32_t panel_to_screen_y(int32_t tx, int32_t ty) { return PANEL_W - tx; }
 
-/* The 3 macro keys occupy the wpm_meter rect (status_screen.c: pos 10,42,
- * size 260x90), split along screen-X into 3 columns: 0=Vol- 1=Mute 2=Vol+. */
-#define WPM_X 10
-#define WPM_Y 42
-#define WPM_W 260
-#define WPM_H 90
+/* Touch is a fixed 2-row x 3-column grid over the WHOLE screen, edge to edge (no
+ * gaps -> no dead zones / mis-inputs). Cells are row-major 0..5:
+ *     0 1 2   (top row)
+ *     3 4 5   (bottom row)
+ * Each macro button occupies one cell. The current test macros use the top row. */
+#define GRID_COLS 3
+#define GRID_ROWS 2
 
 /* One ZMK macro behavior per zone -- defined in prototype_mk1_waveshare.overlay.
  * Customise what they type there; this file only dispatches by zone. */
@@ -61,59 +62,55 @@ static bool active;
 static int32_t pending_sx, pending_sy;
 
 /* Implemented by the prospector fork when the on-screen touch UI (the two-screen
- * macro pad) is present: given a tapped SCREEN coordinate it switches to the
- * macro screen, hits the Back button, or fires a macro button, and returns true
- * if it consumed the tap. Weak default (no fork UI yet) returns false, so we
- * fall back to firing a macro directly by zone -- the current behaviour. */
-__weak bool prospector_touch_tap(int32_t sx, int32_t sy) {
-    ARG_UNUSED(sx);
-    ARG_UNUSED(sy);
+ * macro pad) is present: given the tapped grid cell (0..5) it opens the macro
+ * screen, hits Back, or fires the button in that cell, and returns true if it
+ * consumed the tap. Weak default (no fork UI yet) returns false, so we fall back
+ * to firing a macro directly by cell -- the current behaviour. */
+__weak bool prospector_touch_tap(int cell) {
+    ARG_UNUSED(cell);
     return false;
 }
 
 static inline int32_t iabs32(int32_t v) { return v < 0 ? -v : v; }
 
-/* Returns 0..2 for a hit in the strip (screen coords), or -1 outside it. */
-static int touch_zone(int32_t sx, int32_t sy) {
-    if (sx < WPM_X || sx >= WPM_X + WPM_W) {
-        return -1;
-    }
-    if (sy < WPM_Y || sy >= WPM_Y + WPM_H) {
-        return -1;
-    }
-    int z = ((sx - WPM_X) * 3) / WPM_W;
-    if (z < 0) z = 0;
-    if (z > 2) z = 2;
-    return z;
+/* Map a screen coordinate to one of the 6 grid cells (0..5), edge to edge. */
+static int touch_cell(int32_t sx, int32_t sy) {
+    if (sx < 0) sx = 0;
+    if (sx >= SCREEN_W) sx = SCREEN_W - 1;
+    if (sy < 0) sy = 0;
+    if (sy >= SCREEN_H) sy = SCREEN_H - 1;
+    int col = (sx * GRID_COLS) / SCREEN_W;
+    int row = (sy * GRID_ROWS) / SCREEN_H;
+    return row * GRID_COLS + col;
 }
 
 /* Run the ZMK behavior off the input callback context (which may be IRQ/driver
  * context) -- behaviors/HID must run on a thread. */
 static void touch_fire(struct k_work *work) {
     ARG_UNUSED(work);
-    int32_t sx = pending_sx, sy = pending_sy;
+    int cell = touch_cell(pending_sx, pending_sy);
 
     /* Give the on-screen touch UI (prospector fork) first refusal: on the main
-     * screen it switches to the macro screen, on the macro screen it handles the
-     * macro buttons / Back / timeout itself. */
-    if (prospector_touch_tap(sx, sy)) {
+     * screen it opens the macro screen, on the macro screen it handles the macro
+     * buttons / Back / timeout itself. */
+    if (prospector_touch_tap(cell)) {
         return;
     }
 
-    /* Fallback (no fork UI): fire a macro directly by zone in the WPM strip. */
-    int zone = touch_zone(sx, sy);
-    if (zone < 0 || zone > 2) {
+    /* Fallback (no fork UI): the current test macros live in the top row
+     * (cells 0..2 = Vol- / Mute / Vol+); the other cells do nothing yet. */
+    if (cell < 0 || cell > 2) {
         return;
     }
 
     struct zmk_behavior_binding binding = {
-        .behavior_dev = touch_macro_dev[zone],
+        .behavior_dev = touch_macro_dev[cell],
         .param1 = 0,
         .param2 = 0,
     };
     struct zmk_behavior_binding_event event = {
         .layer = 0,
-        .position = (uint32_t)(0x7000 + zone), /* synthetic, off-matrix */
+        .position = (uint32_t)(0x7000 + cell), /* synthetic, off-matrix */
         .timestamp = k_uptime_get(),
     };
 
@@ -143,9 +140,9 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                 iabs32(cur_y - start_y) < TOUCH_TAP_MAX_TRAVEL) {
                 pending_sx = panel_to_screen_x(cur_x, cur_y);
                 pending_sy = panel_to_screen_y(cur_x, cur_y);
-                LOG_INF("tap raw(%d,%d) screen(%d,%d) -> zone %d",
+                LOG_INF("tap raw(%d,%d) screen(%d,%d) -> cell %d",
                         cur_x, cur_y, pending_sx, pending_sy,
-                        touch_zone(pending_sx, pending_sy));
+                        touch_cell(pending_sx, pending_sy));
                 /* Always dispatch -- the fork UI may want a tap anywhere (e.g.
                  * to open the macro screen from the main screen). */
                 k_work_submit(&touch_work);
