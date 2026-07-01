@@ -150,3 +150,46 @@ Instead of replacing the WPM/layer-text widget, keep the main OPERATOR screen in
 
 Because it can't be hardware-tested from here (LVGL + the panel), expect a calibration/iteration
 pass like the rotation fix.
+
+---
+
+## Two-screen nav + MACRO hub (implemented state)
+
+Navigation map (2x3 grid, cells 0..5; cell = row*3 + col):
+```
+NORMAL --tap anywhere--> HOME
+HOME:   top row (0,1,2) = BACK->NORMAL   3=MEDIA   4=SETTINGS   5=MACRO hub
+MEDIA:  0 vol-  1 back  2 vol+   3 prev   4 play/pause   5 next
+SETTINGS: 0 bright-  1 back  2 bright+   3 vol-   4 mute   5 vol+
+HUB:    0 F-keys  1 back  2 numpad(123)  3 symbols(#)  5 modifiers(MOD)
+```
+- **Colours:** buttons = 80% of cell, radius 12, black fill; border+text = WPM-purple
+  (`DISPLAY_COLOR_WPM_TEXT`); Back = low-battery red (`DISPLAY_COLOR_BATTERY_LOW_FILL`);
+  page nav = pastel battery-blue (`DISPLAY_COLOR_BATTERY_FILL`). Font `lv_font_montserrat_20`
+  (has the `LV_SYMBOL_*` glyphs).
+- **Brightness** (settings 0/2) steps `disp_bl` only via `prospector_brightness_step()` in
+  `src/brightness.c` — the display backlight, NOT the keyboard `&bl` relay (separately wired).
+- **Key sends** (F-keys / numbers / symbols) go through ZMK's `&kp` behaviour:
+  `zmk_behavior_invoke_binding({.behavior_dev="key_press", .param1 = keycode | (pending_mods<<24)})`.
+  Keycodes come from `<dt-bindings/zmk/keys.h>` (F1.., N0.., EXCL..); mods from
+  `<dt-bindings/zmk/modifiers.h>` (bits 24+). No per-key macros needed.
+- **Modifiers (planned):** one-shot — a tapped mod sets `pending_mods`, applied to the *next key
+  sent* (not the next tap), so navigating pages to reach a key does NOT consume it.
+- **Pagination:** 4 keys/page in cells 0,2,3,5. cell 1 = Back(page 0) / Prev-page(page>=1);
+  cell 4 = Next-page (blue `LV_SYMBOL_DOWN`), cyclic. Hub area (views >= VIEW_HUB) has **no idle
+  timeout** so you can sit on a key page.
+
+### Staging
+- **A (done):** hub + paginated **F-keys** (F1-F12, 3 pages), key-send + one-shot-mod plumbing,
+  timeout-off in hub. Uses the existing cell-based `prospector_touch_tap(int cell)`.
+- **B (next):** **Numpad** = a 4x3 grid (12 cells). Needs the touch hook to pass **raw coords**
+  (`prospector_touch_tap(sx, sy)`) so the UI can map cells per the *current* screen's grid
+  (2x3 vs 4x3). Calculator layout: 7 8 9 / 4 5 6 / 1 2 3 / (back) 0 (enter).
+- **C:** **Symbols** (paginated, `EXCL` etc. — already carry shift) + **Modifiers** screen
+  (Ctrl/Shift/Alt/Gui set `pending_mods`, no pagination).
+
+### TODO / wanted (deferred)
+- **Swipe-to-back gesture:** top-to-bottom swipe = Back/exit, especially for paginated pages >= 2
+  where cell 1 is Prev-page (so there's no cell Back). Needs swipe detection added to
+  `app/src/touch/touch_input.c` (currently tap-only). Deferred per user; for now exit a deep page
+  by Prev-page'ing back to page 1 then Back.
