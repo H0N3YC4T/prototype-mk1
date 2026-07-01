@@ -112,3 +112,41 @@ after the input is calibrated.
 - [ ] 3 macro definitions (needs decision)
 - [ ] Zone calibration (hardware)
 - [ ] Fork: 3-button art replacing the wpm_meter widget
+
+## REDESIGN — two-screen model (current direction)
+
+Instead of replacing the WPM/layer-text widget, keep the main OPERATOR screen intact and add a
+**second "macro screen"**:
+- Tap **anywhere** on the main screen -> switch to the macro screen.
+- Macro screen shows the 3 macro buttons (Vol-/Mute/Vol+) + a **Back** button.
+- **Timeout** (no touch for ~N s) also returns to the main screen.
+
+### Split of responsibilities
+- **Our repo (`app/src/touch/touch_input.c`)** — done, non-regressing: detects a tap, maps to
+  screen coords, and calls a weak hook `bool prospector_touch_tap(int32_t sx, int32_t sy)`. If the
+  fork implements it (returns true), the fork owns the reaction; otherwise we fall back to the
+  current "fire a macro by zone in the WPM strip" behaviour. So the touch keeps working today, and
+  the fork can take over cleanly.
+- **Prospector fork** — the actual UI. Implements `prospector_touch_tap` + the two screens.
+
+### Fork implementation plan (`.../operator/status_screen.c`, or a new file it compiles)
+1. In `zmk_display_status_screen()`, after building the main widgets, create a **macro view**:
+   a full-screen `lv_obj` child (or a separate `lv_obj` screen), `LV_OBJ_FLAG_HIDDEN` by default,
+   containing 3 labelled buttons + a Back button. Record their rects.
+2. Implement `bool prospector_touch_tap(int32_t sx, int32_t sy)`:
+   - Main view (macro hidden): show macro view, (re)start the timeout `lv_timer`. return true.
+   - Macro view: hit-test the 4 buttons -> fire `touch_macro_N` via
+     `zmk_behavior_invoke_binding("touch_macro_N", ...)`, or Back -> hide macro view; reset the
+     timeout. return true.
+3. **Timeout**: an `lv_timer` (period = the timeout) whose callback hides the macro view; reset it
+   on each tap; pause it on the main view.
+4. **Thread safety (important):** `prospector_touch_tap` is called from a ZMK system-workqueue
+   thread, NOT the LVGL/display thread. Do NOT touch LVGL directly there. Marshal to the display
+   thread -- record the tap in a static + submit to ZMK's display work queue (or use the same
+   mechanism the widgets use to update), and do all `lv_obj_*` / `lv_timer_*` work in that context.
+   Getting this wrong => heap/LVGL corruption.
+5. Ship as a fork commit; bump `config/west.yml` to the new fork SHA (same flow as the theme
+   colours), then CI.
+
+Because it can't be hardware-tested from here (LVGL + the panel), expect a calibration/iteration
+pass like the rotation fix.

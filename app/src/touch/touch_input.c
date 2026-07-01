@@ -58,7 +58,18 @@ static const char *const touch_macro_dev[3] = {
 
 static int32_t cur_x, cur_y, start_x, start_y;
 static bool active;
-static int pending_zone = -1;
+static int32_t pending_sx, pending_sy;
+
+/* Implemented by the prospector fork when the on-screen touch UI (the two-screen
+ * macro pad) is present: given a tapped SCREEN coordinate it switches to the
+ * macro screen, hits the Back button, or fires a macro button, and returns true
+ * if it consumed the tap. Weak default (no fork UI yet) returns false, so we
+ * fall back to firing a macro directly by zone -- the current behaviour. */
+__weak bool prospector_touch_tap(int32_t sx, int32_t sy) {
+    ARG_UNUSED(sx);
+    ARG_UNUSED(sy);
+    return false;
+}
 
 static inline int32_t iabs32(int32_t v) { return v < 0 ? -v : v; }
 
@@ -80,7 +91,17 @@ static int touch_zone(int32_t sx, int32_t sy) {
  * context) -- behaviors/HID must run on a thread. */
 static void touch_fire(struct k_work *work) {
     ARG_UNUSED(work);
-    int zone = pending_zone;
+    int32_t sx = pending_sx, sy = pending_sy;
+
+    /* Give the on-screen touch UI (prospector fork) first refusal: on the main
+     * screen it switches to the macro screen, on the macro screen it handles the
+     * macro buttons / Back / timeout itself. */
+    if (prospector_touch_tap(sx, sy)) {
+        return;
+    }
+
+    /* Fallback (no fork UI): fire a macro directly by zone in the WPM strip. */
+    int zone = touch_zone(sx, sy);
     if (zone < 0 || zone > 2) {
         return;
     }
@@ -120,15 +141,14 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             active = false;
             if (iabs32(cur_x - start_x) < TOUCH_TAP_MAX_TRAVEL &&
                 iabs32(cur_y - start_y) < TOUCH_TAP_MAX_TRAVEL) {
-                int32_t sx = panel_to_screen_x(cur_x, cur_y);
-                int32_t sy = panel_to_screen_y(cur_x, cur_y);
-                int zone = touch_zone(sx, sy);
+                pending_sx = panel_to_screen_x(cur_x, cur_y);
+                pending_sy = panel_to_screen_y(cur_x, cur_y);
                 LOG_INF("tap raw(%d,%d) screen(%d,%d) -> zone %d",
-                        cur_x, cur_y, sx, sy, zone);
-                if (zone >= 0) {
-                    pending_zone = zone;
-                    k_work_submit(&touch_work);
-                }
+                        cur_x, cur_y, pending_sx, pending_sy,
+                        touch_zone(pending_sx, pending_sy));
+                /* Always dispatch -- the fork UI may want a tap anywhere (e.g.
+                 * to open the macro screen from the main screen). */
+                k_work_submit(&touch_work);
             }
         }
         break;
