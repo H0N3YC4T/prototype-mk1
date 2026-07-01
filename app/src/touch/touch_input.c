@@ -61,13 +61,14 @@ static int32_t cur_x, cur_y, start_x, start_y;
 static bool active;
 static int32_t pending_sx, pending_sy;
 
-/* Implemented by the prospector fork when the on-screen touch UI (the two-screen
- * macro pad) is present: given the tapped grid cell (0..5) it opens the macro
- * screen, hits Back, or fires the button in that cell, and returns true if it
- * consumed the tap. Weak default (no fork UI yet) returns false, so we fall back
- * to firing a macro directly by cell -- the current behaviour. */
-__weak bool prospector_touch_tap(int cell) {
-    ARG_UNUSED(cell);
+/* Implemented by the prospector fork when the on-screen touch UI is present:
+ * given the RAW rendered-screen coords (sx,sy; 280x240) it maps them to a cell
+ * per whichever screen's grid is showing (2x3, or 4x3 for the numpad), then
+ * navigates / fires and returns true if it consumed the tap. Weak default (no
+ * fork UI) returns false, so we fall back to the fixed 2x3 macro grid below. */
+__weak bool prospector_touch_tap(int sx, int sy) {
+    ARG_UNUSED(sx);
+    ARG_UNUSED(sy);
     return false;
 }
 
@@ -88,17 +89,16 @@ static int touch_cell(int32_t sx, int32_t sy) {
  * context) -- behaviors/HID must run on a thread. */
 static void touch_fire(struct k_work *work) {
     ARG_UNUSED(work);
-    int cell = touch_cell(pending_sx, pending_sy);
 
-    /* Give the on-screen touch UI (prospector fork) first refusal: on the main
-     * screen it opens the macro screen, on the macro screen it handles the macro
-     * buttons / Back / timeout itself. */
-    if (prospector_touch_tap(cell)) {
+    /* Give the on-screen touch UI (prospector fork) first refusal: it maps the
+     * raw screen coords to a cell per whichever screen (grid) is showing. */
+    if (prospector_touch_tap(pending_sx, pending_sy)) {
         return;
     }
 
-    /* Fallback (no fork UI): the current test macros live in the top row
+    /* Fallback (no fork UI): fixed 2x3 grid; the test macros live in the top row
      * (cells 0..2 = Vol- / Mute / Vol+); the other cells do nothing yet. */
+    int cell = touch_cell(pending_sx, pending_sy);
     if (cell < 0 || cell > 2) {
         return;
     }
