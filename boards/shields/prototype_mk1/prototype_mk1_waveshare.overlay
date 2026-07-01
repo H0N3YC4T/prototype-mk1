@@ -86,5 +86,20 @@
             #binding-cells = <0>;
             bindings = <&kp C_VOL_UP>;   /* Volume Up */
         };
+        touch_macro_3: touch_macro_3 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp C_PP>;       /* Play / Pause */
+        };
+        touch_macro_4: touch_macro_4 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp C_PREV>;     /* Previous track */
+        };
+        touch_macro_5: touch_macro_5 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp C_NEXT>;     /* Next track */
+        };
     };
 };
