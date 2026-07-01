@@ -11,7 +11,7 @@ manifest:
       remote: zmkfirmware
       # Pinned to a validated ZMK main commit (Zephyr 4.1 / LVGL 9.3).
       # Bump deliberately and re-test; see MIGRATION_NOTES.md.
-      revision: 6abbf3a8001c1a520612d4aeaf8b5280d103f7ca
+      revision: 64daf698e073e37b6748ac54f4eb48d8666af0b9
       import: app/west.yml
     # Dongle display — LVGL-9/Zephyr-4.1. Replaces the previously-vendored
     # boards/shields/dongle_display copy. Known-good HEAD: 2bb333f (pin at end).
@@ -27,6 +27,6 @@ manifest:
     # commit so each theme change triggers a reproducible CI build.
     - name: prospector-zmk-module
       remote: honeycat
-      revision: 0f863b2d095bb9a9ee9307cb683d308558fcbfe4
+      revision: 6abbf3a8001c1a520612d4aeaf8b5280d103f7ca
   self:
     path: config
