@@ -35,20 +35,20 @@ config NICE_VIEW_GEM_WPM_FIXED_RANGE_MAX
     int "Fixed range maximum for WPM gauge/chart"
     default 100
 
-# --- Custom theme system (crystal + landscape + evangelion) used by the local
-# --- animation.c / animation_assets.c. The cycle_animation hotkey switches
-# --- between these themes (and toggles movement) at runtime.
+# --- Peripheral gem artwork. Theme switching is PAUSED (full multi-theme system
+# --- is backed up on branch dev/periph-theme): the halves show a single static
+# --- random transmutation frame to save battery. default n = static (no loop).
 config NICE_VIEW_ANIMATION
     bool "Animate the peripheral artwork (vs. a single static frame)"
-    default y
+    default n
 
-# Optional: compile ONLY the transmutation theme's bitmaps (drops the other five
-# to save peripheral flash) and lock the gem to it. Default n = all themes are
-# compiled and theme switching (cycle_animation next/prev) works. Pairs with the
-# matching lock in animation.c, which is gated on this same symbol.
+# Compile ONLY the transmutation theme's bitmaps (drops the other five to save
+# peripheral flash) and lock the gem to it. default y = transmutation-only. Set
+# to n (+ NICE_VIEW_ANIMATION=y) to restore the full multi-theme switching system.
+# Pairs with the matching lock in animation.c, gated on this same symbol.
 config NICE_VIEW_GEM_TRANSMUTATION_ONLY
     bool "Compile only the transmutation theme (slim the peripheral build)"
-    default n
+    default y
 
 choice NICE_VIEW_ANIMATION_THEME
     prompt "Default peripheral animation theme"
