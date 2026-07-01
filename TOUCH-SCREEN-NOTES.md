@@ -179,14 +179,16 @@ HUB:    0 F-keys  1 back  2 numpad(123)  3 symbols(#)  5 modifiers(MOD)
   cell 4 = Next-page (blue `LV_SYMBOL_DOWN`), cyclic. Hub area (views >= VIEW_HUB) has **no idle
   timeout** so you can sit on a key page.
 
-### Staging
+### Staging (all shipped)
 - **A (done):** hub + paginated **F-keys** (F1-F12, 3 pages), key-send + one-shot-mod plumbing,
-  timeout-off in hub. Uses the existing cell-based `prospector_touch_tap(int cell)`.
-- **B (next):** **Numpad** = a 4x3 grid (12 cells). Needs the touch hook to pass **raw coords**
-  (`prospector_touch_tap(sx, sy)`) so the UI can map cells per the *current* screen's grid
-  (2x3 vs 4x3). Calculator layout: 7 8 9 / 4 5 6 / 1 2 3 / (back) 0 (enter).
-- **C:** **Symbols** (paginated, `EXCL` etc. — already carry shift) + **Modifiers** screen
-  (Ctrl/Shift/Alt/Gui set `pending_mods`, no pagination).
+  timeout-off in hub.
+- **B (done):** **Numpad** = 4x3 grid. The touch hook now passes **raw coords**
+  (`prospector_touch_tap(sx, sy)`); the UI maps cells per the *current* screen's grid via
+  `grid_rows` (2, or 4 = numpad) + `cell_from_coords()`. Layout: 7 8 9 / 4 5 6 / 1 2 3 /
+  (back) 0 (enter). Enter = `RET`.
+- **C (done):** **Symbols** (paginated, 32 across 8 pages; `EXCL`.. already carry shift) +
+  **Modifiers** (one-shot Ctrl/Shift/Alt/Gui via `MOD_L*`; tap toggles `pending_mods`, active =
+  blue, applied to the next key *sent* and persists across navigation; no pagination).
 
 ### TODO / wanted (deferred)
 - **Swipe-to-back gesture:** top-to-bottom swipe = Back/exit, especially for paginated pages >= 2
