@@ -232,6 +232,14 @@ removes, validating it over any further buffer bump.
 
 ## 8. Follow-up fix — boot-variant number-key corruption (thread safety)
 
+> **SUPERSEDED, see `REVIEW-BRIEF.md` §0.** The fix described below (and its
+> "superseded mechanism" note at the end of §9) turned out to still be broken:
+> `zmk_behavior_queue_add()` is not a thread hop when called with `wait=0` (our only
+> use), so the display thread was still doing the unsafe invoke. Corrected in fork
+> commit `62ba9e5` — real `k_work_submit()` to the system workqueue, calling
+> `zmk_behavior_queue_add()` from inside that handler. `REVIEW-BRIEF.md` §0 has the
+> full mechanism and final code; treat this section as historical.
+
 **Symptom (hardware):** numpad digits occasionally send the wrong key, and the
 pattern changes boot to boot. Volume/media were fine.
 
