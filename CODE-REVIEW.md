@@ -261,3 +261,37 @@ I²C glitches (both would be position-consistent, not boot-variant).
 
 **Retroactive note:** F-keys/symbols went through the same display-thread path, so
 they were likely subtly affected too and this fix covers them as well.
+
+**Superseded mechanism:** the first cut of this fix used a hand-rolled SPSC ring +
+`k_work` on the system workqueue. §9 replaced it with ZMK's own `zmk_behavior_queue_add`
+(the macro path) — same idea, but battle-tested and less custom code.
+
+---
+
+## 9. Follow-up fix — crash on the numpad (LVGL pool exhaustion)
+
+**Symptom (hardware):** opening the numpad crashes the dongle.
+
+**Root cause:** `draw_cell` builds two LVGL objects per cell (button + label). Every
+other screen is 2×3 = 6 cells (~12 objects); the **numpad is 4×3 = 12 cells (~24
+objects)**, roughly double. The OPERATOR layout's LVGL pool default is **20 KB**,
+which the 6-cell screens fit but the numpad exhausts → `lv_obj_create()` returns
+**NULL** → the next `lv_obj_set_*(NULL, …)` dereferences it → hard fault. Numpad-only,
+and independent of the §8 key-send fix.
+
+**Fix (three layers):**
+1. **LVGL pool 20 KB → 25 KB** (`prototype_mk1_waveshare.conf`). RAM-bounded: 32 KB
+   *overflowed the RAM region by ~5 KB*, so headroom above 20 KB is only ~7.7 KB. 25 KB
+   (+5 KB) covers the numpad's ~3 KB extra with ~2.7 KB RAM to spare.
+2. **`draw_cell` NULL-guards** — if the pool is ever short, the cell is skipped
+   (missing button) instead of dereferencing NULL. Turns a crash into a cosmetic
+   shortfall.
+3. **Key-sends moved to `zmk_behavior_queue_add`** (see §8 supersede note) — unrelated
+   to the crash but landed in the same change; the correct, tested key path.
+
+**Confidence / follow-up:** 25 KB should render the numpad fully, and the guards
+guarantee no crash regardless. This build's RAM is tight (~within 8 KB of the
+ceiling), so if the numpad shows *missing buttons*, the proper next step is a
+**shared `lv_style_t`** for the buttons instead of per-object local styles — that
+cuts per-cell memory sharply and removes the RAM-ceiling fragility, rather than
+chasing the pool size.
