@@ -148,7 +148,7 @@ making a retry unnecessary; left as a documented escalation if hardware still sh
 |---|---|---|
 | Touch UI (Media/Settings/hub/F-keys/numpad/symbols/mods) | ✅ green | ✅ keys type; nav/timeout confirmed |
 | Brightness device-bind fix | ✅ green | ⏳ flash & confirm ∓ moves panel (+ serial log) |
-| Reconnect deferred-subscribe (zmk fork) | ⏳ in progress | ⏳ **sleep/wake cycle test required** |
+| Reconnect deferred-subscribe (zmk fork) | ✅ green (all central targets) | ⏳ **sleep/wake cycle test required** |
 
 **Reconnect HW test:** flash all three parts from `dev/touch-screen`; idle until
 both halves deep-sleep (~20 min), wake together, type on each. Repeat ~5–10 cycles.
@@ -165,3 +165,65 @@ without them.
 - Everything is on `dev/touch-screen`, unmerged. The zmk fork is a new maintenance
   surface — on future zmk pin bumps, rebase `fix/3156-deferred-subscribe` onto the
   new base (or drop it if the fix lands upstream).
+
+---
+
+## 7. Independent deep-dive audit (2026-07-02)
+
+Second pass after the two fixes, looking for anything else that could bite during
+hardware testing. No new *bugs* found beyond one modifier footgun (fixed below);
+the rest is confirmations + documented limitations so testing isn't a surprise.
+
+### Sanity check — why reconnect "wasn't an issue in 0.3"
+Confirmed the diagnosis holds and *sharpens* it. "0.3" is the version we're **on**
+(ZMK v0.3.0 / Zephyr `v4.1.0+zmk-fixes`). Our tree shows ZMK now sets
+`BT_ATT_TX_COUNT default 10` and has **zero** `L2CAP_TX_BUF_COUNT` references — the old
+knob that fed ATT is gone. On pre-4.1 Zephyr, ZMK's L2CAP override gave centrals ~5
+ATT buffers, enough that the mid-walk subscribe collision never starved; Zephyr 4.1
+gave ATT its own default-3 pool, exposing #3156 (opened 2025-12-20). **Key inference:**
+our `=20` (≫ the historical ~5) still fails, so buffer count is *not* the binding
+constraint — the concurrency is. That's precisely what the deferred-subscribe patch
+removes, validating it over any further buffer bump.
+
+### Fixed
+- **Armed one-shot modifier lingering past the hub.** A mod armed on the Modifiers
+  screen sets `pending_mods` until a key is sent. If you left the hub (back to Normal)
+  without sending a key, it persisted and the next key typed *anywhere* would carry it
+  (armed Ctrl → later a stray Ctrl+A). Now `show_view()` clears `pending_mods` on any
+  transition to a non-hub view (`v < VIEW_HUB`). The intended arm→navigate→key flow
+  stays entirely inside the hub, so it's unaffected. (fork `3366d66`)
+
+### Audited and ruled OUT
+- **#3234 (Zephyr-4.1 stopped auto-enabling `CONFIG_BT`/`ZMK_BLE`/`ZMK_SPLIT_BLE`/
+  `ZMK_USB`).** Our firmware demonstrably does BLE-split + USB HID (CI green, keys type
+  over BLE), i.e. it is not in the "~90 KB, BLE stripped" broken state that regression
+  produces. Our June pin post-dates the Feb-2026 regression window. Not affected.
+- **`BT_MAX_CONN=5` on the waveshare dongle** (vs 7 on the nano dongle). Max
+  *simultaneous* connections here = 2 halves + 1 host = 3; 5 leaves margin even across
+  a reconnect. Not a bottleneck (and the user correctly rejected BT_MAX_CONN as the
+  reconnect cause). Left as-is.
+- **Two `&i2c1` declarations** (our `cst816s` + the adapter's `apds9960`). I2C is
+  multi-drop; distinct addresses (0x15 vs 0x39); the apds9960 init failure (no sensor)
+  is per-device and doesn't disable the bus — touch works. Fine.
+- **`central.c` patch re-traced** end-to-end (cold boot, 2-peripheral reconnect,
+  peripheral-missing-a-characteristic). Sound; also note the flush subscribes
+  **position-state first**, so keys work even if the battery subscribe later contends.
+
+### Known limitations / notes (not bugs — for awareness)
+- **`CONFIG_ZMK_USB_LOGGING=y`** is kept on the dongle *on purpose* — it's needed to
+  capture the reconnect serial-log signature. Remove it for daily firmware once the
+  reconnect is confirmed (it adds a USB CDC ACM + logging overhead).
+- **Brightness fix assumes the backlight is on P1.11** (`disp_bl`, per the adapter's
+  DT). If the panel still doesn't dim, the added `LOG_INF` disambiguates: `rc 0` +
+  no visible change ⇒ the module's BL isn't actually wired to that PWM (hardware), not
+  software.
+- **Input-split subscribe left inline** (not deferred). It's compiled out for us
+  (`CONFIG_ZMK_INPUT_SPLIT` off — no peripheral pointing devices). If ever enabled, it
+  would need the same deferral as position-state/battery.
+- **Numpad (4×3) + Symbols + Modifiers screens are hardware-untested** — key-send is
+  proven (F-keys type), but the 4×3 touch mapping and symbol/label rendering haven't
+  been seen on the panel. Watch for row mis-mapping on the numpad (calibration, not a
+  logic bug) and any tofu glyphs (montserrat_20 covers all 32 symbols, so unlikely).
+- **Rapid taps:** the tap hand-off is a single atomic slot drained every 30 ms, so two
+  taps inside one 30 ms window would drop the earlier one. Irrelevant at human tap
+  rates; noted for completeness.
