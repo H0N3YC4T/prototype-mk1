@@ -227,3 +227,37 @@ removes, validating it over any further buffer bump.
 - **Rapid taps:** the tap hand-off is a single atomic slot drained every 30 ms, so two
   taps inside one 30 ms window would drop the earlier one. Irrelevant at human tap
   rates; noted for completeness.
+
+---
+
+## 8. Follow-up fix — boot-variant number-key corruption (thread safety)
+
+**Symptom (hardware):** numpad digits occasionally send the wrong key, and the
+pattern changes boot to boot. Volume/media were fine.
+
+**Root cause:** `zmk_behavior_invoke_binding()` runs the behaviour **and its HID
+report write synchronously on the calling thread**, and ZMK's HID/endpoints path
+has **no cross-thread lock** — it assumes single-threaded access from the workqueue.
+The touch UI invoked key-sends from the **LVGL display thread** (`ui_timer_cb`), so
+every touch keypress wrote the shared keyboard HID report from a second,
+unsynchronised context, racing the dongle's normal key path → corrupted/dropped
+keyboard reports. Boot-to-boot variance is the classic signature of a timing race.
+Consumer keys (volume) write a *different*, far-less-contended report, which masked
+the bug. The original `app/src/touch/touch_input.c` deliberately invoked behaviours
+from the **system workqueue** for exactly this reason; the fork's UI regressed it
+onto the display thread.
+
+**Fix:** a lock-free SPSC ring + `k_work` marshals every touch key/macro send onto
+the system workqueue (`send_key`/`fire_macro` → `queue_key` → `key_work_handler`).
+The display thread now only *enqueues*; the behaviour invoke + HID write happen on
+the workqueue — the same context ZMK uses for real keys. Verified ZMK's own key/HID
+path is entirely `k_work`-driven, so this serialises correctly.
+
+**Confidence / caveat:** matches ZMK's threading model and the known-good original,
+and moving off the display thread cannot regress it — but it's hardware-unverified.
+If any wrong-key behaviour remains after flashing, note *which key → which output*
+and the next suspects are touch-coordinate noise on the tighter 4×3 grid or CST816S
+I²C glitches (both would be position-consistent, not boot-variant).
+
+**Retroactive note:** F-keys/symbols went through the same display-thread path, so
+they were likely subtly affected too and this fix covers them as well.
