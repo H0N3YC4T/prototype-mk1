@@ -133,7 +133,7 @@ subject of §7 item 1) is not, and is exactly what needs a second opinion.
 
 | project | remote | revision (as of writing) | purpose |
 |---|---|---|---|
-| `zmk` | `honeycat` (fork of zmkfirmware) | `c027b34f0a2bb1a30e31df1ba34653fe7063128f` | branch `fix/3156-deferred-subscribe`; base = `zmkfirmware @ 64daf698e073e37b6748ac54f4eb48d8666af0b9` |
+| `zmk` | `honeycat` (fork of zmkfirmware) | `c2ca24ff49a27b5c80463e33c84f3d28e9a28551` (§8a second-pass fixes; supersedes `c027b34`) | branch `fix/3156-deferred-subscribe`; base = `zmkfirmware @ 64daf698e073e37b6748ac54f4eb48d8666af0b9` |
 | `prospector-zmk-module` | `honeycat` | `62ba9e5c94efea412eb2776cc889b0bafe2e6c5f` | branch `feat/new-status-screens`; see §0 for the just-landed correction |
 | `zmk-dongle-display` | `englmaxi` | `2bb333f87136d33e94a49d86236ed9ec254a8060` | untouched this session |
 
@@ -396,6 +396,64 @@ than in a typical PR because empirical confirmation is largely absent.
    proactively doing the shared-`lv_style_t` refactor now rather than waiting for a
    hardware report of missing buttons?
 
+## §8a. Second-pass review results (Fable 5, 2026-07-03) — findings & fixes
+
+Independent re-derivation of the reconnect fix from ZMK/Zephyr source, prioritized
+per the user (reconnect first). Zmk fork updated; `config/west.yml` zmk pin bumped
+past `c027b34` — check the file for the current SHA.
+
+**Answers to §7 questions:**
+- **Q4 ✅ CONFIRMED:** `APPLY_MODS(mods, keycode) = (mods << 24 | keycode)`
+  (`modifiers.h:19`) — `send_key`'s encoding is bit-exact correct.
+- **Q1 ✅ CONFIRMED by architecture:** ZMK's own peripheral key events reach HID via
+  `k_work_submit(&peripheral_event_work)` (central.c) — the system workqueue. Our
+  `k_work_submit(&key_work)` lands on the same single thread → serialized. A plain
+  (non-delayable) `k_work_submit` has no synchronous fast-path.
+- **Q2 ✅ RESOLVED, with a real finding:** read the previously-unread reconnect path.
+  `release_peripheral_slot()` zeroes the position value handle, so
+  `split_central_process_connection()` always re-runs discovery on reconnect — the
+  patched walk IS the sleep/wake path (good). BUT release did **not** clear
+  sensor/battery value handles or ANY cached `ccc_handle`s → the `subscribed`
+  early-stop could be satisfied by stale state, and a peripheral reflash while the
+  dongle stayed up would make re-subscribes write a wrong (stale) CCC handle =
+  silently deaf half. **Fixed:** release now clears value+CCC handles for
+  position/sensor/battery.
+
+**New finding 1 (the big one): sensor CCC discovery still shared
+`sub_discover_params` with position-state.** The first-pass fix gave *battery* its
+own discover-params but left `sensor_subscribe_params.disc_params =
+&slot->sub_discover_params`. This keymap **has sensors** (encoders;
+`sensor-bindings` on every layer; `zmk,keymap-sensors` with both encoders), so the
+path is live. In the deferred flush, position + sensor subscribes fire back-to-back
+— when CCC handles are unknown, both start concurrent GATT discoveries on ONE
+struct; the second clobbers the first's in-flight request state. This is
+**deterministic** in the flush, and (in stock ZMK, where position/sensor chrcs are
+adjacent and often arrive in the same ATT response batch) it is also a better
+root-cause candidate for #3156 on sensor keyboards than buffer exhaustion — it is
+timing-dependent, not pool-dependent, which finally explains why
+`BT_ATT_TX_COUNT=20` changed nothing. **Fixed:** `sensor_sub_discover_params` added,
+sensor subscribe now uses it.
+
+**New finding 2: added the self-heal the first pass deferred.** The stuck state
+("linked but no keys until dongle power-cycle") existed because nothing retried.
+Now, in the fork: (a) position-state subscribe carries a completion callback — an
+ATT error triggers `bt_conn_disconnect()` so the peripheral re-advertises and the
+whole cycle re-runs; (b) a synchronous subscribe failure in the flush does the same;
+(c) a characteristic walk that "completes" without ever finding position-state (the
+classic masked `-ENOMEM` outcome) also disconnects instead of flushing nothing.
+Worst case is now a **visible reconnect loop in the log**, never a silently dead
+half. Infinite-loop risk accepted: it only loops for a peripheral that genuinely
+lacks/hides the position-state characteristic, which is a non-functional split
+anyway — and the log makes it obvious.
+
+**Hardware-verification protocol fix:** the old markers ("Found position state
+characteristic", "[SUBSCRIBED]") are `LOG_DBG` — **invisible** at the default INF
+level over USB CDC, so the documented serial check could never have worked. The
+subscribe callback now logs `Position-state subscription established (peripheral N)`
+at **INF**. After flashing: wake each half and look for that line (one per half);
+any `... disconnecting so the peripheral can retry` line = the self-heal caught a
+failure (report it, but the half should recover on its own within seconds).
+
 ## §8. Pointers
 - `CODE-REVIEW.md` §1–§9 — original per-change write-up (note: §8/§9 there describe
   the *pre-§0-correction* state of Issue 4; this document supersedes them for that
@@ -404,3 +462,148 @@ than in a typical PR because empirical confirmation is largely absent.
   rejected `BT_MAX_CONN` hypothesis and the buffer-math justification for why `=20`
   alone couldn't have been expected to fully fix it.
 - `TOUCH-SCREEN-NOTES.md` — UI/UX design record, nav map, deferred swipe-to-back gesture.
+
+---
+
+## §9. Executor handoff — operational rules & remaining work
+
+Written for a follow-on executor model (e.g. Opus 4.8). Each remaining item gives
+the issue, the recommended fix, and exact steps. The rules section lists traps that
+have each ALREADY caused (or nearly caused) a broken build in this project — do not
+relearn them.
+
+### §9.1 Operational rules (violating any of these has already broken something)
+
+1. **`config/west.yml` has THREE `revision:` lines; TWO are honeycat forks** —
+   `zmk` (~line 16) and `prospector-zmk-module` (~line 32). A "replace the first
+   revision" bulk-edit once pointed zmk at a prospector SHA (broken manifest, commit
+   `a2feab6`, fixed in `5a14c51`). **Always** bump a pin by replacing the exact old
+   SHA and asserting it occurs exactly once:
+   ```python
+   s = open("config/west.yml", encoding="utf-8").read()
+   assert s.count(OLD_SHA) == 1
+   open("config/west.yml", "w", encoding="utf-8", newline="\n").write(s.replace(OLD_SHA, NEW_SHA))
+   ```
+   And read the file first — a stale OLD_SHA makes the assert fail (this too
+   happened: a bump against `8ad5960` when the pin was already `c1f730f`).
+2. **Fork remotes:** prospector clone `D:\User\Andrew\Desktop\Projects\_touchref\prospector`,
+   push to remote **`fork`** branch `feat/new-status-screens` (origin = carrefinho,
+   pushes DENIED). zmk clone `D:\User\Andrew\Desktop\Projects\_touchref\zmk`, push to
+   remote **`fork`** branch `fix/3156-deferred-subscribe` (origin = zmkfirmware).
+3. **Every fork commit needs a same-push `west.yml` pin bump** in the main repo or
+   CI silently builds the OLD fork code. Docs-only commits: append `[skip ci]`.
+4. **Never set `CONFIG_ZMK_BEHAVIOR_MACRO` in a .conf** — promptless symbol, ZMK CI
+   hard-rejects the assignment (macros auto-enable from DT nodes).
+5. **LVGL pool RAM ceiling:** `CONFIG_LV_Z_MEM_POOL_SIZE=32768` overflows RAM by
+   ~5 KB on the dongle (linker: `region 'RAM' overflowed by 4996 bytes`). Practical
+   max ≈ 27.5 KB; current value 25000. Do not raise it to fix rendering issues —
+   use the shared-style refactor (§9.3).
+6. **`zmk_behavior_queue_add()` with `wait=0` is NOT a thread hop** — it executes
+   the behavior synchronously on the caller's thread. Any key/behavior send
+   originating from the LVGL display thread MUST go through `queue_key()`'s
+   `k_work_submit` ring in `status_screen.c`. Never call `zmk_behavior_queue_add`
+   or `zmk_behavior_invoke_binding` directly from UI code.
+7. **No LVGL calls off the display thread.** Touch events arrive via
+   `atomic_set(&pending_tap, ...)` and are drained by the 30 ms `lv_timer`. Keep it
+   that way.
+8. **Fonts:** `FG_Medium_20` has no lowercase and no symbols (renders tofu). UI text
+   uses `lv_font_montserrat_20` (has `LV_SYMBOL_*` glyphs); labels stay UPPERCASE.
+9. **On `main`:** the nice_view_gem Kconfig strip (`NICE_VIEW_ANIMATION` default n,
+   `NICE_VIEW_GEM_TRANSMUTATION_ONLY` default y) is INTENTIONAL (static frame =
+   battery saving; full theme system backed up on `dev/periph-theme`). Do not
+   "fix" it. Same for the placeholder `pwm-leds` node on P0.08 in the waveshare
+   overlay — it satisfies the `zmk,backlight` assert for the `&bl` relay to the
+   halves; do not remove or merge it. `brightness.c` must keep binding via
+   `DEVICE_DT_GET(DT_PARENT(DT_NODELABEL(disp_bl)))`, never `DEVICE_DT_GET_ONE`.
+10. **Dead ends, do not revisit:** `BT_MAX_CONN` is not the reconnect cause
+    (rejected with reasoning, twice). Raising `BT_ATT_TX_COUNT` beyond 20 is proven
+    ineffective (=20 still failed on hardware). `BT_L2CAP_TX_BUF_COUNT` no longer
+    feeds ATT on Zephyr 4.1.
+11. **CI:** poll `https://api.github.com/repos/H0N3YC4T/Keyboard-Prototype_Mk1/actions/runs?head_sha=<sha>`
+    every ~45 s; on failure fetch the failed job's logs with the token from
+    `git credential fill`. A full zmk rebuild takes ~5-6 min.
+
+### §9.2 Remaining item: interpret the hardware-verification round (user flashes)
+
+**Issue:** every fix in this arc is CI-green but hardware-unverified (§6 matrix).
+The user will flash all 3 parts from `dev/touch-screen` and report. Interpretation
+guide — do not guess beyond it:
+
+| Observation | Meaning | Recommended action |
+|---|---|---|
+| Serial: `Position-state subscription established (peripheral N)` after each wake, keys work | Reconnect fix verified | Remove `CONFIG_ZMK_USB_LOGGING=y` from `prototype_mk1_waveshare.conf` (§9.5), proceed to merge gate (§9.6) |
+| Serial: occasional `... disconnecting so the peripheral can retry`, then recovery | Self-heal caught a transient; root partially remains | Acceptable short-term; log the ATT err code; if frequent, apply §9.4 escalation |
+| Serial: retry LOOP (repeated disconnect lines, half never settles) | CCC write rejected or walk still truncating | Capture err code. `ATT err 0x01` (invalid handle) → stale-handle theory wrong somewhere; walk-truncation line → apply §9.4. Do NOT touch buffers/BT_MAX_CONN |
+| Brightness: log `display brightness -> N% (delta, rc 0)` but panel unchanged | Software path proven, PWM pin wrong (hardware) | Stop software churn; the Waveshare 1.69 module's BL pin must be verified physically against P1.11 |
+| Brightness: `rc != 0` | LED driver rejected the call | Check `rc`: -ENODEV → device not ready (binding wrong after all); report before changing code |
+| Numpad: one or more BLANK buttons, no crash | LVGL pool short; NULL-guards working as designed | Apply §9.3 shared-style refactor. Do NOT raise the pool (rule 5) |
+| Numpad/F-keys/symbols: wrong key, CONSISTENT per position across reboots | Touch calibration (4×3 row mapping), not threading | Adjust `cell_from_coords()`/transform in the fork; ask user for tap→output table first |
+| Wrong keys VARYING boot-to-boot (still) | Threading fix incomplete — re-audit §0 assumptions | Verify `key_work_handler` is the only invoke path (grep rule 6); check for new callers |
+
+### §9.3 Contingency: shared `lv_style_t` refactor (only if blank numpad buttons)
+
+**Issue:** `draw_cell()` sets 6+ local style props per object; local styles allocate
+per-property per-object from the LVGL pool. The numpad's 24 objects make this the
+dominant pool consumer.
+**Recommended fix:** one static shared style for the invariant props, local styles
+only for the two per-cell accent props:
+```c
+static lv_style_t cell_style;           /* file scope */
+/* in zmk_display_status_screen(), once, before any build_view: */
+lv_style_init(&cell_style);
+lv_style_set_bg_color(&cell_style, lv_color_hex(0x000000));
+lv_style_set_bg_opa(&cell_style, LV_OPA_COVER);
+lv_style_set_border_width(&cell_style, 2);
+lv_style_set_radius(&cell_style, 12);
+lv_style_set_pad_all(&cell_style, 0);
+lv_style_set_text_font(&cell_style, &lv_font_montserrat_20);
+/* in draw_cell(): replace the six lv_obj_set_style_* calls with: */
+lv_obj_add_style(b, &cell_style, LV_PART_MAIN);
+lv_obj_set_style_border_color(b, lv_color_hex(accent), LV_PART_MAIN); /* stays local */
+/* label: keep lv_obj_set_style_text_color(l, ...) local; font comes from parent style
+   only if inheritance applies -- text_font does NOT inherit through add_style on the
+   parent object, so keep the label's font set explicitly OR add the shared style to
+   the label too: lv_obj_add_style(l, &cell_style, LV_PART_MAIN). */
+```
+Commit to the prospector fork + pin bump per rules 1-3.
+
+### §9.4 Contingency: reconnect escalation (only if §9.2 shows persistent truncation)
+
+**Issue:** if walk truncation persists even with separated disc_params, the last
+remaining concurrency is the flush itself issuing 2-3 CCC auto-discoveries
+back-to-back (position, sensor, battery — now on separate structs, which Zephyr
+should queue safely; if hardware disagrees, this is the next lever).
+**Recommended fix — serialize the flush completely:** issue ONLY the position-state
+subscribe in `split_central_flush_subscriptions()`; move the sensor subscribe into
+`split_central_position_subscribed_cb` (on success), and the battery subscribe +
+read into a new sensor-completion callback (or straight after sensor's subscribe
+call if sensors absent). Each subscription then starts only after the previous
+one's CCC write confirmed — zero concurrent discoveries, at the cost of ~2 extra
+conn intervals per reconnect. Keep the self-heal disconnect on position failure.
+**Nuclear fallback** (user already declined once; offer only if the above fails on
+hardware): `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=n` on the dongle —
+removes the battery subscribe entirely; costs the halves' battery display on the
+dongle screen only.
+
+### §9.5 Cleanup after reconnect verifies
+Remove `CONFIG_ZMK_USB_LOGGING=y` (and its comment block) from
+`boards/shields/prototype_mk1/prototype_mk1_waveshare.conf`. One commit, pin
+untouched, normal CI.
+
+### §9.6 Merge gate
+Merge `dev/touch-screen` → `main` ONLY after the user confirms on hardware:
+(a) reconnect survives ≥5 sleep/wake cycles, (b) numpad renders fully + types
+correctly across ≥2 reboots, (c) brightness moves the panel. The user explicitly
+gates this; do not merge on CI green alone.
+
+### §9.7 Deferred feature: swipe-to-back (build only when asked)
+**Issue:** paginated screens at page ≥2 have no Back cell (cell 1 = prev-page).
+**Recommended design:** in `app/src/touch/touch_input.c`, the tap filter currently
+DISCARDS any release with travel ≥ `TOUCH_TAP_MAX_TRAVEL` (24 px) — swipes die
+there. In that else-branch, detect a screen-coords downward swipe:
+`(sy_end - sy_start) > 100 && |sx_end - sx_start| < 60` (screen coords via the
+existing `panel_to_screen_*` transform on BOTH start and end points), then call a
+new weak hook `prospector_touch_swipe_down(void)` (same weak-symbol pattern as
+`prospector_touch_tap`). Fork side: stash into a second atomic, drain in
+`ui_timer_cb`, act as Back-one-level from any view. Thresholds need hardware
+calibration — expect one iteration pass like the rotation fix.
