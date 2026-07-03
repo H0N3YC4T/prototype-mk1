@@ -38,9 +38,12 @@ config NICE_VIEW_GEM_WPM_FIXED_RANGE_MAX
 # --- Custom theme system (crystal + landscape + evangelion) used by the local
 # --- animation.c / animation_assets.c. The cycle_animation hotkey switches
 # --- between these themes (and toggles movement) at runtime.
+# Default OFF: the halves show a single static frame (of the default theme below),
+# not the animation loop -- saves battery, and the user doesn't watch them. Set
+# CONFIG_NICE_VIEW_ANIMATION=y (or flip this default) to bring the animation back.
 config NICE_VIEW_ANIMATION
     bool "Animate the peripheral artwork (vs. a single static frame)"
-    default y
+    default n
 
 # Optional: compile ONLY the transmutation theme's bitmaps (drops the other five
 # to save peripheral flash) and lock the gem to it. Default n = all themes are
