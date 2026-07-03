@@ -31,9 +31,15 @@ include:
   # halves; the XIAO has no backlight LED, so prototype_mk1_waveshare.overlay adds
   # a placeholder zmk,backlight node to satisfy ZMK's build assert. Ext-power is
   # still disabled here (no such hardware on the XIAO, and no &ext_power key).
+  # Behavior-queue is right-sized DOWN here (global config/prototype_mk1.conf sets 512
+  # for the halves' long macros; on the dongle that static K_MSGQ costs ~12 KB of RAM
+  # for a queue the touch UI puts 2 entries in per tap). cmake-args is the only lever
+  # that beats the global conf's last-merge; freed RAM is partly reinvested in the LVGL
+  # pool (prototype_mk1_waveshare.conf). Do NOT move the 512 out of the global conf --
+  # the halves need it.
   - board: xiao_ble//zmk
     shield: prototype_mk1_waveshare prospector_adapter
-    cmake-args: -DCONFIG_ZMK_EXT_POWER=n
+    cmake-args: -DCONFIG_ZMK_EXT_POWER=n -DCONFIG_ZMK_BEHAVIORS_QUEUE_SIZE=64
     artifact-name: dongle-waveshare
 
   - board: nice_nano//zmk
