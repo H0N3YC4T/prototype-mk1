@@ -195,7 +195,10 @@ static void touch_cb(struct input_event *evt, void *user_data) {
         cur_y = evt->value;
         break;
     case INPUT_BTN_TOUCH:
-        if (evt->value) {
+        /* Edge-triggered: the CST816S re-reports BTN_TOUCH=1 every cycle while held,
+         * so gate the down-logic on !active or it resets start_x/y (and tp_have_prev)
+         * every report -> the trackpad never accumulates a motion delta. */
+        if (evt->value && !active) {
             active = true;
             start_x = cur_x;
             start_y = cur_y;
@@ -252,9 +255,13 @@ static void touch_cb(struct input_event *evt, void *user_data) {
     }
 
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
-    /* Trackpad motion: sample at each report boundary (evt->sync) while touching.
-     * First sample after a touch-down seeds prev with no delta (no pointer jump). */
-    if (prospector_touchpad_active() && active && evt->sync) {
+    /* Trackpad motion: sample on every position event while touching -- NOT gated on
+     * evt->sync. The CST816S carries sync on the BTN_TOUCH event, not the ABS events,
+     * so a sync-gated sampler never fired during a drag. Incremental per-axis deltas
+     * sum to the full move (works through the panel->screen rotation); the first
+     * sample after a touch-down just seeds prev with no delta (no pointer jump). */
+    if (prospector_touchpad_active() && active &&
+        (evt->code == INPUT_ABS_X || evt->code == INPUT_ABS_Y)) {
         int32_t sx = panel_to_screen_x(cur_x, cur_y);
         int32_t sy = panel_to_screen_y(cur_x, cur_y);
         if (tp_have_prev) {
