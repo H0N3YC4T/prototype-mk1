@@ -30,16 +30,15 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #include <zmk/endpoints.h>
 #include <dt-bindings/zmk/pointing.h>
 
-/* Whole-screen trackpad. The CST816S is single-touch, so gestures are time/pattern
- * based (no two-finger anything):
- *   DRAG            -> pointer motion (commits once travel leaves the dead-zone).
- *   HOLD then DRAG  -> scroll (press ~TP_HOLD_MS still, then drag vertically).
- *   1 TAP           -> left click,  2 TAPS -> right click (resolved over TP_DTAP_MS).
+/* Whole-screen trackpad (single-touch CST816S -- no two-finger gestures):
+ *   DRAG (main area)     -> pointer motion (commits once past the dead-zone).
+ *   DRAG on the far-right -> scroll (that vertical strip is the scroll lane).
+ *   1 TAP -> left click,  2 TAPS -> right click (resolved over TP_DTAP_MS).
  *   top-left corner TAP -> exit to the hub. */
 #define TP_CORNER_PX 40           /* top-left NxN screen corner tap = exit */
 #define TP_MOVE_DEADZONE_PX 8     /* travel this far commits a drag (else it's a tap) */
-#define TP_HOLD_MS 220            /* press+hold this long (still) then drag = scroll */
-#define TP_DTAP_MS 260            /* 2nd tap within this of the 1st = right click */
+#define TP_DTAP_MS 180            /* 2nd tap within this of the 1st = right click */
+#define TP_SCROLL_ZONE_X 240      /* screen x >= this (far right, of 280) = scroll lane */
 #define TP_SCROLL_PX 18           /* screen px of vertical drag per wheel tick */
 #define TP_SENS_NUM 1             /* pointer delta = screen delta * NUM / DEN */
 #define TP_SENS_DEN 1
@@ -161,7 +160,7 @@ static int32_t tp_start_sx, tp_start_sy;    /* touch-down screen coords */
 static int32_t tp_prev_sx, tp_prev_sy;      /* last sampled point while streaming motion */
 static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scroll tick */
 static enum tp_mode tp_mode;                /* this touch: pending / moving / scrolling */
-static bool tp_scrolled;                    /* a scroll tick actually fired this touch */
+static bool tp_scroll_zone;                 /* touch started in the far-right scroll lane */
 static bool tp_first_tap;                   /* a first tap is awaiting a possible second */
 
 static void tp_work_handler(struct k_work *work) {
@@ -188,17 +187,6 @@ static void tp_work_handler(struct k_work *work) {
     }
 }
 static K_WORK_DEFINE(tp_work, tp_work_handler);
-
-/* Fires TP_HOLD_MS after touch-down. If the finger is still down and hasn't left the
- * dead-zone (still PENDING), switch this touch to scroll mode from the current point. */
-static void tp_hold_handler(struct k_work *work) {
-    ARG_UNUSED(work);
-    if (active && tp_mode == TP_PENDING) {
-        tp_mode = TP_SCROLL;
-        tp_scroll_ref_sy = panel_to_screen_y(cur_x, cur_y);
-    }
-}
-static K_WORK_DELAYABLE_DEFINE(tp_hold_work, tp_hold_handler);
 
 /* Fires TP_DTAP_MS after a first tap released with no second tap -> single tap = left
  * click. (A second tap inside the window fires the right click directly + cancels this.) */
@@ -236,19 +224,14 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             tp_start_sx = panel_to_screen_x(start_x, start_y);
             tp_start_sy = panel_to_screen_y(start_x, start_y);
             tp_mode = TP_PENDING;
-            tp_scrolled = false;
-            if (prospector_touchpad_active()) {
-                k_work_reschedule(&tp_hold_work, K_MSEC(TP_HOLD_MS));
-            }
+            tp_scroll_zone = (tp_start_sx >= TP_SCROLL_ZONE_X);
 #endif
         } else if (!evt->value && active) {
             active = false;
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
             if (prospector_touchpad_active()) {
-                k_work_cancel_delayable(&tp_hold_work);
-                /* A "tap" = finger lifted without committing to a drag and without a
-                 * scroll actually firing (covers a hold that never dragged). */
-                if (tp_mode != TP_MOTION && !tp_scrolled) {
+                /* A "tap" = finger lifted before committing to a drag (scroll or move). */
+                if (tp_mode == TP_PENDING) {
                     if (tp_start_sx < TP_CORNER_PX && tp_start_sy < TP_CORNER_PX) {
                         /* corner tap = exit; hand to the fork UI */
                         pending_sx = tp_start_sx;
@@ -294,13 +277,17 @@ static void touch_cb(struct input_event *evt, void *user_data) {
         int32_t sx = panel_to_screen_x(cur_x, cur_y);
         int32_t sy = panel_to_screen_y(cur_x, cur_y);
         if (tp_mode == TP_PENDING) {
-            /* Leaving the dead-zone commits a pointer drag + cancels the hold->scroll. */
+            /* Leaving the dead-zone commits the drag: scroll lane -> scroll, else move. */
             if (iabs32(sx - tp_start_sx) >= TP_MOVE_DEADZONE_PX ||
                 iabs32(sy - tp_start_sy) >= TP_MOVE_DEADZONE_PX) {
-                tp_mode = TP_MOTION;
-                k_work_cancel_delayable(&tp_hold_work);
-                tp_prev_sx = sx; /* stream from here; the dead-zone px are dropped */
-                tp_prev_sy = sy;
+                if (tp_scroll_zone) {
+                    tp_mode = TP_SCROLL;
+                    tp_scroll_ref_sy = sy;
+                } else {
+                    tp_mode = TP_MOTION;
+                    tp_prev_sx = sx; /* stream from here; the dead-zone px are dropped */
+                    tp_prev_sy = sy;
+                }
             }
         } else if (tp_mode == TP_MOTION) {
             int dx = sx - tp_prev_sx;
@@ -320,7 +307,6 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                  * this sign if it scrolls the wrong way for your taste. */
                 atomic_add(&tp_scroll, -ticks);
                 tp_scroll_ref_sy += ticks * TP_SCROLL_PX;
-                tp_scrolled = true;
                 k_work_submit(&tp_work);
             }
         }
