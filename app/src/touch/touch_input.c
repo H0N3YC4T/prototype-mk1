@@ -30,13 +30,20 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #include <zmk/endpoints.h>
 #include <dt-bindings/zmk/pointing.h>
 
-/* Mouse-assist pad: 3 vertical zones over the screen -- left third = left click,
- * middle third = scroll (vertical drag), right third = right click; top-left corner
- * tap = exit. SCREEN_W is 280 (defined below). */
+/* Mouse pad: 3 vertical zones over the screen.
+ *   TAPS:  left third = left click, right third = right click, top-left corner = exit.
+ *   DRAGS: starting in the MIDDLE third = scroll lane (vertical wheel ticks);
+ *          starting in a SIDE third = TRACKPAD pointer motion (the drag may then roam
+ *          the whole screen -- only the start zone selects the mode). A small
+ *          dead-zone separates finger-wobble taps from deliberate drags, and once a
+ *          drag starts, its release never clicks. */
 #define TP_CORNER_PX 40                 /* top-left NxN screen corner = exit tap */
 #define TP_ZONE_L    (280 / 3)          /* left | middle boundary (screen x) */
 #define TP_ZONE_R    (2 * 280 / 3)      /* middle | right boundary (screen x) */
 #define TP_SCROLL_PX 18                 /* screen px of vertical drag per wheel tick */
+#define TP_MOVE_DEADZONE_PX 8           /* travel below this = tap; above = drag */
+#define TP_SENS_NUM 1                   /* pointer delta = screen delta * NUM / DEN */
+#define TP_SENS_DEN 1
 #endif
 
 /* Waveshare 1.69" panel, as the CST816S reports it (portrait). The rendered
@@ -148,14 +155,25 @@ static K_WORK_DEFINE(touch_work, touch_fire);
  * boot-variant key corruption we already fixed once; same rule applies to mouse HID). */
 static atomic_t tp_click = ATOMIC_INIT(0);  /* 0 / MB1 / MB2 */
 static atomic_t tp_scroll = ATOMIC_INIT(0); /* signed vertical wheel ticks pending */
+static atomic_t tp_dx = ATOMIC_INIT(0);     /* accumulated pointer deltas (raw px) */
+static atomic_t tp_dy = ATOMIC_INIT(0);
 static int32_t tp_start_sx, tp_start_sy;    /* touch-down screen coords (zone + corner) */
 static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scroll tick */
+static int32_t tp_prev_sx, tp_prev_sy;      /* last sampled point while streaming motion */
 static bool tp_middle;                      /* touch started in the middle (scroll) zone */
+static bool tp_moved;                       /* drag left the dead-zone -> motion, no click */
 
 static void tp_work_handler(struct k_work *work) {
     ARG_UNUSED(work);
+    int dx = atomic_set(&tp_dx, 0) * TP_SENS_NUM / TP_SENS_DEN;
+    int dy = atomic_set(&tp_dy, 0) * TP_SENS_NUM / TP_SENS_DEN;
     int scroll = atomic_set(&tp_scroll, 0);
     int click = atomic_set(&tp_click, 0);
+    if (dx || dy) {
+        zmk_hid_mouse_movement_set((int16_t)dx, (int16_t)dy);
+        zmk_endpoint_send_mouse_report();
+        zmk_hid_mouse_movement_set(0, 0);
+    }
     if (scroll) {
         zmk_hid_mouse_scroll_set(0, (int16_t)scroll);
         zmk_endpoint_send_mouse_report();
@@ -195,6 +213,7 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             tp_start_sy = panel_to_screen_y(start_x, start_y);
             tp_middle = (tp_start_sx >= TP_ZONE_L && tp_start_sx < TP_ZONE_R);
             tp_scroll_ref_sy = tp_start_sy;
+            tp_moved = false;
 #endif
         } else if (!evt->value && active) {
             active = false;
@@ -202,7 +221,8 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                           iabs32(cur_y - start_y) < TOUCH_TAP_MAX_TRAVEL;
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
             if (prospector_touchpad_active()) {
-                if (is_tap) { /* a drag never clicks; only a discrete tap does */
+                /* a drag never clicks (tp_moved = left the dead-zone); only a tap does */
+                if (is_tap && !tp_moved) {
                     if (tp_start_sx < TP_CORNER_PX && tp_start_sy < TP_CORNER_PX) {
                         /* top-left corner tap = exit; hand to the fork UI */
                         pending_sx = tp_start_sx;
@@ -237,20 +257,47 @@ static void touch_cb(struct input_event *evt, void *user_data) {
     }
 
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
-    /* Scroll: a vertical drag that STARTED in the middle zone emits one mouse-wheel
-     * tick per TP_SCROLL_PX of screen-Y travel. Sampled on position events (not
-     * evt->sync -- the CST816S carries sync on BTN_TOUCH, not the ABS events). */
-    if (prospector_touchpad_active() && active && tp_middle &&
+    /* Drag handling, sampled on position events (not evt->sync -- the CST816S carries
+     * sync on BTN_TOUCH, not the ABS events). Mode is picked by the START zone:
+     * middle = scroll lane, sides = trackpad pointer motion. */
+    if (prospector_touchpad_active() && active &&
         (evt->code == INPUT_ABS_X || evt->code == INPUT_ABS_Y)) {
-        int32_t sy = panel_to_screen_y(cur_x, cur_y);
-        int dsy = sy - tp_scroll_ref_sy;
-        if (dsy >= TP_SCROLL_PX || dsy <= -TP_SCROLL_PX) {
-            int ticks = dsy / TP_SCROLL_PX; /* signed */
-            /* finger down the screen (sy up) -> scroll down (negative wheel). Flip
-             * this sign if it scrolls the wrong way for your taste. */
-            atomic_add(&tp_scroll, -ticks);
-            tp_scroll_ref_sy += ticks * TP_SCROLL_PX;
-            k_work_submit(&tp_work);
+        if (tp_middle) {
+            /* Scroll: one wheel tick per TP_SCROLL_PX of vertical travel. */
+            int32_t sy = panel_to_screen_y(cur_x, cur_y);
+            int dsy = sy - tp_scroll_ref_sy;
+            if (dsy >= TP_SCROLL_PX || dsy <= -TP_SCROLL_PX) {
+                int ticks = dsy / TP_SCROLL_PX; /* signed */
+                /* finger down the screen (sy up) -> scroll down (negative wheel). Flip
+                 * this sign if it scrolls the wrong way for your taste. */
+                atomic_add(&tp_scroll, -ticks);
+                tp_scroll_ref_sy += ticks * TP_SCROLL_PX;
+                k_work_submit(&tp_work);
+            }
+        } else {
+            /* Trackpad motion. Stays silent inside the dead-zone so finger wobble
+             * during a click never nudges the pointer; once the drag commits,
+             * stream raw deltas (scaled on the workqueue side). */
+            int32_t sx = panel_to_screen_x(cur_x, cur_y);
+            int32_t sy = panel_to_screen_y(cur_x, cur_y);
+            if (!tp_moved) {
+                if (iabs32(sx - tp_start_sx) >= TP_MOVE_DEADZONE_PX ||
+                    iabs32(sy - tp_start_sy) >= TP_MOVE_DEADZONE_PX) {
+                    tp_moved = true;
+                    tp_prev_sx = sx; /* stream from here; the dead-zone px are dropped */
+                    tp_prev_sy = sy;
+                }
+            } else {
+                int dx = sx - tp_prev_sx;
+                int dy = sy - tp_prev_sy;
+                tp_prev_sx = sx;
+                tp_prev_sy = sy;
+                if (dx || dy) {
+                    atomic_add(&tp_dx, dx);
+                    atomic_add(&tp_dy, dy);
+                    k_work_submit(&tp_work);
+                }
+            }
         }
     }
 #endif
