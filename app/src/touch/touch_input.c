@@ -30,19 +30,18 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #include <zmk/endpoints.h>
 #include <dt-bindings/zmk/pointing.h>
 
-/* Mouse pad: 3 vertical zones over the screen.
- *   TAPS:  left third = left click, right third = right click, top-left corner = exit.
- *   DRAGS: starting in the MIDDLE third = scroll lane (vertical wheel ticks);
- *          starting in a SIDE third = TRACKPAD pointer motion (the drag may then roam
- *          the whole screen -- only the start zone selects the mode). A small
- *          dead-zone separates finger-wobble taps from deliberate drags, and once a
- *          drag starts, its release never clicks. */
-#define TP_CORNER_PX 40                 /* top-left NxN screen corner = exit tap */
-#define TP_ZONE_L    (280 / 3)          /* left | middle boundary (screen x) */
-#define TP_ZONE_R    (2 * 280 / 3)      /* middle | right boundary (screen x) */
-#define TP_SCROLL_PX 18                 /* screen px of vertical drag per wheel tick */
-#define TP_MOVE_DEADZONE_PX 8           /* travel below this = tap; above = drag */
-#define TP_SENS_NUM 1                   /* pointer delta = screen delta * NUM / DEN */
+/* Whole-screen trackpad. The CST816S is single-touch, so gestures are time/pattern
+ * based (no two-finger anything):
+ *   DRAG            -> pointer motion (commits once travel leaves the dead-zone).
+ *   HOLD then DRAG  -> scroll (press ~TP_HOLD_MS still, then drag vertically).
+ *   1 TAP           -> left click,  2 TAPS -> right click (resolved over TP_DTAP_MS).
+ *   top-left corner TAP -> exit to the hub. */
+#define TP_CORNER_PX 40           /* top-left NxN screen corner tap = exit */
+#define TP_MOVE_DEADZONE_PX 8     /* travel this far commits a drag (else it's a tap) */
+#define TP_HOLD_MS 220            /* press+hold this long (still) then drag = scroll */
+#define TP_DTAP_MS 260            /* 2nd tap within this of the 1st = right click */
+#define TP_SCROLL_PX 18           /* screen px of vertical drag per wheel tick */
+#define TP_SENS_NUM 1             /* pointer delta = screen delta * NUM / DEN */
 #define TP_SENS_DEN 1
 #endif
 
@@ -153,15 +152,17 @@ static K_WORK_DEFINE(touch_work, touch_fire);
  * ALL zmk_hid_/zmk_endpoint_ calls happen HERE, never in the input callback -- that
  * runs in driver context, and off-thread HID writes corrupt the shared report (the
  * boot-variant key corruption we already fixed once; same rule applies to mouse HID). */
+enum tp_mode { TP_PENDING, TP_MOTION, TP_SCROLL };
 static atomic_t tp_click = ATOMIC_INIT(0);  /* 0 / MB1 / MB2 */
 static atomic_t tp_scroll = ATOMIC_INIT(0); /* signed vertical wheel ticks pending */
 static atomic_t tp_dx = ATOMIC_INIT(0);     /* accumulated pointer deltas (raw px) */
 static atomic_t tp_dy = ATOMIC_INIT(0);
-static int32_t tp_start_sx, tp_start_sy;    /* touch-down screen coords (zone + corner) */
-static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scroll tick */
+static int32_t tp_start_sx, tp_start_sy;    /* touch-down screen coords */
 static int32_t tp_prev_sx, tp_prev_sy;      /* last sampled point while streaming motion */
-static bool tp_middle;                      /* touch started in the middle (scroll) zone */
-static bool tp_moved;                       /* drag left the dead-zone -> motion, no click */
+static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scroll tick */
+static enum tp_mode tp_mode;                /* this touch: pending / moving / scrolling */
+static bool tp_scrolled;                    /* a scroll tick actually fired this touch */
+static bool tp_first_tap;                   /* a first tap is awaiting a possible second */
 
 static void tp_work_handler(struct k_work *work) {
     ARG_UNUSED(work);
@@ -187,6 +188,29 @@ static void tp_work_handler(struct k_work *work) {
     }
 }
 static K_WORK_DEFINE(tp_work, tp_work_handler);
+
+/* Fires TP_HOLD_MS after touch-down. If the finger is still down and hasn't left the
+ * dead-zone (still PENDING), switch this touch to scroll mode from the current point. */
+static void tp_hold_handler(struct k_work *work) {
+    ARG_UNUSED(work);
+    if (active && tp_mode == TP_PENDING) {
+        tp_mode = TP_SCROLL;
+        tp_scroll_ref_sy = panel_to_screen_y(cur_x, cur_y);
+    }
+}
+static K_WORK_DELAYABLE_DEFINE(tp_hold_work, tp_hold_handler);
+
+/* Fires TP_DTAP_MS after a first tap released with no second tap -> single tap = left
+ * click. (A second tap inside the window fires the right click directly + cancels this.) */
+static void tp_tap_handler(struct k_work *work) {
+    ARG_UNUSED(work);
+    if (tp_first_tap) {
+        tp_first_tap = false;
+        atomic_set(&tp_click, MB1);
+        k_work_submit(&tp_work);
+    }
+}
+static K_WORK_DELAYABLE_DEFINE(tp_tap_work, tp_tap_handler);
 #endif /* IS_ENABLED(CONFIG_ZMK_POINTING) */
 
 static void touch_cb(struct input_event *evt, void *user_data) {
@@ -211,36 +235,42 @@ static void touch_cb(struct input_event *evt, void *user_data) {
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
             tp_start_sx = panel_to_screen_x(start_x, start_y);
             tp_start_sy = panel_to_screen_y(start_x, start_y);
-            tp_middle = (tp_start_sx >= TP_ZONE_L && tp_start_sx < TP_ZONE_R);
-            tp_scroll_ref_sy = tp_start_sy;
-            tp_moved = false;
+            tp_mode = TP_PENDING;
+            tp_scrolled = false;
+            if (prospector_touchpad_active()) {
+                k_work_reschedule(&tp_hold_work, K_MSEC(TP_HOLD_MS));
+            }
 #endif
         } else if (!evt->value && active) {
             active = false;
-            bool is_tap = iabs32(cur_x - start_x) < TOUCH_TAP_MAX_TRAVEL &&
-                          iabs32(cur_y - start_y) < TOUCH_TAP_MAX_TRAVEL;
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
             if (prospector_touchpad_active()) {
-                /* a drag never clicks (tp_moved = left the dead-zone); only a tap does */
-                if (is_tap && !tp_moved) {
+                k_work_cancel_delayable(&tp_hold_work);
+                /* A "tap" = finger lifted without committing to a drag and without a
+                 * scroll actually firing (covers a hold that never dragged). */
+                if (tp_mode != TP_MOTION && !tp_scrolled) {
                     if (tp_start_sx < TP_CORNER_PX && tp_start_sy < TP_CORNER_PX) {
-                        /* top-left corner tap = exit; hand to the fork UI */
+                        /* corner tap = exit; hand to the fork UI */
                         pending_sx = tp_start_sx;
                         pending_sy = tp_start_sy;
                         k_work_submit(&touch_work);
-                    } else if (tp_start_sx < TP_ZONE_L) {
-                        atomic_set(&tp_click, MB1); /* left third = left click */
+                    } else if (tp_first_tap) {
+                        /* second tap within the window = right click */
+                        tp_first_tap = false;
+                        k_work_cancel_delayable(&tp_tap_work);
+                        atomic_set(&tp_click, MB2);
                         k_work_submit(&tp_work);
-                    } else if (tp_start_sx >= TP_ZONE_R) {
-                        atomic_set(&tp_click, MB2); /* right third = right click */
-                        k_work_submit(&tp_work);
+                    } else {
+                        /* first tap -> defer the left click, wait for a possible second */
+                        tp_first_tap = true;
+                        k_work_reschedule(&tp_tap_work, K_MSEC(TP_DTAP_MS));
                     }
-                    /* middle-third tap does nothing -- that zone is for scroll drags */
                 }
-                break; /* mouse-pad mode owns the release; skip cell dispatch */
+                break; /* trackpad mode owns the release; skip cell dispatch */
             }
 #endif
-            if (is_tap) {
+            if (iabs32(cur_x - start_x) < TOUCH_TAP_MAX_TRAVEL &&
+                iabs32(cur_y - start_y) < TOUCH_TAP_MAX_TRAVEL) {
                 pending_sx = panel_to_screen_x(cur_x, cur_y);
                 pending_sy = panel_to_screen_y(cur_x, cur_y);
                 LOG_INF("tap raw(%d,%d) screen(%d,%d) -> cell %d",
@@ -258,13 +288,31 @@ static void touch_cb(struct input_event *evt, void *user_data) {
 
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
     /* Drag handling, sampled on position events (not evt->sync -- the CST816S carries
-     * sync on BTN_TOUCH, not the ABS events). Mode is picked by the START zone:
-     * middle = scroll lane, sides = trackpad pointer motion. */
+     * sync on BTN_TOUCH, not the ABS events). */
     if (prospector_touchpad_active() && active &&
         (evt->code == INPUT_ABS_X || evt->code == INPUT_ABS_Y)) {
-        if (tp_middle) {
-            /* Scroll: one wheel tick per TP_SCROLL_PX of vertical travel. */
-            int32_t sy = panel_to_screen_y(cur_x, cur_y);
+        int32_t sx = panel_to_screen_x(cur_x, cur_y);
+        int32_t sy = panel_to_screen_y(cur_x, cur_y);
+        if (tp_mode == TP_PENDING) {
+            /* Leaving the dead-zone commits a pointer drag + cancels the hold->scroll. */
+            if (iabs32(sx - tp_start_sx) >= TP_MOVE_DEADZONE_PX ||
+                iabs32(sy - tp_start_sy) >= TP_MOVE_DEADZONE_PX) {
+                tp_mode = TP_MOTION;
+                k_work_cancel_delayable(&tp_hold_work);
+                tp_prev_sx = sx; /* stream from here; the dead-zone px are dropped */
+                tp_prev_sy = sy;
+            }
+        } else if (tp_mode == TP_MOTION) {
+            int dx = sx - tp_prev_sx;
+            int dy = sy - tp_prev_sy;
+            tp_prev_sx = sx;
+            tp_prev_sy = sy;
+            if (dx || dy) {
+                atomic_add(&tp_dx, dx);
+                atomic_add(&tp_dy, dy);
+                k_work_submit(&tp_work);
+            }
+        } else { /* TP_SCROLL: one wheel tick per TP_SCROLL_PX of vertical travel */
             int dsy = sy - tp_scroll_ref_sy;
             if (dsy >= TP_SCROLL_PX || dsy <= -TP_SCROLL_PX) {
                 int ticks = dsy / TP_SCROLL_PX; /* signed */
@@ -272,31 +320,8 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                  * this sign if it scrolls the wrong way for your taste. */
                 atomic_add(&tp_scroll, -ticks);
                 tp_scroll_ref_sy += ticks * TP_SCROLL_PX;
+                tp_scrolled = true;
                 k_work_submit(&tp_work);
-            }
-        } else {
-            /* Trackpad motion. Stays silent inside the dead-zone so finger wobble
-             * during a click never nudges the pointer; once the drag commits,
-             * stream raw deltas (scaled on the workqueue side). */
-            int32_t sx = panel_to_screen_x(cur_x, cur_y);
-            int32_t sy = panel_to_screen_y(cur_x, cur_y);
-            if (!tp_moved) {
-                if (iabs32(sx - tp_start_sx) >= TP_MOVE_DEADZONE_PX ||
-                    iabs32(sy - tp_start_sy) >= TP_MOVE_DEADZONE_PX) {
-                    tp_moved = true;
-                    tp_prev_sx = sx; /* stream from here; the dead-zone px are dropped */
-                    tp_prev_sy = sy;
-                }
-            } else {
-                int dx = sx - tp_prev_sx;
-                int dy = sy - tp_prev_sy;
-                tp_prev_sx = sx;
-                tp_prev_sy = sy;
-                if (dx || dy) {
-                    atomic_add(&tp_dx, dx);
-                    atomic_add(&tp_dy, dy);
-                    k_work_submit(&tp_work);
-                }
             }
         }
     }
