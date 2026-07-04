@@ -233,7 +233,10 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                 /* A "tap" = finger lifted before committing to a drag (scroll or move). */
                 if (tp_mode == TP_PENDING) {
                     if (tp_start_sx < TP_CORNER_PX && tp_start_sy < TP_CORNER_PX) {
-                        /* corner tap = exit; hand to the fork UI */
+                        /* corner tap = exit; hand to the fork UI. Drop any pending
+                         * first-tap so a stray left click doesn't fire after exit. */
+                        tp_first_tap = false;
+                        k_work_cancel_delayable(&tp_tap_work);
                         pending_sx = tp_start_sx;
                         pending_sy = tp_start_sy;
                         k_work_submit(&touch_work);
