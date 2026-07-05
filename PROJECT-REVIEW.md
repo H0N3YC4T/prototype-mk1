@@ -270,13 +270,13 @@ subscriptions, then sensor disc_params + self-heal.
 
 ## 16. Summary of open items from this deep dive
 
-| # | Item | Type | Action |
+| # | Item | Type | Status |
 |---|---|---|---|
-| 1 | `CONFIG_ZMK_USB_LOGGING=y` outlived calibration; leaks touch-typed keys over USB CDC | stale | flip to `=n` (one line) when convenient |
-| 2 | "3 macro-key zones" comment drift in overlay / conf / CMakeLists | stale | batch into the same follow-up commit |
-| 3 | ALS-path bugs in fork `brightness.c` | bug, compiled-out | fix only if the light sensor is ever fitted |
-| 4 | Upstream the #3156 fix to ZMK | opportunity | optional |
-| 5 | Everything in §7 (trade-offs) | design | revisit only if hardware feel demands |
+| 1 | `CONFIG_ZMK_USB_LOGGING=y` outlived calibration; leaked touch-typed keys over USB CDC | stale | **FIXED 2026-07-05** — `=n`; re-enable temporarily to watch the reconnect marker during sleep/wake verification |
+| 2 | "3 macro-key zones" comment drift in overlay / conf / CMakeLists | stale | **FIXED 2026-07-05** — comment sweep, incl. the 4x3→4x4 pool note and the "three macros" block |
+| 3 | ALS-path bugs in fork `brightness.c` | bug, compiled-out | **FIXED 2026-07-05** (fork abad650) — signed fade level + clamp; still compiled out on our build |
+| 4 | Upstream the #3156 fix to ZMK | opportunity | open, optional |
+| 5 | Everything in §7 (trade-offs) | design | intentionally open; revisit only if hardware feel demands |
 
 Nothing found in the deep dive changes the Part I verdict: the system is coherent, the
 invariants are documented where they bite, and the two real risks (fork-pin discipline, thread

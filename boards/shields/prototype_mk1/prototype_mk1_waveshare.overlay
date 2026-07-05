@@ -15,8 +15,9 @@
  * D0/P0.02, but D0 is now the CST816S touch IRQ, so it was moved to P0.08.
  *
  * CST816S capacitive touch (Waveshare panel): SDA->D4, SCL->D5 on the shared
- * &i2c1 bus (alongside the prospector apds9960), IRQ->D0, RST->D1. Decoded into
- * 3 macro-key zones by app/src/touch/touch_input.c. See TOUCH-SCREEN-NOTES.md.
+ * &i2c1 bus (alongside the prospector apds9960), IRQ->D0, RST->D1. Taps and
+ * trackpad gestures are decoded by app/src/touch/touch_input.c and dispatched
+ * to the prospector fork's on-screen UI. See TOUCH-SCREEN-NOTES.md.
  */
 
 #include "prototype_mk1_dongle_base.dtsi"
@@ -68,8 +69,8 @@
         zmk,backlight = &backlight;
     };
 
-    /* Three macro keys fired by the touch zones (app/src/touch/touch_input.c).
-     * Placeholders -- customise the bindings to taste. */
+    /* Six media macros fired by the touch UI's MEDIA/SETTINGS screens (0-2 are
+     * also the no-fork-UI fallback grid in touch_input.c). Customise to taste. */
     macros {
         touch_macro_0: touch_macro_0 {
             compatible = "zmk,behavior-macro";
