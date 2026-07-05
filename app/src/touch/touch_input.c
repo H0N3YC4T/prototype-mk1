@@ -50,18 +50,15 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #define TP_SENS_DEN 1
 #endif
 
-/* Waveshare 1.69" panel, as the CST816S reports it (portrait). The rendered
- * OPERATOR screen is rotated relative to this, so the zone bounds below are a
- * starting guess -- every tap logs raw x,y + the computed zone so the constants
- * can be calibrated on hardware (see notes). */
+/* Waveshare 1.69" panel, as the CST816S reports it (portrait). */
 #define PANEL_W 240
 #define PANEL_H 280
 #define TOUCH_TAP_MAX_TRAVEL 24
 
 /* The OPERATOR screen renders rotated 90 deg CLOCKWISE vs the CST816S panel axes
- * (confirmed on hardware: panel-X runs along the screen's vertical). Map raw
- * panel (tx,ty) -> rendered screen (sx,sy); the screen is 280 wide x 240 tall.
- * If the 3 keys come out left<->right mirrored, flip sx to (PANEL_H - ty). */
+ * (panel-X runs along the screen's vertical). Map raw panel (tx,ty) -> rendered
+ * screen (sx,sy); the screen is 280 wide x 240 tall. If taps ever come out
+ * left<->right mirrored, flip sx to (PANEL_H - ty). */
 #define SCREEN_W 280
 #define SCREEN_H 240
 static inline int32_t panel_to_screen_x(int32_t tx, int32_t ty) { return ty; }
@@ -71,7 +68,7 @@ static inline int32_t panel_to_screen_y(int32_t tx, int32_t ty) { return PANEL_W
  * gaps -> no dead zones / mis-inputs). Cells are row-major 0..5:
  *     0 1 2   (top row)
  *     3 4 5   (bottom row)
- * Each macro button occupies one cell. The current test macros use the top row. */
+ * Each macro button occupies one cell; the fallback macros use the top row. */
 #define GRID_COLS 3
 #define GRID_ROWS 2
 
@@ -153,10 +150,9 @@ static void touch_fire(struct k_work *work) {
 static K_WORK_DEFINE(touch_work, touch_fire);
 
 #if IS_ENABLED(CONFIG_ZMK_POINTING)
-/* Pending click + accumulated vertical scroll ticks, drained on the system workqueue.
- * ALL zmk_hid_/zmk_endpoint_ calls happen HERE, never in the input callback -- that
- * runs in driver context, and off-thread HID writes corrupt the shared report (the
- * boot-variant key corruption we already fixed once; same rule applies to mouse HID). */
+/* Pending click + accumulated scroll/motion, drained on the system workqueue. ALL
+ * zmk_hid_/zmk_endpoint_ calls happen HERE, never in the input callback -- that runs
+ * in driver context, and ZMK's HID reports have no cross-thread locking. */
 enum tp_mode { TP_PENDING, TP_MOTION, TP_SCROLL };
 static atomic_t tp_click = ATOMIC_INIT(0);  /* 0 / MB1 / MB2 */
 static atomic_t tp_scroll = ATOMIC_INIT(0); /* signed vertical wheel ticks pending */
