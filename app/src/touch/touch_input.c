@@ -46,8 +46,16 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #define TP_DTAP_MS 180            /* 2nd tap within this of the 1st = right click */
 #define TP_SCROLL_ZONE_X 240      /* screen x >= this (far right, of 280) = scroll lane */
 #define TP_SCROLL_PX 18           /* screen px of vertical drag per wheel tick */
-#define TP_SENS_NUM 1             /* pointer delta = screen delta * NUM / DEN */
-#define TP_SENS_DEN 1
+
+/* Pointer acceleration: threshold curve in x256 fixed point. Per-sample deltas up
+ * to TP_ACCEL_THRESH px move 1:1 (precision), above it the gain ramps linearly
+ * with speed and saturates at the level's cap. Level 0 = flat / off. The level is
+ * adjustable from the fork's settings screen (prospector_touchpad_accel_*). */
+#define TP_ACCEL_THRESH 3
+static const uint16_t tp_accel_coef[] = {0, 10, 18, 30, 46};   /* gain256 per px over */
+static const uint16_t tp_accel_cap[] = {256, 448, 576, 736, 896}; /* 1.0x .. 3.5x */
+#define TP_ACCEL_LEVELS ((int)ARRAY_SIZE(tp_accel_coef))
+#define TP_ACCEL_DEFAULT 2
 #endif
 
 /* Waveshare 1.69" panel, as the CST816S reports it (portrait). */
@@ -164,11 +172,36 @@ static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scro
 static enum tp_mode tp_mode;                /* this touch: pending / moving / scrolling */
 static bool tp_scroll_zone;                 /* touch started in the far-right scroll lane */
 static bool tp_first_tap;                   /* a first tap is awaiting a possible second */
+static int32_t tp_carry_x, tp_carry_y;      /* x256 sub-pixel remainders (accel scaling) */
+static uint8_t tp_accel_level = TP_ACCEL_DEFAULT;
+
+/* Settings-screen hooks (called from the fork's display thread; a single aligned
+ * byte read/write, so no marshalling needed). */
+int prospector_touchpad_accel_get(void) {
+    return tp_accel_level;
+}
+void prospector_touchpad_accel_step(int delta) {
+    int l = (int)tp_accel_level + delta;
+    if (l < 0) { l = 0; }
+    if (l > TP_ACCEL_LEVELS - 1) { l = TP_ACCEL_LEVELS - 1; }
+    tp_accel_level = (uint8_t)l;
+}
+
+/* Gain (x256) for one sample whose |dx|+|dy| is `mag`. */
+static int32_t tp_accel_gain256(int32_t mag) {
+    int32_t over = mag - TP_ACCEL_THRESH;
+    if (over <= 0) {
+        return 256;
+    }
+    int32_t g = 256 + (int32_t)tp_accel_coef[tp_accel_level] * over;
+    int32_t cap = tp_accel_cap[tp_accel_level];
+    return g > cap ? cap : g;
+}
 
 static void tp_work_handler(struct k_work *work) {
     ARG_UNUSED(work);
-    int dx = atomic_set(&tp_dx, 0) * TP_SENS_NUM / TP_SENS_DEN;
-    int dy = atomic_set(&tp_dy, 0) * TP_SENS_NUM / TP_SENS_DEN;
+    int dx = atomic_set(&tp_dx, 0); /* already accel-scaled at accumulation time */
+    int dy = atomic_set(&tp_dy, 0);
     int scroll = atomic_set(&tp_scroll, 0);
     int click = atomic_set(&tp_click, 0);
     if (dx || dy) {
@@ -227,6 +260,8 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             tp_start_sy = panel_to_screen_y(start_x, start_y);
             tp_mode = TP_PENDING;
             tp_scroll_zone = (tp_start_sx >= TP_SCROLL_ZONE_X);
+            tp_carry_x = 0;
+            tp_carry_y = 0;
 #endif
         } else if (!evt->value && active) {
             active = false;
@@ -300,9 +335,21 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             tp_prev_sx = sx;
             tp_prev_sy = sy;
             if (dx || dy) {
-                atomic_add(&tp_dx, dx);
-                atomic_add(&tp_dy, dy);
-                k_work_submit(&tp_work);
+                /* Accelerate per sample (per-sample delta ~ finger speed at a fixed
+                 * report rate); carry the x256 remainders so slow motion keeps its
+                 * sub-pixel travel instead of rounding to nothing. */
+                int32_t gain = tp_accel_gain256(iabs32(dx) + iabs32(dy));
+                tp_carry_x += dx * gain;
+                tp_carry_y += dy * gain;
+                int outx = tp_carry_x / 256;
+                int outy = tp_carry_y / 256;
+                tp_carry_x -= outx * 256;
+                tp_carry_y -= outy * 256;
+                if (outx || outy) {
+                    atomic_add(&tp_dx, outx);
+                    atomic_add(&tp_dy, outy);
+                    k_work_submit(&tp_work);
+                }
             }
         } else { /* TP_SCROLL: one wheel tick per TP_SCROLL_PX of vertical travel */
             int dsy = sy - tp_scroll_ref_sy;

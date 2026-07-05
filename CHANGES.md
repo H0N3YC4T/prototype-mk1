@@ -45,8 +45,19 @@ click deferred `TP_DTAP_MS` 180ms (the cost of also having 2-tap = right click),
 stray click after leaving the page). Known accepted quirk: tap-then-immediately-drag still
 fires the deferred left click mid-drag — the tap was an intended click; cancelling would eat
 clicks. `TP_SCROLL_ZONE_X` must match the scroll-lane divider the fork renders at x=240 —
-one constant, two repos. Tuning knobs: `TP_SENS_NUM/DEN` (flat 1/1; acceleration curve is the
-known upgrade), `TP_SCROLL_PX`, `TP_DTAP_MS`, `TP_MOVE_DEADZONE_PX`.
+one constant, two repos. Tuning knobs: `TP_SCROLL_PX`, `TP_DTAP_MS`, `TP_MOVE_DEADZONE_PX`,
+and the acceleration tables below.
+
+**Pointer acceleration (added 2026-07-06):** threshold curve, x256 fixed point. Per-sample
+deltas <= `TP_ACCEL_THRESH` (3px) move 1:1; above that, gain = 256 + coef*(mag - thresh),
+saturating at the level's cap. Five levels (OFF/1/2/3/MAX; `tp_accel_coef` /
+`tp_accel_cap` tables, default level 2 ≈ up to 2.25x). Applied per ABS sample in the motion
+block — per-sample delta is the speed proxy at a fixed report rate — with x256 carry
+accumulators (`tp_carry_x/y`, reset per touch) so slow diagonals keep sub-pixel travel.
+This replaced the old flat `TP_SENS_NUM/DEN` multiplier. The level is adjusted from the
+fork's settings screen via `prospector_touchpad_accel_get/step` (strong symbols here, weak
+-1/no-op fallbacks in the fork; a plain aligned byte, so the display-thread write needs no
+marshalling). In-RAM only — resets to default on reboot, same as brightness.
 
 **Threading:** the input callback runs in driver context and only touches atomics +
 `k_work_submit`; all `zmk_hid_*` / `zmk_endpoint_*` / behavior invokes happen in work handlers
@@ -125,6 +136,7 @@ targets).
 
 - Hardware-verify sleep/wake reconnect (needs USB logging temporarily =y; see conf notes).
 - Swipe-to-back gesture (deferred feature).
-- Pointer acceleration curve (nice-to-have).
 - Optional: upstream the #3156 fix — local candidate branch `pr/3156-deferred-subscribe` +
   PR-3156.md write-up in `_touchref/zmk` (local only, pending personal review).
+- ~~Pointer acceleration curve~~ — done 2026-07-06; settings screen's bottom row adjusts it
+  (volume moved out; it was always duplicated on MEDIA).
