@@ -47,15 +47,14 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #define TP_SCROLL_ZONE_X 240      /* screen x >= this (far right, of 280) = scroll lane */
 #define TP_SCROLL_PX 18           /* screen px of vertical drag per wheel tick */
 
-/* Pointer acceleration: threshold curve in x256 fixed point. Per-sample deltas up
- * to TP_ACCEL_THRESH px move 1:1 (precision), above it the gain ramps linearly
- * with speed and saturates at the level's cap. Level 0 = flat / off. The level is
- * adjustable from the fork's settings screen (prospector_touchpad_accel_*). */
-#define TP_ACCEL_THRESH 3
-static const uint16_t tp_accel_coef[] = {0, 10, 18, 30, 46};   /* gain256 per px over */
-static const uint16_t tp_accel_cap[] = {256, 448, 576, 736, 896}; /* 1.0x .. 3.5x */
-#define TP_ACCEL_LEVELS ((int)ARRAY_SIZE(tp_accel_coef))
-#define TP_ACCEL_DEFAULT 2
+/* Pointer sensitivity: the settings screen sets a level 0..TP_SENS_MAX; each ABS
+ * sample's motion is scaled by level * TP_SENS_MULT256 / 256. Level TP_SENS_DEFAULT
+ * gives ~4x screen-to-pointer movement (the midpoint of the 0..10 range), so 10 is
+ * ~8x and 0 holds the pointer still. x256 carry keeps sub-pixel travel on slow
+ * drags. Adjusted from the fork's settings screen (prospector_touchpad_sens_*). */
+#define TP_SENS_MAX 10
+#define TP_SENS_DEFAULT 5
+#define TP_SENS_MULT256 205   /* per level; 5*205 = 1025/256 ~= 4.0x */
 #endif
 
 /* Waveshare 1.69" panel, as the CST816S reports it (portrait). */
@@ -69,8 +68,18 @@ static const uint16_t tp_accel_cap[] = {256, 448, 576, 736, 896}; /* 1.0x .. 3.5
  * left<->right mirrored, flip sx to (PANEL_H - ty). */
 #define SCREEN_W 280
 #define SCREEN_H 240
-static inline int32_t panel_to_screen_x(int32_t tx, int32_t ty) { return ty; }
-static inline int32_t panel_to_screen_y(int32_t tx, int32_t ty) { return PANEL_W - tx; }
+/* Set true by the fork when the display is rotated 180deg (settings screen). The
+ * touch panel doesn't move with the image, so screen coords are inverted to match. */
+static bool tp_flip;
+void prospector_touch_set_flip(bool flipped) { tp_flip = flipped; }
+static inline int32_t panel_to_screen_x(int32_t tx, int32_t ty) {
+    int32_t v = ty;
+    return tp_flip ? (SCREEN_W - 1 - v) : v;
+}
+static inline int32_t panel_to_screen_y(int32_t tx, int32_t ty) {
+    int32_t v = PANEL_W - tx;
+    return tp_flip ? (SCREEN_H - 1 - v) : v;
+}
 
 /* Touch is a fixed 2-row x 3-column grid over the WHOLE screen, edge to edge (no
  * gaps -> no dead zones / mis-inputs). Cells are row-major 0..5:
@@ -172,35 +181,24 @@ static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scro
 static enum tp_mode tp_mode;                /* this touch: pending / moving / scrolling */
 static bool tp_scroll_zone;                 /* touch started in the far-right scroll lane */
 static bool tp_first_tap;                   /* a first tap is awaiting a possible second */
-static int32_t tp_carry_x, tp_carry_y;      /* x256 sub-pixel remainders (accel scaling) */
-static uint8_t tp_accel_level = TP_ACCEL_DEFAULT;
+static int32_t tp_carry_x, tp_carry_y;      /* x256 sub-pixel remainders (sens scaling) */
+static uint8_t tp_sens_level = TP_SENS_DEFAULT;
 
 /* Settings-screen hooks (called from the fork's display thread; a single aligned
  * byte read/write, so no marshalling needed). */
-int prospector_touchpad_accel_get(void) {
-    return tp_accel_level;
+int prospector_touchpad_sens_get(void) {
+    return tp_sens_level;
 }
-void prospector_touchpad_accel_step(int delta) {
-    int l = (int)tp_accel_level + delta;
+void prospector_touchpad_sens_step(int delta) {
+    int l = (int)tp_sens_level + delta;
     if (l < 0) { l = 0; }
-    if (l > TP_ACCEL_LEVELS - 1) { l = TP_ACCEL_LEVELS - 1; }
-    tp_accel_level = (uint8_t)l;
-}
-
-/* Gain (x256) for one sample whose |dx|+|dy| is `mag`. */
-static int32_t tp_accel_gain256(int32_t mag) {
-    int32_t over = mag - TP_ACCEL_THRESH;
-    if (over <= 0) {
-        return 256;
-    }
-    int32_t g = 256 + (int32_t)tp_accel_coef[tp_accel_level] * over;
-    int32_t cap = tp_accel_cap[tp_accel_level];
-    return g > cap ? cap : g;
+    if (l > TP_SENS_MAX) { l = TP_SENS_MAX; }
+    tp_sens_level = (uint8_t)l;
 }
 
 static void tp_work_handler(struct k_work *work) {
     ARG_UNUSED(work);
-    int dx = atomic_set(&tp_dx, 0); /* already accel-scaled at accumulation time */
+    int dx = atomic_set(&tp_dx, 0); /* already sensitivity-scaled at accumulation time */
     int dy = atomic_set(&tp_dy, 0);
     int scroll = atomic_set(&tp_scroll, 0);
     int click = atomic_set(&tp_click, 0);
@@ -335,12 +333,11 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             tp_prev_sx = sx;
             tp_prev_sy = sy;
             if (dx || dy) {
-                /* Accelerate per sample (per-sample delta ~ finger speed at a fixed
-                 * report rate); carry the x256 remainders so slow motion keeps its
-                 * sub-pixel travel instead of rounding to nothing. */
-                int32_t gain = tp_accel_gain256(iabs32(dx) + iabs32(dy));
-                tp_carry_x += dx * gain;
-                tp_carry_y += dy * gain;
+                /* Scale by the sensitivity level (x256); carry the remainders so slow
+                 * motion keeps its sub-pixel travel instead of rounding to nothing. */
+                int32_t mult = (int32_t)tp_sens_level * TP_SENS_MULT256;
+                tp_carry_x += dx * mult;
+                tp_carry_y += dy * mult;
                 int outx = tp_carry_x / 256;
                 int outy = tp_carry_y / 256;
                 tp_carry_x -= outx * 256;

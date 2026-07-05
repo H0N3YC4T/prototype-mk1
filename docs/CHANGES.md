@@ -44,20 +44,24 @@ click deferred `TP_DTAP_MS` 180ms (the cost of also having 2-tap = right click),
 (40px, top-left) = exit and cancels the deferred click (a tap-then-quick-exit once fired a
 stray click after leaving the page). Known accepted quirk: tap-then-immediately-drag still
 fires the deferred left click mid-drag — the tap was an intended click; cancelling would eat
-clicks. `TP_SCROLL_ZONE_X` must match the scroll-lane divider the fork renders at x=240 —
-one constant, two repos. Tuning knobs: `TP_SCROLL_PX`, `TP_DTAP_MS`, `TP_MOVE_DEADZONE_PX`,
-and the acceleration tables below.
+clicks. `TP_SCROLL_ZONE_X` (240) must match the scroll-lane the fork renders flush to the right
+edge — one constant, two repos. Tuning knobs: `TP_SCROLL_PX`, `TP_DTAP_MS`,
+`TP_MOVE_DEADZONE_PX`, `TP_SENS_MULT256`.
 
-**Pointer acceleration (added 2026-07-06):** threshold curve, x256 fixed point. Per-sample
-deltas <= `TP_ACCEL_THRESH` (3px) move 1:1; above that, gain = 256 + coef*(mag - thresh),
-saturating at the level's cap. Five levels (OFF/1/2/3/MAX; `tp_accel_coef` /
-`tp_accel_cap` tables, default level 2 ≈ up to 2.25x). Applied per ABS sample in the motion
-block — per-sample delta is the speed proxy at a fixed report rate — with x256 carry
-accumulators (`tp_carry_x/y`, reset per touch) so slow diagonals keep sub-pixel travel.
-This replaced the old flat `TP_SENS_NUM/DEN` multiplier. The level is adjusted from the
-fork's settings screen via `prospector_touchpad_accel_get/step` (strong symbols here, weak
--1/no-op fallbacks in the fork; a plain aligned byte, so the display-thread write needs no
-marshalling). In-RAM only — resets to default on reboot, same as brightness.
+**Pointer sensitivity (reworked 2026-07-06, replaced the acceleration curve):** flat multiplier,
+x256 fixed point. Per ABS sample the motion is scaled by `level * TP_SENS_MULT256 / 256` with
+x256 carry accumulators (`tp_carry_x/y`, reset per touch) so slow diagonals keep sub-pixel
+travel. Level range 0..`TP_SENS_MAX` (10), default `TP_SENS_DEFAULT` (5) ≈ 4x (the requested
+base); 10 ≈ 8x, 0 holds still. Adjusted from the fork's settings screen via
+`prospector_touchpad_sens_get/step` (strong here, weak -1/no-op fallbacks in the fork; a plain
+aligned byte, so the display-thread write needs no marshalling). In-RAM only — resets to default
+on reboot, same as brightness. (The earlier threshold accel curve was dropped for a plain
+sensitivity scale.)
+
+**180° display rotation (added 2026-07-06):** the fork's settings rotate button flips the panel
+between its two landscape orientations; touch_input.c exposes `prospector_touch_set_flip(bool)`
+(strong), which sets `tp_flip` so `panel_to_screen_x/y` invert their output (`SCREEN_W/H-1 - v`).
+That single flag rotates taps AND the trackpad consistently. In-RAM, resets on reboot.
 
 **Threading:** the input callback runs in driver context and only touches atomics +
 `k_work_submit`; all `zmk_hid_*` / `zmk_endpoint_*` / behavior invokes happen in work handlers
