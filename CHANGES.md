@@ -135,8 +135,9 @@ targets).
 ## Open items
 
 - Hardware-verify sleep/wake reconnect (needs USB logging temporarily =y; see conf notes).
-- Swipe-to-back gesture (deferred feature).
 - Optional: upstream the #3156 fix — local candidate branch `pr/3156-deferred-subscribe` +
   PR-3156.md write-up in `_touchref/zmk` (local only, pending personal review).
 - ~~Pointer acceleration curve~~ — done 2026-07-06; settings screen's bottom row adjusts it
   (volume moved out; it was always duplicated on MEDIA).
+- ~~Swipe-to-back gesture~~ — dropped 2026-07-06 (not wanted; chevron back buttons cover it).
+  Menu idle timeout raised 5s → 30s same day (hub + trackpad still exempt).
