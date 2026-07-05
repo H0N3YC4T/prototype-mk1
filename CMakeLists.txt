@@ -9,3 +9,8 @@ zephyr_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 # zmk,behavior-cycle-animation node.
 target_sources(app PRIVATE app/src/events/cycle_animation_state_changed.c)
 target_sources(app PRIVATE app/src/behaviors/behavior_cycle_animation.c)
+
+# Touch -> 3 macro keys for the XIAO + Waveshare prospector dongle. The file is
+# internally gated on DT_HAS_COMPAT_STATUS_OKAY(hynitron_cst816s), so it compiles
+# to nothing until the CST816S node is declared (see TOUCH-SCREEN-NOTES.md).
+target_sources(app PRIVATE app/src/touch/touch_input.c)

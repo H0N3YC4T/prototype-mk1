@@ -8,10 +8,12 @@ manifest:
       url-base: https://github.com/H0N3YC4T
   projects:
     - name: zmk
-      remote: zmkfirmware
-      # Pinned to a validated ZMK main commit (Zephyr 4.1 / LVGL 9.3).
-      # Bump deliberately and re-test; see MIGRATION_NOTES.md.
-      revision: 64daf698e073e37b6748ac54f4eb48d8666af0b9
+      remote: honeycat
+      # FORK of zmkfirmware/zmk @ 64daf698 + the #3156 deferred-subscribe reconnect
+      # fix (app/src/split/bluetooth/central.c: subscribe AFTER the char-discovery
+      # walk, not inline mid-walk). Base pin validated (Zephyr 4.1 / LVGL 9.3);
+      # re-test after bumps. See ZMK-3156-DEEP-DIVE.md / MIGRATION_NOTES.md.
+      revision: c2ca24ff49a27b5c80463e33c84f3d28e9a28551
       import: app/west.yml
     # Dongle display — LVGL-9/Zephyr-4.1. Replaces the previously-vendored
     # boards/shields/dongle_display copy. Known-good HEAD: 2bb333f (pin at end).
@@ -27,6 +29,6 @@ manifest:
     # commit so each theme change triggers a reproducible CI build.
     - name: prospector-zmk-module
       remote: honeycat
-      revision: a21074e80ddac7c777c0b4c5500a911d7e0c53bc
+      revision: 3ba7e8a45bcf7ce2622cb15e58d70eed4ba3f5dd
   self:
     path: config

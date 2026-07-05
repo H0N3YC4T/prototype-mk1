@@ -244,3 +244,35 @@ _(append each CI failure + its fix here so debugging stays referenceable)_
   removed vestigial `zephyr,display = &oled` from prototype_mk1.dtsi (gem sets
   &nice_view). Periph order `..periph_left nice_view_adapter nice_view_gem` needs
   NO reorder — the gem (label consumer) is already last, after the adapter.
+
+## Fork maintenance (two personal forks are now load-bearing)
+
+`config/west.yml` pins two `honeycat` forks. Both branches are LINEAR on a clean
+upstream base, so a future upstream bump = rebase, force-push, re-pin, re-CI.
+
+**zmk** — `H0N3YC4T/zmk @ fix/3156-deferred-subscribe`, base `zmkfirmware @ 64daf698`.
+Carries ONLY `app/src/split/bluetooth/central.c` (the #3156 reconnect fix — see
+`REVIEW-BRIEF.md` §8a). To move to a newer upstream zmk:
+```
+cd _touchref/zmk
+git fetch origin
+git rebase origin/main fix/3156-deferred-subscribe
+```
+If upstream refactored `central.c`, port the FOUR elements by hand (all in one
+function/struct): (1) deferred `split_central_flush_subscriptions()` after the walk;
+(2) per-subscription `disc_params` — position/sensor/battery each own their CCC
+discover struct; (3) `release_peripheral_slot()` clears value+ccc handles;
+(4) position-state subscribe self-heal (disconnect-on-failure). Then
+`git push -f fork fix/3156-deferred-subscribe`, bump `config/west.yml`'s zmk
+revision, full CI, and **hardware-re-test reconnect before trusting the bump**.
+
+**prospector** — `H0N3YC4T/prospector-zmk-module @ feat/new-status-screens`, base
+carrefinho main. Carries the whole touch UI. Same shape; conflicts land almost
+entirely in `status_screen.c`/`brightness.c`, wholly ours → take ours. Then
+`git push -f fork feat/new-status-screens`, bump the prospector revision, CI.
+
+**Upstreaming (removes the zmk maintenance burden):** the central.c fix closes an
+open community bug (zmk #3156). Worth preparing a PR — branch off `zmkfirmware/main`,
+two commits (deferred-subscribe + disc_params separation; then self-heal), body from
+`ZMK-3156-DEEP-DIVE.md` §3.4–3.5 + `REVIEW-BRIEF.md` §8a. **Do not open the PR without
+explicit user consent** (outward-facing).
