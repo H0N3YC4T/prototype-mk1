@@ -29,6 +29,6 @@ manifest:
     # commit so each theme change triggers a reproducible CI build.
     - name: prospector-zmk-module
       remote: honeycat
-      revision: 6c2fe5078d3de0f41696675bdcf606cdc51ff9b6
+      revision: 3ba7e8a45bcf7ce2622cb15e58d70eed4ba3f5dd
   self:
     path: config

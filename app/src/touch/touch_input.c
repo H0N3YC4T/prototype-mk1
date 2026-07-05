@@ -1,17 +1,23 @@
 /*
  * SPDX-License-Identifier: MIT
  *
- * Touch -> 3 macro keys for the XIAO nRF52840 + Waveshare 1.69" prospector
- * dongle (CST816S controller). The 3 zones replace the on-screen wpm_meter
- * widget (WPM bars + WPM number + layer-name text); each tap fires one of three
- * ZMK macro behaviors (touch_macro_0/1/2), which the dongle -- being the split
- * central -- sends to the host as a normal HID report.
+ * CST816S touch input for the XIAO nRF52840 + Waveshare 1.69" prospector
+ * dongle. Two jobs:
  *
- * Whole file is gated on the cst816s DT node, so with no node present (the
- * default until the controller is wired + declared in the overlay) this
- * compiles to nothing and the build stays green. See TOUCH-SCREEN-NOTES.md for
- * the activation steps (wiring/pins, the DT node, the 3 macro defs, and the
- * zone calibration).
+ *  1. TAPS: raw screen coords are handed to the prospector fork's on-screen UI
+ *     (prospector_touch_tap), which maps them to a cell in whichever screen is
+ *     showing. With no fork UI present, falls back to a fixed 2x3 macro grid
+ *     (touch_macro_0..2, defined in prototype_mk1_waveshare.overlay).
+ *
+ *  2. TRACKPAD: while the fork's MOUSE page is active
+ *     (prospector_touchpad_active), gestures become mouse HID instead --
+ *     drag = pointer, right-edge drag = scroll, 1 tap = left click,
+ *     2 taps = right click, top-left corner tap = exit.
+ *
+ * Whole file is gated on the cst816s DT node, so with no node present this
+ * compiles to nothing and the build stays green. Thread rule: behaviors and
+ * HID writes happen ONLY on the system workqueue (k_work), never in this
+ * file's input callback (driver context). See TOUCH-SCREEN-NOTES.md.
  */
 
 #include <zephyr/kernel.h>
