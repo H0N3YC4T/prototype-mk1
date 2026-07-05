@@ -15,7 +15,7 @@ include:
     artifact-name: reset-waveshare
 
   # Zephyr 4.1 / LVGL 9.3 migration complete: all display-bearing targets below
-  # build green on the HWMv2 `nice_nano//zmk` board id. See MIGRATION_NOTES.md.
+  # build green on the HWMv2 `nice_nano//zmk` board id. See docs/issues.md (S12).
 
   # -------------- CONTROLLERS --------------
 

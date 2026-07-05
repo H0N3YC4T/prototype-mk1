@@ -17,7 +17,7 @@
  * Whole file is gated on the cst816s DT node, so with no node present this
  * compiles to nothing and the build stays green. Thread rule: behaviors and
  * HID writes happen ONLY on the system workqueue (k_work), never in this
- * file's input callback (driver context). See TOUCH-SCREEN-NOTES.md.
+ * file's input callback (driver context). See docs/information.md.
  */
 
 #include <zephyr/kernel.h>

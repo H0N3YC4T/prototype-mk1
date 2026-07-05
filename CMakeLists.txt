@@ -13,5 +13,5 @@ target_sources(app PRIVATE app/src/behaviors/behavior_cycle_animation.c)
 # CST816S touch input for the XIAO + Waveshare prospector dongle: tap dispatch to
 # the fork's on-screen UI + trackpad gestures (see the file header). Internally
 # gated on DT_HAS_COMPAT_STATUS_OKAY(hynitron_cst816s), so it compiles to nothing
-# until the CST816S node is declared (see TOUCH-SCREEN-NOTES.md).
+# until the CST816S node is declared (see docs/information.md).
 target_sources(app PRIVATE app/src/touch/touch_input.c)

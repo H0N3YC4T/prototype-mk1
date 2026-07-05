@@ -17,7 +17,7 @@
  * CST816S capacitive touch (Waveshare panel): SDA->D4, SCL->D5 on the shared
  * &i2c1 bus (alongside the prospector apds9960), IRQ->D0, RST->D1. Taps and
  * trackpad gestures are decoded by app/src/touch/touch_input.c and dispatched
- * to the prospector fork's on-screen UI. See TOUCH-SCREEN-NOTES.md.
+ * to the prospector fork's on-screen UI. See docs/information.md.
  */
 
 #include "prototype_mk1_dongle_base.dtsi"
