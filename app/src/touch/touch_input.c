@@ -44,7 +44,9 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #define TP_CORNER_PX 40           /* top-left NxN screen corner tap = exit */
 #define TP_MOVE_DEADZONE_PX 8     /* travel this far commits a drag (else it's a tap) */
 #define TP_DTAP_MS 180            /* 2nd tap within this of the 1st = right click */
-#define TP_SCROLL_ZONE_X 240      /* screen x >= this (far right, of 280) = scroll lane */
+#define TP_SCROLL_ZONE 240        /* logical coord >= this along the LONG axis (280) =
+                                   * scroll lane: far-right strip in landscape, bottom
+                                   * strip in portrait (horizontal, right = scroll down) */
 #define TP_SCROLL_PX 18           /* screen px of vertical drag per wheel tick */
 
 /* Pointer sensitivity: the settings screen sets a level 0..TP_SENS_MAX; each ABS
@@ -68,17 +70,31 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
  * left<->right mirrored, flip sx to (PANEL_H - ty). */
 #define SCREEN_W 280
 #define SCREEN_H 240
-/* Set true by the fork when the display is rotated 180deg (settings screen). The
- * touch panel doesn't move with the image, so screen coords are inverted to match. */
-static bool tp_flip;
-void prospector_touch_set_flip(bool flipped) { tp_flip = flipped; }
+/* UI orientation, set by the fork's rotate button: 0..3 = 0/90/180/270 deg CW.
+ * The CST816S doesn't rotate with the image, so raw panel (tx,ty) is mapped into
+ * the CURRENT logical screen space: 280x240 landscape at 0/180, 240x280 portrait
+ * at 90/270. rot 0 is the hardware-calibrated baseline; if the two portrait
+ * orientations come out swapped vs the display on hardware, swap cases 1 and 3
+ * here AND the middle entries of rot_to_panel[] in the fork. */
+static uint8_t tp_rot;
+void prospector_touch_set_orientation(int rot) { tp_rot = (uint8_t)(rot & 3); }
+static inline int32_t tp_scr_w(void) { return (tp_rot & 1) ? PANEL_W : PANEL_H; }
+static inline int32_t tp_scr_h(void) { return (tp_rot & 1) ? PANEL_H : PANEL_W; }
 static inline int32_t panel_to_screen_x(int32_t tx, int32_t ty) {
-    int32_t v = ty;
-    return tp_flip ? (SCREEN_W - 1 - v) : v;
+    switch (tp_rot) {
+    case 1: return PANEL_W - tx;      /* portrait A */
+    case 2: return PANEL_H - 1 - ty;  /* landscape, flipped 180 */
+    case 3: return tx;                /* portrait B */
+    default: return ty;               /* calibrated landscape */
+    }
 }
 static inline int32_t panel_to_screen_y(int32_t tx, int32_t ty) {
-    int32_t v = PANEL_W - tx;
-    return tp_flip ? (SCREEN_H - 1 - v) : v;
+    switch (tp_rot) {
+    case 1: return PANEL_H - 1 - ty;
+    case 2: return tx;
+    case 3: return ty;
+    default: return PANEL_W - tx;
+    }
 }
 
 /* Touch is a fixed 2-row x 3-column grid over the WHOLE screen, edge to edge (no
@@ -177,9 +193,9 @@ static atomic_t tp_dx = ATOMIC_INIT(0);     /* accumulated pointer deltas (raw p
 static atomic_t tp_dy = ATOMIC_INIT(0);
 static int32_t tp_start_sx, tp_start_sy;    /* touch-down screen coords */
 static int32_t tp_prev_sx, tp_prev_sy;      /* last sampled point while streaming motion */
-static int32_t tp_scroll_ref_sy;            /* screen-y of the last emitted scroll tick */
+static int32_t tp_scroll_ref;               /* scroll-axis coord of the last emitted tick */
 static enum tp_mode tp_mode;                /* this touch: pending / moving / scrolling */
-static bool tp_scroll_zone;                 /* touch started in the far-right scroll lane */
+static bool tp_scroll_zone;                 /* touch started in the scroll lane */
 static bool tp_first_tap;                   /* a first tap is awaiting a possible second */
 static int32_t tp_carry_x, tp_carry_y;      /* x256 sub-pixel remainders (sens scaling) */
 static uint8_t tp_sens_level = TP_SENS_DEFAULT;
@@ -257,7 +273,8 @@ static void touch_cb(struct input_event *evt, void *user_data) {
             tp_start_sx = panel_to_screen_x(start_x, start_y);
             tp_start_sy = panel_to_screen_y(start_x, start_y);
             tp_mode = TP_PENDING;
-            tp_scroll_zone = (tp_start_sx >= TP_SCROLL_ZONE_X);
+            tp_scroll_zone = (tp_rot & 1) ? (tp_start_sy >= TP_SCROLL_ZONE)
+                                          : (tp_start_sx >= TP_SCROLL_ZONE);
             tp_carry_x = 0;
             tp_carry_y = 0;
 #endif
@@ -320,7 +337,7 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                 iabs32(sy - tp_start_sy) >= TP_MOVE_DEADZONE_PX) {
                 if (tp_scroll_zone) {
                     tp_mode = TP_SCROLL;
-                    tp_scroll_ref_sy = sy;
+                    tp_scroll_ref = (tp_rot & 1) ? sx : sy;
                 } else {
                     tp_mode = TP_MOTION;
                     tp_prev_sx = sx; /* stream from here; the dead-zone px are dropped */
@@ -348,14 +365,17 @@ static void touch_cb(struct input_event *evt, void *user_data) {
                     k_work_submit(&tp_work);
                 }
             }
-        } else { /* TP_SCROLL: one wheel tick per TP_SCROLL_PX of vertical travel */
-            int dsy = sy - tp_scroll_ref_sy;
-            if (dsy >= TP_SCROLL_PX || dsy <= -TP_SCROLL_PX) {
-                int ticks = dsy / TP_SCROLL_PX; /* signed */
-                /* finger down the screen (sy up) -> scroll down (negative wheel). Flip
-                 * this sign if it scrolls the wrong way for your taste. */
+        } else { /* TP_SCROLL: one wheel tick per TP_SCROLL_PX along the scroll axis
+                  * (vertical lane in landscape; horizontal bottom lane in portrait,
+                  * where swipe right = scroll down). */
+            int32_t s = (tp_rot & 1) ? sx : sy;
+            int ds = s - tp_scroll_ref;
+            if (ds >= TP_SCROLL_PX || ds <= -TP_SCROLL_PX) {
+                int ticks = ds / TP_SCROLL_PX; /* signed */
+                /* finger down/right -> scroll down (negative wheel). Flip this sign
+                 * if it scrolls the wrong way for your taste. */
                 atomic_add(&tp_scroll, -ticks);
-                tp_scroll_ref_sy += ticks * TP_SCROLL_PX;
+                tp_scroll_ref += ticks * TP_SCROLL_PX;
                 k_work_submit(&tp_work);
             }
         }
