@@ -86,11 +86,13 @@ with `queue_add` called inside that handler.
 
 ## 4. UI navigation + design language
 
-Navigation map (2×3 grid, cells 0..5 = row*3 + col; post-2026-07-06 menu swap):
+Navigation map (2×3 grid, cells = row*3 + col; post-2026-07-06 menu swap):
 ```
 NORMAL --tap anywhere--> HOME
 HOME:     0-2 = BACK->NORMAL | 3 = TRACKPAD | 4 = SETTINGS | 5 = KEYS hub
-SETTINGS: 0 sens+ | 1 back | 2 bright+ | 3 sens- | 4 rotate 180deg | 5 bright-
+SETTINGS: 3x3. 0 sens+ | 1 back | 2 bright+ / 3 sens- | 4 rotate 180deg | 5 bright- /
+          6 sens readout (GPS icon + 0..10) | 7 empty | 8 bright readout (eye icon + %)
+          (row 2 = blue non-tappable readout boxes; no sun glyph in LVGL -> eye-open)
 HUB:      0 Fn(F-keys) | 1 back | 2 123(numpad) | 3 #$%(symbols) | 4 MEDIA | 5 MOD
 MEDIA:    0 vol- | 1 back->HUB | 2 vol+ | 3 prev | 4 play/pause | 5 next
 FKEYS/SYMBOLS: 3x3 paginated, 7 keys/page; cell 1 = Back(pg0)/Prev, cell 7 = Next
