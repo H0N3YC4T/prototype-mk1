@@ -47,7 +47,8 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
 #define TP_SCROLL_ZONE 240        /* logical coord >= this along the LONG axis (280) =
                                    * scroll lane: far-right strip in landscape, bottom
                                    * strip in portrait (horizontal, right = scroll down) */
-#define TP_SCROLL_PX 18           /* screen px of vertical drag per wheel tick */
+#define TP_SCROLL_PX 6            /* screen px of lane travel per wheel tick (lower =
+                                   * faster scrolling; was 18, cut to a third) */
 
 /* Pointer sensitivity: the settings screen sets a level 0..TP_SENS_MAX; each ABS
  * sample's motion is scaled by level * TP_SENS_MULT256 / 256. Level TP_SENS_DEFAULT
