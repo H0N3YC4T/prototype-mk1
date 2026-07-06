@@ -40,7 +40,7 @@ LOG_MODULE_REGISTER(mk1_touch, LOG_LEVEL_INF);
  *   DRAG (main area)     -> pointer motion (commits once past the dead-zone).
  *   DRAG on the far-right -> scroll (that vertical strip is the scroll lane).
  *   1 TAP -> left click,  2 TAPS -> right click (resolved over TP_DTAP_MS).
- *   top-left corner TAP -> exit to the hub. */
+ *   top-left corner TAP -> exit (the fork decides where to; currently HOME). */
 #define TP_CORNER_PX 40           /* top-left NxN screen corner tap = exit */
 #define TP_MOVE_DEADZONE_PX 8     /* travel this far commits a drag (else it's a tap) */
 #define TP_DTAP_MS 180            /* 2nd tap within this of the 1st = right click */
