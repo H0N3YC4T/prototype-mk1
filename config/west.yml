@@ -23,12 +23,14 @@ manifest:
     # nice_view_gem is now a LOCAL vendored shield (boards/shields/nice_view_gem),
     # re-vendored from M165437/nice-view-gem @ 0a50fe2 (LVGL 9) so the custom theme
     # system + images can be layered on. The M165437 module reference was removed.
-    # Prospector display dongle (XIAO + Waveshare 1.69"). FORK of carrefinho's
-    # prospector-zmk-module (feat/new-status-screens) carrying our custom OPERATOR
-    # theme (lilac WPM + 3-tier battery colours). Pinned per-iteration to the fork
-    # commit so each theme change triggers a reproducible CI build.
-    - name: prospector-zmk-module
+    # Touch dongle module (XIAO + Waveshare 1.69"): prospector_adapter shield with
+    # the OPERATOR layout, the whole touch UI + trackpad, the CST816S gesture
+    # driver, and the patched st7789v driver. Standalone repo extracted 2026-07-06
+    # from our prospector-zmk-module fork (which stays up as the history archive;
+    # derived from carrefinho's original -- credited in its README/LICENSE).
+    # Pinned per-iteration to an exact commit for reproducible CI builds.
+    - name: zmk-waveshare-touch
       remote: honeycat
-      revision: 4876f118c2f237ee30aeb34a04194c825b097947
+      revision: dcedbf35339624bfbcaeed3746878929161e57fa
   self:
     path: config

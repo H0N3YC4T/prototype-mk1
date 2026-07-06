@@ -10,8 +10,5 @@ zephyr_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_sources(app PRIVATE app/src/events/cycle_animation_state_changed.c)
 target_sources(app PRIVATE app/src/behaviors/behavior_cycle_animation.c)
 
-# CST816S touch input for the XIAO + Waveshare prospector dongle: tap dispatch to
-# the fork's on-screen UI + trackpad gestures (see the file header). Internally
-# gated on DT_HAS_COMPAT_STATUS_OKAY(hynitron_cst816s), so it compiles to nothing
-# until the CST816S node is declared (see docs/information.md).
-target_sources(app PRIVATE app/src/touch/touch_input.c)
+# The CST816S touch driver (touch_input.c) moved into the zmk-waveshare-touch
+# module 2026-07-06 -- gestures + the UI they drive now live in one repo.
