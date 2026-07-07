@@ -124,21 +124,28 @@ TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 
 ## 5. Trackpad, sensitivity, and rotation
 
-- **Gestures** (in `touch_input.c`): drag = pointer; 1 tap = left click (deferred `TP_DTAP_MS`
-  180 ms — the cost of also having 2-tap = right click); 2 taps = right click; top-left 40px
-  corner tap = exit (cancels any pending first-tap); far-right strip
-  (`TP_SCROLL_ZONE_X` = 240, drawn flush to the screen's right edge) = vertical scroll
-  (`TP_SCROLL_PX` per tick).
+- **Gestures** (in `touch_input.c`, module repo): drag = pointer; 1 tap = left click (deferred
+  `TP_DTAP_MS` 180 ms — the cost of also having 2-tap = right click); 2 taps = right click;
+  **tap-then-hold-and-drag = drag-lock** (2026-07-08): a 2nd touch inside the double-tap window
+  that moves instead of releasing quickly holds MB1 for the whole drag (`TP_DRAG` mode, shares
+  the `TP_MOTION` accumulation code) and releases it on lift — the standard trackpad drag
+  gesture, as opposed to holding a physical button; top-left 40px corner tap = exit (cancels any
+  pending first-tap); far-right/bottom strip (`TP_SCROLL_ZONE` = 240 along the long axis, drawn
+  flush to the screen edge) = scroll (`TP_SCROLL_PX` per tick — vertical lane in landscape,
+  horizontal lane in portrait where swipe right = scroll down).
 - **Sensitivity** (replaced the old acceleration curve 2026-07-06): flat x256 multiplier,
   `level * TP_SENS_MULT256 / 256`, with per-touch x256 carry (`tp_carry_x/y`) so slow diagonals
   keep sub-pixel travel. Level range 0..`TP_SENS_MAX` (10), default `TP_SENS_DEFAULT` (5) ≈ 4×
   movement; 10 ≈ 8×, 0 holds still. Adjusted from the SETTINGS left column via
   `prospector_touchpad_sens_get/step` (in-RAM, resets to default on reboot).
-- **180° rotation** (SETTINGS cell 4): `settings_toggle_rotation()` flips the ST7789V between its
-  two landscape orientations (`display_set_orientation` ROTATED_90 ↔ ROTATED_270 — LVGL's 280×240
-  geometry is unchanged), calls `prospector_touch_set_flip()` to invert the touch mapping, then
-  `lv_obj_invalidate(lv_screen_active())` for a full redraw. Two taps = full circle. 90° is not
-  offered — it would swap to a 240×280 portrait geometry and break every widget position.
+- **4-step rotation** (SETTINGS cell 4, full rework 2026-07-06 — this section previously
+  described an earlier 180°-only version): `settings_apply_rotation()` (module repo,
+  `touch_rotation.c`) steps the ST7789V through all four orientations 90° CW per tap (pure MADCTL
+  scan-out change, `rot_to_panel[]`, LVGL logical resolution swaps 280×240 landscape ↔ 240×280
+  portrait), calls `prospector_touch_set_orientation()` to keep the touch transform in sync, then
+  `status_screen_reflow()` + `build_view()` re-lay both the NORMAL screen and the current touch
+  screen for the new dimensions. Four taps = full circle. Portrait layouts for the touch UI and
+  the NORMAL screen widgets are both handled (see §11 hazard notes for the calibration knobs).
 - **Tuning knobs** (top of the respective files): `TP_SENS_MULT256`, `TP_SCROLL_PX`, `TP_DTAP_MS`,
   `TP_MOVE_DEADZONE_PX`, `TP_CORNER_PX`, `TP_SCROLL_ZONE_X` (must match the fork's rendered lane).
 
