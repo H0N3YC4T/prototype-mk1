@@ -31,6 +31,6 @@ manifest:
     # Pinned per-iteration to an exact commit for reproducible CI builds.
     - name: zmk-waveshare-touch
       remote: honeycat
-      revision: 75ff5621527a7655f2818f29dfa79b0c9b64f0fe
+      revision: a918d233db984d4648ad6a25b57b5b962344c0e7
   self:
     path: config
