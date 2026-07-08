@@ -163,6 +163,7 @@
 
     // Touch-screen macro pad (dongle PAD screen): M1..M5 in binding order,
     // standard keymap syntax. Only the dongle build consumes this node.
+
     touch_pad {
         compatible = "zmk,prospector-touch-pad";
         bindings = <&kp LC(C) &kp LC(V) &kp LC(X) &kp LC(Z) &kp LC(Y)>;
@@ -191,11 +192,11 @@
         layer_lower {
             display-name = "Lower";
             bindings = <
-&hold_esc ESCAPE TILDE  &kp F1          &kp F2          &kp F3           &kp F4     &kp F5                                                 &kp F6         &kp F7                    &kp F8         &kp F9  &kp F10  &kp F11
-&kp TAB                 &kp BACKSPACE   &kp UP_ARROW    &kp ENTER        &kp SPACE  &kp LA(UP_ARROW)                                       &kp LC(LS(P))  &kp LC(NON_US_BACKSLASH)  &kp LC(W)      &none   &none    &kp F12
-&kp LEFT_CONTROL        &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LC(F)  &kp LA(DOWN_ARROW)                                     &kp LC(J)      &kp LC(B)                 &kp LC(LA(B))  &none   &none    &none
-&kp LSHIFT              &kp LC(Z)       &kp LC(Y)       &kp LC(C)        &kp LC(V)  &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp LC(F)      &kp LC(G)                 &kp LC(P)      &none   &none    &kp RIGHT_SHIFT
-                                                        &trans           &trans     &trans                &trans              &trans       &trans         &trans                    &trans
+&hold_esc ESCAPE TILDE  &kp F1          &kp F2          &kp F3           &kp F4     &kp F5                                                 &kp F6     &kp F7     &kp F8     &kp F9                   &kp F10                   &kp F11
+&kp TAB                 &kp BACKSPACE   &kp UP_ARROW    &kp ENTER        &kp SPACE  &kp LA(UP_ARROW)                                       &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_PLUS              &kp KP_MINUS              &kp F12
+&kp LEFT_CONTROL        &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp LC(F)  &kp LA(DOWN_ARROW)                                     &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp KP_MULTIPLY          &kp KP_DIVIDE             &kp KP_DOT
+&kp LSHIFT              &kp LC(Z)       &kp LC(Y)       &kp LC(C)        &kp LC(V)  &kp LC(LS(NUMBER_4))  &kp LC(LS(ESCAPE))  &at_tog_mod  &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp KP_LEFT_PARENTHESIS  &kp KP_RIGHT_PARENTHESIS  &kp KP_ENTER
+                                                        &trans           &trans     &trans                &trans              &trans       &trans     &trans     &trans
             >;
 
             sensor-bindings =
