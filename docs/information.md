@@ -114,10 +114,11 @@ TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 - **Idle timeout** (`TOUCH_TIMEOUT_MS` = 30 s) returns only HOME/SETTINGS to NORMAL, declared
   per view in `view_defs[]` (enum order carries no semantics). Key screens, media and trackpad
   never time out — exit is always explicit.
-- **Colour roles** (reuse the OPERATOR theme): lilac `COLOR_ACCENT` = keys, red `COLOR_BACK` =
-  back/exit, pastel blue `COLOR_PAGE` = nav + numpad operators + armed/rotate. Greyed control =
-  `COLOR_HINT_GLYPH`. Named greys: `COLOR_HINT`, `COLOR_HINT_GLYPH`, `COLOR_LANE_BG/EDGE`,
-  `COLOR_BTN_BG` (0x101216 charcoal fill).
+- **Colour roles** (named by colour since 2026-07-09; accents live in display_colors.h, greys
+  in touch_ui.h): lilac `COLOR_PURPLE` = keys/readouts, `COLOR_RED` = back/exit, pastel
+  `COLOR_BLUE` = nav + numpad operators + armed/rotate, `COLOR_GREEN`/`COLOR_YELLOW` = the
+  settings +/- pairs. Greyed control = `COLOR_GREY`. Other named greys: `COLOR_DARK_GREY`
+  (hints), `COLOR_NEAR_BLACK`/`COLOR_SLATE` (scroll lane), `COLOR_CHARCOAL` (button fill).
 - **Navigation glyphs:** red ▲ = back/up a level (all back buttons), blue ▲/▼ = prev/next page.
   Menu items are LVGL built-in FontAwesome glyphs (audio/settings/keyboard/GPS-cursor); Fn, 123,
   #$%, MOD stay text (no glyph exists).
