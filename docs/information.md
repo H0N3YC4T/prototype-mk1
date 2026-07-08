@@ -93,11 +93,13 @@ NORMAL --tap anywhere--> HOME
 HOME:     3x3. 0 Fn(F-keys) | 1 back->NORMAL | 2 123(numpad) /
           3 #$%(symbols) | 4 SETTINGS | 5 TRACKPAD /
           6 MOD | 7 PAD (keyboard icon; greyed if nothing bound) | 8 MEDIA
-PAD:      2x3 user macro pad. 0 M1 | 1 back->HOME | 2 M2 / 3 M3 | 4 M4 | 5 M5. Bindings come
-          from the keymap's zmk,prospector-touch-pad node (standard binding syntax --
-          bindings = <&kp LC(C) ...>; M-number = binding order; unbound cells greyed).
-          One-shot mods do NOT apply to pad bindings (mods ride inside send_key's param
-          encoding); bake mods into the binding itself.
+PAD:      2x3 user macro pad. 0 "$_" terminal LG(N1) | 1 back->HOME | 2 LIST task manager /
+          3 WIFI browser C_AL_WWW | 4 EYE_CLOSE show desktop LG(D) | 5 EDIT notes LG(N3).
+          Bindings come from the keymap's zmk,prospector-touch-pad node (standard binding
+          syntax; order = cells 0,2,3,4,5; unbound cells greyed); faces are hardcoded in
+          build_pad -- keep them in sync when rebinding. Terminal/notes are taskbar pins
+          1 and 3 (Win+N semantics: launch or focus). One-shot mods do NOT apply to pad
+          bindings (mods ride inside send_key's param encoding); bake mods into the binding.
 SETTINGS: 3x3. 0 sens+ | 1 back | 2 bright+ / 3 sens- | 4 rotate 90deg CW per tap | 5 bright- /
           6 sens readout (GPS icon + 0..10) | 7 empty | 8 bright readout (eye icon + %)
           (+ = pastel green, - = pastel yellow, greyed at end stops; row 2 = purple
