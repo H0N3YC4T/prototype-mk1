@@ -161,6 +161,13 @@
         };
     };
 
+    // Touch-screen macro pad (dongle PAD screen): M1..M5 in binding order,
+    // standard keymap syntax. Only the dongle build consumes this node.
+    touch_pad {
+        compatible = "zmk,prospector-touch-pad";
+        bindings = <&kp LC(C) &kp LC(V) &kp LC(X) &kp LC(Z) &kp LC(Y)>;
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
