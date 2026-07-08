@@ -92,10 +92,17 @@ from HOME and every back returns to HOME; cells = row-major):
 NORMAL --tap anywhere--> HOME
 HOME:     3x3. 0 Fn(F-keys) | 1 back->NORMAL | 2 123(numpad) /
           3 #$%(symbols) | 4 SETTINGS | 5 TRACKPAD /
-          6 MOD | 7 reserved (greyed keyboard icon, no-op; future programmable pad) | 8 MEDIA
+          6 MOD | 7 PAD (keyboard icon; greyed if nothing bound) | 8 MEDIA
+PAD:      2x3 user macro pad. 0 M1 | 1 back->HOME | 2 M2 / 3 M3 | 4 M4 | 5 M5. Bindings come
+          from the keymap's zmk,prospector-touch-pad node (standard binding syntax --
+          bindings = <&kp LC(C) ...>; M-number = binding order; unbound cells greyed).
+          One-shot mods do NOT apply to pad bindings (mods ride inside send_key's param
+          encoding); bake mods into the binding itself.
 SETTINGS: 3x3. 0 sens+ | 1 back | 2 bright+ / 3 sens- | 4 rotate 90deg CW per tap | 5 bright- /
           6 sens readout (GPS icon + 0..10) | 7 empty | 8 bright readout (eye icon + %)
-          (row 2 = blue non-tappable readout boxes; no sun glyph in LVGL -> eye-open)
+          (+ = pastel green, - = pastel yellow, greyed at end stops; row 2 = purple
+          non-tappable readout boxes; rotate = the only blue on the screen. No sun glyph
+          in LVGL -> eye-open marks brightness.)
 MEDIA:    0 vol- | 1 back->HOME | 2 vol+ | 3 prev | 4 play/pause | 5 next
 FKEYS/SYMBOLS: 3x3 paginated, 7 keys/page; cell 1 = Back(pg0)/Prev, cell 7 = Next
 NUMPAD:   4x4; 7 8 9 + / 4 5 6 - / 1 2 3 * / back->HOME 0 enter / ; operators (col 3) blue.

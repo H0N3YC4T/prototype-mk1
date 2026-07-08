@@ -9,7 +9,7 @@ manifest:
   projects:
     - name: zmk
       remote: honeycat
-      revision: e45c5cc4815a127c1ceed20f7cb89f5efef33583
+      revision: be3b4c60e6a29f52ba525c7b87222b5b1caf6238
       import: app/west.yml
     - name: zmk-dongle-display
       remote: englmaxi
