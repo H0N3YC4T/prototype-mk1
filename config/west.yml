@@ -9,28 +9,13 @@ manifest:
   projects:
     - name: zmk
       remote: honeycat
-      # FORK of zmkfirmware/zmk @ 64daf698 + the #3156 deferred-subscribe reconnect
-      # fix (app/src/split/bluetooth/central.c: subscribe AFTER the char-discovery
-      # walk, not inline mid-walk). Base pin validated (Zephyr 4.1 / LVGL 9.3);
-      # re-test after bumps. See docs/issues.md (S2) / docs/information.md.
-      revision: cfa75c3f35b5f33a33ef1843c594cd6dc91b5561
+      revision: 5f29b4ac785adfed7f8389e3f63be2ca510fd8c5
       import: app/west.yml
-    # Dongle display — LVGL-9/Zephyr-4.1. Replaces the previously-vendored
-    # boards/shields/dongle_display copy. Known-good HEAD: 2bb333f (pin at end).
     - name: zmk-dongle-display
       remote: englmaxi
       revision: 2bb333f87136d33e94a49d86236ed9ec254a8060
-    # nice_view_gem is now a LOCAL vendored shield (boards/shields/nice_view_gem),
-    # re-vendored from M165437/nice-view-gem @ 0a50fe2 (LVGL 9) so the custom theme
-    # system + images can be layered on. The M165437 module reference was removed.
-    # Touch dongle module (XIAO + Waveshare 1.69"): prospector_adapter shield with
-    # the OPERATOR layout, the whole touch UI + trackpad, the CST816S gesture
-    # driver, and the patched st7789v driver. Standalone repo extracted 2026-07-06
-    # from our prospector-zmk-module fork (which stays up as the history archive;
-    # derived from carrefinho's original -- credited in its README/LICENSE).
-    # Pinned per-iteration to an exact commit for reproducible CI builds.
     - name: zmk-waveshare-touch
       remote: honeycat
-      revision: cab5681defc4cfbaa3403095d28dd954c8f92f97
+      branch: main
   self:
     path: config
