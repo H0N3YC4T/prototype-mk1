@@ -86,15 +86,16 @@ with `queue_add` called inside that handler.
 
 ## 4. UI navigation + design language
 
-Navigation map (2×3 grid, cells = row*3 + col; post-2026-07-08 HOME rework):
+Navigation map (flat since 2026-07-08 — the HUB sub-menu is gone; every screen is one tap
+from HOME and every back returns to HOME; cells = row-major):
 ```
 NORMAL --tap anywhere--> HOME
-HOME:     0 MEDIA | 1 back->NORMAL | 2 123(numpad) | 3 KEYS hub | 4 SETTINGS | 5 TRACKPAD
-          (media + numpad also reachable via the hub; back from either always -> HOME)
+HOME:     3x3. 0 Fn(F-keys) | 1 back->NORMAL | 2 123(numpad) /
+          3 #$%(symbols) | 4 SETTINGS | 5 TRACKPAD /
+          6 MOD | 7 reserved (greyed keyboard icon, no-op; future programmable pad) | 8 MEDIA
 SETTINGS: 3x3. 0 sens+ | 1 back | 2 bright+ / 3 sens- | 4 rotate 90deg CW per tap | 5 bright- /
           6 sens readout (GPS icon + 0..10) | 7 empty | 8 bright readout (eye icon + %)
           (row 2 = blue non-tappable readout boxes; no sun glyph in LVGL -> eye-open)
-HUB:      0 Fn(F-keys) | 1 back->HOME | 2 123(numpad) | 3 #$%(symbols) | 4 MEDIA | 5 MOD
 MEDIA:    0 vol- | 1 back->HOME | 2 vol+ | 3 prev | 4 play/pause | 5 next
 FKEYS/SYMBOLS: 3x3 paginated, 7 keys/page; cell 1 = Back(pg0)/Prev, cell 7 = Next
 NUMPAD:   4x4; 7 8 9 + / 4 5 6 - / 1 2 3 * / back->HOME 0 enter / ; operators (col 3) blue.
@@ -103,9 +104,9 @@ NUMPAD:   4x4; 7 8 9 + / 4 5 6 - / 1 2 3 * / back->HOME 0 enter / ; operators (c
 MODIFIERS: one-shot Ctrl/Shift/Alt/Gui; armed = solid blue fill + black text
 TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 ```
-- **Idle timeout** (`TOUCH_TIMEOUT_MS` = 30 s) returns only HOME/SETTINGS to NORMAL. Everything
-  from `VIEW_HUB` onward in the enum (hub, media, trackpad, key pages) never times out — media
-  and trackpad are placed after `VIEW_HUB` deliberately, exit is always explicit.
+- **Idle timeout** (`TOUCH_TIMEOUT_MS` = 30 s) returns only HOME/SETTINGS to NORMAL, declared
+  per view in `view_defs[]` (enum order carries no semantics). Key screens, media and trackpad
+  never time out — exit is always explicit.
 - **Colour roles** (reuse the OPERATOR theme): lilac `COLOR_ACCENT` = keys, red `COLOR_BACK` =
   back/exit, pastel blue `COLOR_PAGE` = nav + numpad operators + armed/rotate. Greyed control =
   `COLOR_HINT_GLYPH`. Named greys: `COLOR_HINT`, `COLOR_HINT_GLYPH`, `COLOR_LANE_BG/EDGE`,
@@ -118,7 +119,8 @@ TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
   Touch zones still span the full screen — only drawing is inset. One font: `lv_font_montserrat_20`.
 - **Armed one-shot modifiers:** solid blue fill + black text on the button, plus a blue
   radius-44 frame (a child rounded-rect, not an overlay border) around the whole screen.
-  Leaving the hub clears `pending_mods` so an armed mod can't leak into normal typing.
+  HOME keeps armed mods (it now sits between MODIFIERS and the key screens); reaching
+  NORMAL or SETTINGS clears `pending_mods` so an armed mod can't leak into normal typing.
 - Key sends reuse ZMK's `&kp` (`behavior_dev="key_press"`, `param1 = keycode | (pending_mods<<24)`)
   — no per-key macros.
 
