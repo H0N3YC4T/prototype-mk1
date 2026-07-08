@@ -121,6 +121,10 @@ TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 - **Navigation glyphs:** red ▲ = back/up a level (all back buttons), blue ▲/▼ = prev/next page.
   Menu items are LVGL built-in FontAwesome glyphs (audio/settings/keyboard/GPS-cursor); Fn, 123,
   #$%, MOD stay text (no glyph exists).
+- **Custom HOME icons (plumbing since 2026-07-09):** the trackpad / MOD / 123 / #$% cells accept
+  custom icons — drop LVGL-converted assets (white-on-transparent, ~40px, recolored to theme
+  purple at draw time) into the module's `src/icons/` per its README; the icon descriptors are
+  weak symbols, so missing assets simply mean the text fallback draws.
 - **Glass corners:** R5.15mm ≈ **44px** (`GLASS_RADIUS`). The button grid is inset by `UI_PAD`
   (5px) so corner buttons clear the arcs; full-screen frames (armed-mod frame) use radius 44.
   Touch zones still span the full screen — only drawing is inset. One font: `lv_font_montserrat_20`.
