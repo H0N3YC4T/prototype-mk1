@@ -16,6 +16,6 @@ manifest:
       revision: 2bb333f87136d33e94a49d86236ed9ec254a8060
     - name: zmk-waveshare-touch
       remote: honeycat
-      revision: d1595e8581e6d4ab9b22eb57b54a32bfd0b3407d
+      revision: 869a04d91fe1a44414f3f78e95b64a4aea58c6c3
   self:
     path: config 
