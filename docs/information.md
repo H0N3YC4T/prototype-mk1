@@ -110,6 +110,14 @@ FKEYS/SYMBOLS: 3x3 paginated, 7 keys/page; cell 1 = Back(pg0)/Prev, cell 7 = Nex
 NUMPAD:   4x4; 7 8 9 + / 4 5 6 - / 1 2 3 * / back->HOME 0 enter / ; operators (col 3) blue.
           True HID Keypad codes (KP_N0..KP_N9, KP_PLUS/MINUS/MULTIPLY/DIVIDE, KP_ENTER),
           not main-row digits -- distinguishable from top-row typing by apps that care.
+CALC:     5x4 on-dongle calculator (reached by HOLDing the 123 cell on HOME). Row 0 = display,
+          spans, tap = exit to HOME; rows 1-4 = numpad layout but back->backspace, enter-> = .
+          All maths runs on the M4F (recursive-descent evaluator, +-*/ with precedence, doubles);
+          host never involved. /0 or malformed = "Error".
+HOLD:     press-and-hold >= TOUCH_HOLD_MS (700ms) routes to a view's on_hold instead of on_tap.
+          Only HOME defines holds: hold 123 -> CALC, hold settings -> dongle bootloader (fires
+          ZMK's built-in `bootloader` reset behaviour by DT name). Views without on_hold treat a
+          hold as a slow tap.
 MODIFIERS: one-shot Ctrl/Shift/Alt/Gui; armed = solid blue fill + black text
 TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 ```
