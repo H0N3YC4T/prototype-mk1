@@ -17,22 +17,23 @@ A DIY split keyboard on ZMK v0.3.0 / Zephyr 4.1 / LVGL 9.3.
 | **Dongle** ("waveshare") | Seeed XIAO nRF52840 + Waveshare 1.69" LCD (280×240, ST7789V, glass corners R5.15mm ≈ 44px) + CST816S touch | Split central; colour status screen + touch UI + trackpad |
 | Old dongle ("nano") | nice!nano v2 + nice!view | Legacy central, still buildable |
 
-The dongle runs the OPERATOR layout from a fork of `carrefinho/prospector-zmk-module`.
-Firmware is built by GitHub Actions (`build.yaml`); flash the artifact per target.
+The dongle runs the `dongle-mk1` module (OPERATOR layout, derived from
+`carrefinho/prospector-zmk-module`). Firmware is built by GitHub Actions (`build.yaml`);
+flash the artifact per target.
 
-## 2. Three repos, one pin discipline
+## 2. Four repos (mk1 naming since 2026-07-11)
 
-| Repo | Branch | Holds |
+| Repo | Tracking | Holds |
 |---|---|---|
-| this repo | `main` | shields, keymap, `app/src/touch/touch_input.c`, `config/west.yml` |
-| `H0N3YC4T/prospector-zmk-module` | `feat/new-status-screens` | the whole on-screen touch UI (`status_screen.c`, `brightness.c`, widgets) |
-| `H0N3YC4T/zmk` | `fix/3156-deferred-subscribe` | split-central reconnect fix (`central.c`) |
+| `H0N3YC4T/prototype-mk1` (this repo) | — | shields, keymap, confs, `config/west.yml`, docs |
+| `H0N3YC4T/dongle-mk1` | `revision: main` | the whole touch dongle: status screen, touch UI + trackpad, CST816S driver, st7789v patch |
+| `H0N3YC4T/nice-view-mk1` | `revision: main` | halves' nice!view shield: widgets, themes, cycle_animation behavior |
+| `H0N3YC4T/zmk` (fork) | **exact SHA** | split-central reconnect fix (`central.c`), branch fix/3156 / PR #3411 |
 
-Both forks are pinned by **exact SHA** in `config/west.yml`. `west.yml` has three `revision:`
-lines (zmk first, prospector last; the middle is zmk-dongle-display `2bb333f8`). Fork edit cycle:
-commit fork → push → replace the pin (assert the new SHA occurs exactly once — a bulk replace
-once hit the wrong line) → commit + push this repo → CI. Local working clones live in
-`_touchref/`; the SHA in `west.yml` is the source of truth, not the clones.
+Module edit cycle: commit + push the module, then push anything here — CI's `west update`
+fetches module `main` at build time. The zmk fork stays SHA-pinned: bump it deliberately and
+re-test reconnect on hardware after any move. Local clones are siblings in `GithubRepos/`;
+for the modules the branch is the source of truth, for zmk the SHA in `west.yml` is.
 
 **Fork rebase onto a newer upstream** (both branches are linear on a clean base):
 ```
@@ -48,25 +49,26 @@ If upstream refactors zmk `central.c`, re-port by hand the four elements: (1) de
 (position/sensor/battery each own their CCC discover struct); (3) `release_peripheral_slot()`
 clears value + ccc handles; (4) position-state subscribe self-heal (disconnect-on-failure).
 
-## 3. Touch stack architecture
+## 3. Touch stack architecture (all inside the dongle-mk1 module)
 
 ```
-CST816S (I2C) --Zephyr input_cst816s--> touch_input.c (this repo)
-   INPUT_ABS_X/Y + INPUT_BTN_TOUCH          |  taps: raw screen coords
+CST816S (I2C) --Zephyr input_cst816s--> src/touch/tools/touch_input.c
+   INPUT_ABS_X/Y + INPUT_BTN_TOUCH          |  taps: screen coords (+ hold flag)
                                             v
-                          prospector_touch_tap(sx, sy)     [weak here, strong in the fork]
-                          prospector_touchpad_active()     [true while the MOUSE page shows]
+                    prospector_touch_tap(sx, sy, hold)   [tools/touch_nav.c]
+                    prospector_touchpad_active()         [true while TRACKPAD shows]
+                    prospector_touch_has_action()        [trackpad corner-exit test]
                                             v
-                        status_screen.c (fork): views, grids, key sends, rendering
+        touch_main.c dispatcher + src/touch/views/* (declarative page_cell tables)
 ```
 
-- `touch_input.c` owns the **panel→screen transform** and all **gesture recognition** (tap and
-  trackpad state machine). It knows nothing about views. The transform is 90° CW:
-  `sx = ty`, `sy = PANEL_W − tx` (panel 240×280 → screen 280×240). A `tp_flip` flag inverts both
-  axes (`SCREEN_W/H−1 − v`) when the display is rotated 180° (see §5).
-- `status_screen.c` owns **views + cell mapping** (`grid_rows`/`grid_cols` per view: 2×3, 3×3,
-  or 4×4) and all **rendering**. It knows nothing about the sensor.
-- The seam is weak symbols, so this repo builds green with or without the fork.
+- `tools/touch_input.c` owns the **panel→screen transform** and all **gesture recognition**
+  (tap/hold and the trackpad state machine). It knows nothing about views. The transform is a
+  4-case switch on `tp_rot` (0..3, set by the rotate button); rot 0 is the hardware-calibrated
+  landscape baseline.
+- `touch_main.c` + the per-view `page_cell[]` tables own **cells, spans and actions**; grid
+  dims are inferred from each view's cell extents. Rendering helpers live in
+  `tools/touch_draw.c`.
 
 **CST816S facts (re-learn before touching gestures):**
 - Single-touch only — two-finger gestures are physically impossible (scroll is a right-edge lane).
