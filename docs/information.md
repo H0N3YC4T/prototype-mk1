@@ -3,7 +3,8 @@
 The single reference for how this keyboard's firmware is put together and how to work on it.
 Consolidated 2026-07-06 from the earlier docs set (CHANGES, PROJECT-REVIEW, REVIEW-BRIEF,
 TOUCH-SCREEN-NOTES, MIGRATION_NOTES, IMPROVEMENT-PLAN, CODE-REVIEW, ZMK-3156-DEEP-DIVE). Issue
-history and fixes live in the companion `issues.md`.
+history and fixes lived in a companion `issues.md`, retired 2026-07-11 (see git history);
+the reconnect state is summarised in section 9 below.
 
 ---
 
@@ -229,7 +230,8 @@ Reconnect-after-sleep (a half links but sends no keys until the dongle is power-
 - The real fix (zmk fork `central.c`): defer all GATT subscriptions until the characteristic walk
   completes (no nested CCC discovery racing the walk), give sensor + battery their own
   `disc_params`, self-heal by disconnecting on a failed/absent position-state subscription, and
-  clear cached handles on slot release. Full root-cause analysis is in `issues.md`.
+  clear cached handles on slot release. Full root-cause analysis is in the zmk fork's
+  PR #3411 description and this repo's git history of `docs/issues.md`.
 
 `CONFIG_ZMK_SLEEP=n` on the dongle is correct hygiene (USB-powered, stays awake to accept
 reconnects; also sidesteps the separate #3207 central-sleep regression) — not itself the #3156 fix.

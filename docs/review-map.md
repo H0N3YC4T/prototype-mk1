@@ -1,5 +1,10 @@
 # Code review map — everything since the Zephyr 4.1 / LVGL 9.3 uplift
 
+> **HISTORICAL SNAPSHOT (2026-07-08).** Written for the manual review of that date; repo
+> names, paths and file lists predate the mk1 renames, the nice-view extraction and the
+> declarative touch-UI rework. `docs/issues.md` it cites was retired (see git history).
+> Kept for reference — do not use as a current map.
+
 A guide for manually reviewing the work done since the firmware moved to ZMK's Zephyr 4.1 /
 LVGL 9.3 base. **Current-state only** — anything that was tried and later reverted or superseded
 (widget-shrink experiment, the old 180°-only rotation, the acceleration curve, swipe-to-back,
