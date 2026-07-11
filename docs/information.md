@@ -100,35 +100,39 @@ PAD:      2x3 user macro pad. 0 "$_" terminal LG(N1) | 1 back->HOME | 2 LIST tas
           build_pad -- keep them in sync when rebinding. Terminal/notes are taskbar pins
           1 and 3 (Win+N semantics: launch or focus). One-shot mods do NOT apply to pad
           bindings (mods ride inside send_key's param encoding); bake mods into the binding.
-SETTINGS: 3x3. 0 sens+ | 1 back | 2 bright+ / 3 sens- | 4 rotate 90deg CW per tap | 5 bright- /
-          6 sens readout (GPS icon + 0..10) | 7 empty | 8 bright readout (eye icon + %)
-          (+ = pastel green, - = pastel yellow, greyed at end stops; row 2 = purple
-          non-tappable readout boxes; rotate = the only blue on the screen. No sun glyph
-          in LVGL -> eye-open marks brightness.)
+SETTINGS: 3x6 grid of 2-col buttons. Top row: sens+ | back | bright+ / middle: sens- |
+          rotate 90deg CW per tap | bright- / bottom: sens readout (GPS icon + 0..10) and
+          bright readout (eye icon + %) as two half-width boxes (not tappable).
+          (+ = pastel green, - = pastel yellow, greyed at end stops; rotate = blue. No sun
+          glyph in LVGL -> eye-open marks brightness.)
 MEDIA:    0 vol- | 1 back->HOME | 2 vol+ | 3 prev | 4 play/pause | 5 next
 FKEYS/SYMBOLS: 3x3 paginated, 7 keys/page; cell 1 = Back(pg0)/Prev, cell 7 = Next
 NUMPAD:   4x4; 7 8 9 + / 4 5 6 - / 1 2 3 * / back->HOME 0 enter / ; operators (col 3) blue.
           True HID Keypad codes (KP_N0..KP_N9, KP_PLUS/MINUS/MULTIPLY/DIVIDE, KP_ENTER),
           not main-row digits -- distinguishable from top-row typing by apps that care.
-CALC:     5x4 on-dongle calculator (reached by HOLDing the 123 cell on HOME). Row 0 = display,
-          spans, tap = exit to HOME; rows 1-4 = numpad layout but back->backspace, enter-> = .
-          All maths runs on the M4F (recursive-descent evaluator, +-*/ with precedence, doubles);
-          host never involved. /0 or malformed = "Error".
+CALC:     5x4, 3 pages, on-dongle calculator (HOLD the 123 cell on HOME). Every page: row 0 =
+          display (tap = exit to HOME). Page 1: digits + - * /, "=" evaluates, backspace
+          top-right. Page 2: auto-pairing brackets, %, !, decimal point. Page 3 (binary):
+          0/1 entry, << >> & | ~ ^, WS cycles the word size (2/4/8/16); values convert
+          between bases when switching pages. Hold backspace = clear, hold / = %. All maths
+          runs on the M4F (recursive-descent evaluator, doubles); host never involved.
+          /0 or malformed input = "Error".
 HOLD:     press-and-hold >= TOUCH_HOLD_MS (700ms) routes to a view's on_hold instead of on_tap.
-          Only HOME defines holds: hold 123 -> CALC, hold settings -> dongle bootloader (fires
-          ZMK's built-in `bootloader` reset behaviour by DT name). Views without on_hold treat a
-          hold as a slow tap.
+          HOME: hold 123 -> CALC, hold settings -> dongle bootloader (fires ZMK's built-in
+          `bootloader` reset behaviour by DT name). CALC: hold backspace = clear, hold / = %.
+          Views without on_hold treat a hold as a slow tap.
 MODIFIERS: one-shot Ctrl/Shift/Alt/Gui; armed = solid blue fill + black text
 TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 ```
-- **Idle timeout** (`TOUCH_TIMEOUT_MS` = 30 s) returns only HOME/SETTINGS to NORMAL, declared
-  per view in `view_defs[]` (enum order carries no semantics). Key screens, media and trackpad
-  never time out — exit is always explicit.
-- **Colour roles** (named by colour since 2026-07-09; accents live in display_colors.h, greys
-  in touch_ui.h): lilac `COLOR_PURPLE` = keys/readouts, `COLOR_RED` = back/exit, pastel
-  `COLOR_BLUE` = nav + numpad operators + armed/rotate, `COLOR_GREEN`/`COLOR_YELLOW` = the
-  settings +/- pairs. Greyed control = `COLOR_GREY`. Other named greys: `COLOR_DARK_GREY`
-  (hints), `COLOR_NEAR_BLACK`/`COLOR_SLATE` (scroll lane), `COLOR_CHARCOAL` (button fill).
+- **Idle timeout** (`TOUCH_TIMEOUT_MS` = 30 s) returns HOME, SETTINGS and MODIFIERS to NORMAL,
+  declared per view (`.idle_timeout` on each view's `struct view_def`). Key screens, media and
+  trackpad never time out — exit is always explicit.
+- **Colour roles** (role-named since the 2026-07-11 declarative rework; whole palette in the
+  module's src/display_colors.h): lilac `COLOR_PRIMARY` = keys, sky-blue `COLOR_ACCENT` = nav /
+  operators / armed / rotate, `COLOR_RED` = back/exit, `COLOR_GREEN` = settings + / calc "=",
+  pastel-yellow `COLOR_ALERT` = settings - / page nav. Greyed control = `COLOR_GREY`. Other
+  named greys: `COLOR_DARK_GREY` (hints), `COLOR_NEAR_BLACK`/`COLOR_SLATE` (scroll lane),
+  `COLOR_CHARCOAL` (button fill).
 - **Navigation glyphs:** red ▲ = back/up a level (all back buttons), blue ▲/▼ = prev/next page.
   Menu items are LVGL built-in FontAwesome glyphs (audio/settings/keyboard/GPS-cursor); Fn, 123,
   #$%, MOD stay text (no glyph exists).
