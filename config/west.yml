@@ -17,5 +17,8 @@ manifest:
     - name: zmk-waveshare-touch
       remote: honeycat
       revision: main
+    - name: nice-view-mk1
+      remote: honeycat
+      revision: main
   self:
     path: config 

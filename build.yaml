@@ -13,12 +13,12 @@ include:
     cmake-args: -DCONFIG_ZMK_EXT_POWER=n -DCONFIG_ZMK_BEHAVIORS_QUEUE_SIZE=64
     artifact-name: dongle
 #  - board: nice_nano//zmk
-#    shield: prototype_mk1_central_left nice_view_adapter nice_view_gem
+#    shield: prototype_mk1_central_left nice_view_adapter nice_view_mk1
 #    artifact-name: central-left
   # -------------- PERIPHERALS --------------
   - board: nice_nano//zmk
-    shield: prototype_mk1_periph_left nice_view_adapter nice_view_gem
+    shield: prototype_mk1_periph_left nice_view_adapter nice_view_mk1
     artifact-name: left
   - board: nice_nano//zmk
-    shield: prototype_mk1_periph_right nice_view_adapter nice_view_gem
+    shield: prototype_mk1_periph_right nice_view_adapter nice_view_mk1
     artifact-name: right

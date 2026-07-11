@@ -1,8 +1,0 @@
-# SPDX-License-Identifier: MIT
-
-
-description: ZMK behavior to control Nice!View animation and theme
-
-compatible: "zmk,behavior-cycle-animation"
-
-include: one_param.yaml

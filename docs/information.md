@@ -13,7 +13,7 @@ A DIY split keyboard on ZMK v0.3.0 / Zephyr 4.1 / LVGL 9.3.
 
 | Piece | Hardware | Role |
 |---|---|---|
-| Halves | nice!nano v2 + nice!view (gem layout) | BLE peripherals; static display frame |
+| Halves | nice!nano v2 + nice!view (nice-view-mk1 module) | BLE peripherals; static display frame |
 | **Dongle** ("waveshare") | Seeed XIAO nRF52840 + Waveshare 1.69" LCD (280×240, ST7789V, glass corners R5.15mm ≈ 44px) + CST816S touch | Split central; colour status screen + touch UI + trackpad |
 | Old dongle ("nano") | nice!nano v2 + nice!view | Legacy central, still buildable |
 
@@ -199,14 +199,19 @@ TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
 
 ## 8. Peripheral display (halves)
 
-`boards/shields/nice_view_gem/Kconfig.defconfig`:
+Lives in the standalone `nice-view-mk1` module since 2026-07-11 (extracted from this repo's
+vendored `boards/shields/nice_view_gem` and renamed gem -> mk1; tracked `revision: main` in
+west.yml like the touch module). The `cycle_animation` behavior + event moved with it, so this
+repo's `app/` + `include/` trees and root CMakeLists are gone.
+`boards/shields/nice_view_mk1/Kconfig.defconfig` (in the module):
 - `NICE_VIEW_ANIMATION` default **n** — single static frame instead of the animation loop
   (battery; the user doesn't watch the halves). `=y` restores the loop.
-- `NICE_VIEW_GEM_TRANSMUTATION_ONLY` default **y** on main — compile only the transmutation
-  theme's bitmaps (slim peripheral flash) and lock the gem to it. Visually identical to `=n` with
-  animation off. The full 6-theme + `cycle_animation` hotkey system is preserved on branch
-  `dev/periph-theme`; the peripheral hotkey-relay fix is on tag `archive/dev-fix-theme`. To
-  restore switching: `ONLY=n`, `ANIMATION=y`.
+- `NICE_VIEW_MK1_TRANSMUTATION_ONLY` default **y** — compile only the transmutation theme's
+  bitmaps (slim peripheral flash) and lock the display to it. Visually identical to `=n` with
+  animation off. The full 6-theme + `cycle_animation` hotkey system (never verified working
+  end-to-end; design reference only) is preserved on THIS repo's `dev/periph-theme` branch;
+  the peripheral hotkey-relay fix is on tag `archive/dev-fix-theme`. To restore switching:
+  `ONLY=n`, `ANIMATION=y`.
 
 ## 9. Split reconnect (current state)
 
