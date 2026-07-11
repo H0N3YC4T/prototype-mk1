@@ -177,16 +177,18 @@ TRACKPAD: whole-screen pointer; exit -> HOME (top-left corner tap, X glyph)
   `status_screen_reflow()` + `build_view()` re-lay both the NORMAL screen and the current touch
   screen for the new dimensions. Four taps = full circle. Portrait layouts for the touch UI and
   the NORMAL screen widgets are both handled (see §11 hazard notes for the calibration knobs).
-- **Tuning knobs** (top of the respective files): `TP_SENS_MULT256`, `TP_SCROLL_PX`, `TP_DTAP_MS`,
-  `TP_MOVE_DEADZONE_PX`, `TP_CORNER_PX`, `TP_SCROLL_ZONE_X` (must match the fork's rendered lane).
+- **Tuning knobs**: `TP_SENS_MULT256`, `TP_SCROLL_PX`, `TP_DTAP_MS`, `TP_MOVE_DEADZONE_PX`
+  (tools/touch_input.c) and the shared `TP_SCROLL_ZONE` + `TOUCH_HOLD_MS` (touch_ui.h — the
+  lane constant is single-sourced with the drawn divider). The corner-exit zone is no longer a
+  pixel constant: it is the trackpad view's only actionable cell (~40px in landscape).
 
 ## 6. Brightness & settings specifics
 
 - Display dimmer (`brightness.c`): `prospector_brightness_step/get`, binds the display's pwm-leds
   controller specifically via `DEVICE_DT_GET(DT_PARENT(DT_NODELABEL(disp_bl)))` (there are two
   pwm-leds nodes — see §9). Clamps 5–100%. Never touches the keyboard `&bl` relay.
-- SETTINGS +/- control cells show the live value (sensitivity 0..10, brightness %) and grey out
-  (`COLOR_HINT_GLYPH`) at their end stop (`SETTINGS_SENS_MAX` / `SETTINGS_BRIGHT_MIN`=5/`_MAX`=100).
+- SETTINGS readout boxes show the live values (sensitivity 0..10, brightness %); the +/- cells
+  grey out (`COLOR_GREY`) at their end stop (`SETTINGS_SENS_MAX` / `SETTINGS_BRIGHT_MIN`=5/`_MAX`=100).
   Volume lives on the MEDIA screen.
 
 ## 7. Build, flash, and reset
@@ -246,9 +248,10 @@ reconnects; also sidesteps the separate #3207 central-sleep regression) — not 
   locality) relaying to the halves and satisfies ZMK's `zmk,backlight` BUILD_ASSERT; moved off
   D0/P0.02 when D0 became the touch IRQ. Separate from the display's `disp_bl` (pwm1) — never
   point `zmk,backlight` at the display or the two weld.
-- **Trackpad hotspots are code constants, not rendered zones**: corner-exit (40px) and scroll
-  lane (x≥240) live in `touch_input.c`; the fork only draws the affordances. Change one → change
-  both.
+- **Trackpad hotspots**: the scroll lane boundary is the shared `TP_SCROLL_ZONE` (touch_ui.h),
+  single-sourced between the gesture test and the drawn divider; the corner-exit is the trackpad
+  view's one actionable cell, so the driver just asks `prospector_touch_has_action()`. (These
+  were once duplicated pixel constants — no longer.)
 
 ## 11. Branch & tag map (post-2026-07-05 cleanup)
 
@@ -258,7 +261,7 @@ reconnects; also sidesteps the separate #3207 central-sleep regression) — not 
 | `zmk-0-3` | Historical pre-touchscreen config, keymap refreshed to current. |
 | `dev/periph-theme` | Restore point for the full 6-theme + `cycle_animation` system. |
 | tags `archive/dev-touch-easy`, `archive/dev-touch-testing`, `archive/dev-fix-theme` | Heads of deleted branches, kept forever. |
-| fork `prospector…/feat/new-status-screens`, `zmk…/fix/3156-deferred-subscribe` | Pinned by west.yml — never delete. |
+| `zmk…` fork main (PR #3411) | SHA-pinned by west.yml — never delete. The old prospector fork is retired (superseded by dongle-mk1). |
 
 ## 12. Feature history (work orders, all shipped)
 
