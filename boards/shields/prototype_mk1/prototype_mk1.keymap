@@ -41,7 +41,10 @@
         // (forwards/backwards), NVC_PAUSE freezes on a random static frame.
         // Handled by the gem animation widget listener.
 
-        cycle_animation: cycle_animation {
+        // Node NAME <= 8 chars: this behavior is GLOBAL-locality and the BLE split
+        // relay truncates device names to 8+NUL -- a longer name silently breaks the
+        // peripheral-side lookup (this is why theme switching never worked).
+        cycle_animation: nvcycle {
             compatible = "zmk,behavior-cycle-animation";
             #binding-cells = <1>;
         };
