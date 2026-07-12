@@ -200,9 +200,7 @@
                                                         &trans           &trans     &trans                &trans              &trans       &trans     &trans     &trans
             >;
 
-            sensor-bindings =
-                <&encoder_undo_redo>,
-                <&inc_dec_kp UP_ARROW DOWN_ARROW>;
+            sensor-bindings = <&encoder_undo_redo>, <&inc_dec_kp RIGHT LEFT>;
 
             label = "LOWER";
         };
