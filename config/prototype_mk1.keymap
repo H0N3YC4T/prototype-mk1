@@ -37,9 +37,7 @@
     };
 
     behaviors {
-        // nice!view peripheral animation control: NVC_NEXT/NVC_PREV cycle themes
-        // (forwards/backwards), NVC_PAUSE freezes on a random static frame.
-        // Handled by the gem animation widget listener.
+        // nice!view theme control: NVC_NEXT/PREV cycle themes, NVC_PAUSE reshuffles the frame
 
         // node name <= 8 chars (BLE split relay truncates behavior names)
         cycle_animation: nvcycle {

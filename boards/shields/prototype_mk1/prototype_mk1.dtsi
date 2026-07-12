@@ -13,9 +13,7 @@
 
 / {
     chosen {
-        // zephyr,display is set by the display shield overlay
-        // (nice_view_mk1 -> &nice_view). The old &oled chosen here was
-        // vestigial SSD1306-template residue and has been removed.
+        // zephyr,display is set by the display shield overlay (nice_view_mk1)
         zmk,kscan = &kscan0;
     };
 
