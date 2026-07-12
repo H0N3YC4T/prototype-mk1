@@ -217,8 +217,7 @@ repo's `app/` + `include/` trees and root CMakeLists are gone.
   (battery; the user doesn't watch the halves). `=y` restores the loop.
 - `NICE_VIEW_MK1_TRANSMUTATION_ONLY` default **y** — compile only the transmutation theme's
   bitmaps (slim peripheral flash) and lock the display to it. Visually identical to `=n` with
-  animation off. The full 6-theme + `cycle_animation` hotkey system (never verified working
-  end-to-end; design reference only) is preserved on THIS repo's `dev/periph-theme` branch;
+  animation off. Theme switching WORKS (hardware-verified 2026-07-12; node renamed nvcycle -- the BLE relay truncates behavior names to 8 chars). The old reference attempt is preserved on THIS repo's `dev/periph-theme` branch;
   the peripheral hotkey-relay fix is on tag `archive/dev-fix-theme`. To restore switching:
   `ONLY=n`, `ANIMATION=y`.
 
