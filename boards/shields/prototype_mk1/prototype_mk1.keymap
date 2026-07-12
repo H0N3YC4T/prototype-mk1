@@ -41,9 +41,7 @@
         // (forwards/backwards), NVC_PAUSE freezes on a random static frame.
         // Handled by the gem animation widget listener.
 
-        // Node NAME <= 8 chars: this behavior is GLOBAL-locality and the BLE split
-        // relay truncates device names to 8+NUL -- a longer name silently breaks the
-        // peripheral-side lookup (this is why theme switching never worked).
+        // node name <= 8 chars (BLE split relay truncates behavior names)
         cycle_animation: nvcycle {
             compatible = "zmk,behavior-cycle-animation";
             #binding-cells = <1>;
@@ -164,9 +162,7 @@
         };
     };
 
-    // Touch-screen macro pad (dongle PAD screen), binding order = cells 0,2,3,4,5:
-    // terminal (taskbar pin 1) / Task Manager / default browser / show desktop /
-    // notes (taskbar pin 3). Only the dongle build consumes this node.
+    // dongle PAD screen bindings (cells 0,2,3,4,5): terminal / task mgr / browser / desktop / notes
 
     touch_pad {
         compatible = "zmk,prospector-touch-pad";

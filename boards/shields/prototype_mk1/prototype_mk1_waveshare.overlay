@@ -4,21 +4,8 @@
  * SPDX-License-Identifier: MIT
  *
  * XIAO nRF52840 + Waveshare 1.69" prospector receiver dongle.
- * Shared dongle DT comes from prototype_mk1_dongle_base.dtsi. The display
- * (ST7789V), its own backlight, ambient sensor, and colour themes are all
- * provided by the prospector_adapter shield.
- *
- * Keyboard backlight relay placeholder: the XIAO has no backlight LED, but
- * CONFIG_ZMK_BACKLIGHT must be on so the GLOBAL-locality &bl behaviour relays to
- * the halves, and ZMK BUILD_ASSERTs a zmk,backlight chosen node. We point it at
- * a placeholder PWM-LED on a free, unconnected internal pad. It used to sit on
- * D0/P0.02, but D0 is now the CST816S touch IRQ, so it was moved to P0.08.
- *
- * CST816S capacitive touch (Waveshare panel): SDA->D4, SCL->D5 on the shared
- * &i2c1 bus (alongside the prospector apds9960), IRQ->D0, RST->D1. Taps and
- * trackpad gestures are decoded by the dongle-mk1 module
- * (src/touch/tools/touch_input.c) and dispatched to its on-screen touch UI.
- * See docs/information.md.
+ * Display/backlight/sensor come from the prospector_adapter shield; shared DT
+ * from prototype_mk1_dongle_base.dtsi. See docs/information.md.
  */
 
 #include "prototype_mk1_dongle_base.dtsi"
@@ -106,16 +93,8 @@
     };
 };
 
-/* --- Split sensors (the two half encoders) ---
- * The XIAO dongle has NO physical encoders; the actual encoders live on the halves
- * and forward rotation over the split SENSOR characteristic. But the central only
- * subscribes to that characteristic when ZMK_KEYMAP_HAS_SENSORS is set, which
- * requires a zmk,keymap-sensors node present in THIS build's devicetree. Without it
- * (the waveshare overlay previously had none) the dongle silently drops every
- * encoder event. So define the sensors node + two dummy EC11 devices on free,
- * unconnected XIAO P1 pins (P1.00-P1.03 are not broken out and not used by the
- * touch/display/QSPI). The EC11 driver inits them harmlessly (nothing connected);
- * the real encoder data arrives over BLE. Mirrors prototype_mk1_dongle.overlay. */
+/* dummy EC11s on unconnected P1 pins: the central only subscribes to the halves'
+ * encoders if this build has a zmk,keymap-sensors node (real data arrives over BLE) */
 / {
     left_encoder: encoder_left {
         compatible = "alps,ec11";

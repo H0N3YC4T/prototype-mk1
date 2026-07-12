@@ -18,9 +18,7 @@ config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
     default 2
 endif # SHIELD_PROTOTYPE_MK1_DONGLE
 
-# XIAO/prospector receiver dongle. Central role + split BLE central. Display and
-# LVGL config come entirely from the prospector_adapter shield, so this shield is
-# deliberately NOT part of the nice!view-mono LVGL defconfig block below.
+# XIAO/prospector dongle: display/LVGL config comes from the prospector_adapter shield
 if SHIELD_PROTOTYPE_MK1_WAVESHARE
 config ZMK_KEYBOARD_NAME
     default "Prototype_Mk1"
@@ -30,9 +28,7 @@ config ZMK_SPLIT
     default y
 config BT_MAX_CONN
     default 5
-# 3 host BLE profiles -- matches the Settings layer's BT_SEL 0..2 and the
-# prospector UI. ZMK derives ZMK_BLE_PROFILE_COUNT = BT_MAX_PAIRED -
-# ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS, i.e. 5 - 2 = 3.
+# 3 host profiles (BT_SEL 0..2): BT_MAX_PAIRED(5) - peripherals(2)
 config BT_MAX_PAIRED
     default 5
 config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
