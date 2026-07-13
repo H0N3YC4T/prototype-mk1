@@ -37,7 +37,7 @@
     };
 
     behaviors {
-        // nice!view theme control: NVC_NEXT/PREV cycle themes, NVC_PAUSE reshuffles the frame
+        // nice!view theme control: NVC_NEXT/PREV cycle themes, NVC_PAUSE plays/stops the animation
 
         // node name <= 8 chars (BLE split relay truncates behavior names)
         cycle_animation: nvcycle {
