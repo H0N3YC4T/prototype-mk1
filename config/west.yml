@@ -19,6 +19,6 @@ manifest:
       revision: main
     - name: nice-view-mk1
       remote: honeycat
-      revision: dev
+      revision: main
   self:
     path: config 
