@@ -10,7 +10,6 @@
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/pointing.h>
 
 #define BASE 0
 #define LOWER 1
@@ -39,8 +38,8 @@
 
     behaviors {
         // nice!view theme control: NVC_NEXT/PREV cycle themes, NVC_PAUSE plays/stops, NVC_SHUF rerolls the frame
-
         // node name <= 8 chars (BLE split relay truncates behavior names)
+
         cycle_animation: nvcycle {
             compatible = "zmk,behavior-cycle-animation";
             #binding-cells = <1>;
@@ -223,11 +222,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2               &none                       &none                                      &none   &none   &none   &none  &none  &none
-&bt BT_CLR         &bt BT_CLR_ALL  &none         &bl BL_DEC                 &bl BL_TOG                  &bl BL_INC                                 &none   &none   &none   &none  &none  &none
-&ext_power EP_TOG  &none           &none         &cycle_animation NVC_PREV  &cycle_animation NVC_PAUSE  &cycle_animation NVC_NEXT                  &none   &none   &none   &none  &none  &none
-&sys_reset         &bootloader     &none         &none                      &cycle_animation NVC_SHUF   &none                      &to 0   &to 0   &none   &none   &none   &none  &none  &none
-                                                 &trans                     &trans                      &trans                     &trans  &trans  &trans  &trans  &trans
+&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2               &none                       &none                                      &none   &none   &none   &none  &none  &none
+&bt BT_CLR         &bt BT_CLR_ALL  &none           &bl BL_DEC                 &bl BL_TOG                  &bl BL_INC                                 &none   &none   &none   &none  &none  &none
+&ext_power EP_TOG  &none           &none           &cycle_animation NVC_PREV  &cycle_animation NVC_PAUSE  &cycle_animation NVC_NEXT                  &none   &none   &none   &none  &none  &none
+&sys_reset         &bootloader     &studio_unlock  &none                      &cycle_animation NVC_SHUF   &none                      &to 0   &to 0   &none   &none   &none   &none  &none  &none
+                                                   &trans                     &trans                      &trans                     &trans  &trans  &trans  &trans  &trans
             >;
 
             sensor-bindings =
