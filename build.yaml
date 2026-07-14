@@ -10,7 +10,7 @@ include:
   # ---------------- DONGLE -----------------
   - board: xiao_ble//zmk
     shield: prototype_mk1_waveshare prospector_adapter
-#    snippet: studio-rpc-usb-uart
+    snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_EXT_POWER=n -DCONFIG_ZMK_BEHAVIORS_QUEUE_SIZE=64
     artifact-name: dongle
 #  - board: nice_nano//zmk
