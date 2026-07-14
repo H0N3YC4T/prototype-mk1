@@ -7,7 +7,6 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/backlight.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 
@@ -222,11 +221,11 @@
         layer_settings {
             display-name = "Settings";
             bindings = <
-&out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2               &none                       &none                                      &none   &none   &none   &none  &none  &none
-&bt BT_CLR         &bt BT_CLR_ALL  &none           &bl BL_DEC                 &bl BL_TOG                  &bl BL_INC                                 &none   &none   &none   &none  &none  &none
-&ext_power EP_TOG  &none           &none           &cycle_animation NVC_PREV  &cycle_animation NVC_PAUSE  &cycle_animation NVC_NEXT                  &none   &none   &none   &none  &none  &none
-&sys_reset         &bootloader     &studio_unlock  &none                      &cycle_animation NVC_SHUF   &none                      &to 0   &to 0   &none   &none   &none   &none  &none  &none
-                                                   &trans                     &trans                      &trans                     &trans  &trans  &trans  &trans  &trans
+&out OUT_TOG    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2               &bt BT_CLR                  &bt BT_CLR_ALL                             &none   &none   &none   &none  &none  &none
+&studio_unlock  &none         &none         &bl BL_DEC                 &bl BL_TOG                  &bl BL_INC                                 &none   &none   &none   &none  &none  &none
+&bootloader     &none         &none         &cycle_animation NVC_PREV  &cycle_animation NVC_PAUSE  &cycle_animation NVC_NEXT                  &none   &none   &none   &none  &none  &none
+&sys_reset      &none         &none         &none                      &cycle_animation NVC_SHUF   &none                      &to 0   &to 0   &none   &none   &none   &none  &none  &none
+                                            &trans                     &trans                      &trans                     &trans  &trans  &trans  &trans  &trans
             >;
 
             sensor-bindings =
