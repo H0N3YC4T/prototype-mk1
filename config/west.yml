@@ -12,7 +12,7 @@ manifest:
       revision: 2bb333f87136d33e94a49d86236ed9ec254a8060
     - name: zmk
       remote: honeycat
-      revision: 9a4ae7b9220c225f6b5ed891be45fb8dcb583e11
+      revision: 2a20d6667d8d5d342d7ad728cf924f1726e00fe9
       import: app/west.yml
     - name: dongle-mk1
       remote: honeycat
