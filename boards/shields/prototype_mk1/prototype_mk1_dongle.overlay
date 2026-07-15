@@ -3,18 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  *
- * nice!view receiver dongle (nice!nano v2 + nice_view_adapter + dongle_display).
+ * nice!view receiver dongle (nice!nano v2 + nice_view_adapter + nice_view_mk1).
  * Shared dongle DT comes from prototype_mk1_dongle_base.dtsi; this overlay adds
- * the nice!view display and the dongle encoders.
+ * the dongle encoders. The display + chosen node come from the nice_view_mk1
+ * shield, same as the halves.
  */
 
 #include "prototype_mk1_dongle_base.dtsi"
 
 / {
-    chosen {
-        zephyr,display = &nice_view;
-    };
-
     left_encoder: encoder_left {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
@@ -35,19 +32,5 @@
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
         triggers-per-rotation = <20>;
-    };
-};
-
-/* nice!view display hardware (Sharp LS0xx) on the nice_view_adapter SPI bus.
- * The englmaxi dongle_display module ships only the status-screen widgets and
- * expects the dongle's own shield to define the display device + chosen node. */
-&nice_view_spi {
-    status = "okay";
-    nice_view: ls0xx@0 {
-        compatible = "sharp,ls0xx";
-        spi-max-frequency = <1000000>;
-        reg = <0>;
-        width = <160>;
-        height = <68>;
     };
 };
