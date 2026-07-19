@@ -6,7 +6,7 @@ manifest:
       url-base: https://github.com/englmaxi
     - name: honeycat
       url-base: https://github.com/H0N3YC4T
-  projects: 
+  projects:
     - name: zmk-dongle-display
       remote: englmaxi
       revision: 2bb333f87136d33e94a49d86236ed9ec254a8060
@@ -21,4 +21,4 @@ manifest:
       remote: honeycat
       revision: main
   self:
-    path: config 
+    path: config
