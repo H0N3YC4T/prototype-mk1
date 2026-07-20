@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render docs/keymap/keymap_raw.{svg,png} from config/prototype_mk1.keymap.
+"""Render docs/keymap/keymap.{svg,png} from config/prototype_mk1.keymap.
 
 parse -> classify key categories -> inject encoder knobs -> draw -> png
 Run from the repo root (locally or in CI); see .github/workflows/draw-keymap.yml.
@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parent.parent
 KEYMAP = ROOT / "config" / "prototype_mk1.keymap"
 CONFIG = ROOT / "docs" / "keymap" / "keymap_drawer.config.yaml"
 LAYOUT = ROOT / "boards" / "shields" / "prototype_mk1" / "layouts" / "prototype_mk1_layout.dtsi"
-OUT_SVG = ROOT / "docs" / "keymap" / "keymap_raw.svg"
-OUT_PNG = ROOT / "docs" / "keymap" / "keymap_raw.png"
+OUT_SVG = ROOT / "docs" / "keymap" / "keymap.svg"
+OUT_PNG = ROOT / "docs" / "keymap" / "keymap.png"
 
 # knob widgets drawn in the top of the split gap (drawing-only, not real keys)
 KNOB_ATTRS = ["<&key_physical_attrs 100 100  630   70       0     0     0>",
