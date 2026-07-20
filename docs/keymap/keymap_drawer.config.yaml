@@ -157,21 +157,29 @@ draw_config:
   glyphs:
     win: |
       <svg viewBox="0 0 24 24"><path d="M3 5.6 10.6 4.5V11.2H3zM11.7 4.3 21 3v8.2h-9.3zM3 12.6h7.6v6.7L3 18.2zM11.7 12.6H21V21l-9.3-1.3z"/></svg>
-  dark_mode: false
+  dark_mode: true
   footer_text: Prototype_Mk1
   svg_extra_style: |
-    rect.number   { fill: #a8d0e6; }
-    rect.fkey     { fill: #8ca8e6; }
-    rect.mod      { fill: #c8a2c8; }
-    rect.nav      { fill: #8cd9c8; }
-    rect.sym      { fill: #f5e08c; }
-    rect.media    { fill: #f5b98c; }
-    rect.system   { fill: #e8909d; }
-    rect.layer    { fill: #a8e6b8; }
-    rect.macro    { fill: #f0e8d8; }
-    rect.bt       { fill: #8cc4e8; }
-    rect.nv       { fill: #c8a2c8; }
-    rect.wasd     { fill: #a8e6b8; }
-    rect.ghost    { fill: #f5f5f5; }
-    .ghost text   { fill: #a8a8a8; }
-    rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
+    /* dark scheme -- BG swap lives in scripts/draw_keymap.py (BG_COLOR) */
+    rect.key      { fill: #3b414b; stroke: #262b33; }
+    text          { fill: #ced4dc; }
+    .number text  { fill: #a8d0e6; }
+    .fkey text    { fill: #8ca8e6; }
+    .mod text     { fill: #c8a2c8; }
+    .nav text     { fill: #8cd9c8; }
+    .sym text     { fill: #f5e08c; }
+    .media text   { fill: #f5b98c; }
+    .system text  { fill: #e8909d; }
+    .layer text   { fill: #a8e6b8; }
+    .macro text   { fill: #e8dcc8; }
+    .bt text      { fill: #8cc4e8; }
+    .nv text      { fill: #c8a2c8; }
+    .wasd text    { fill: #a8e6b8; }
+    rect.held     { fill: #9c4f56; }
+    .held text    { fill: #f2dfe1; }
+    rect.ghost    { fill: #2a2f37; }
+    .ghost text   { fill: #646b75; }
+    rect.encoder  { fill: #2f353d; stroke: #4a5158; }
+    .encoder text { fill: #ced4dc; }
+    text.label    { fill: #ced4dc; }
+    tspan         { fill: inherit; }

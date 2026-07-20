@@ -13,6 +13,7 @@ import tempfile
 from pathlib import Path
 
 ENV = {**os.environ, "PYTHONUTF8": "1"}  # unicode legends vs windows cp1252
+BG_COLOR = "#10131a"  # swap to the user's exact background when provided
 
 import yaml
 
@@ -199,7 +200,23 @@ def main():
     drawn = subprocess.run(["keymap", "-c", str(CONFIG), "draw", tmp_yaml],
                            capture_output=True, text=True, check=True, env=ENV,
                            encoding="utf-8")
-    OUT_SVG.write_text(drawn.stdout, encoding="utf-8", newline="\n")
+    svg = drawn.stdout
+    # explicit background rect (CSS background-color is ignored by raster renderers)
+    m = re.search(r'<svg[^>]*width="(\d+)"[^>]*height="(\d+)"[^>]*>', svg)
+    if m:
+        bg = f'<rect x="0" y="0" width="{m.group(1)}" height="{m.group(2)}" fill="{BG_COLOR}"/>'
+        svg = svg[:m.end()] + bg + svg[m.end():]
+
+    # encoder keys draw as circles: corner radius must be an attribute for resvg
+    def circleify(mm):
+        tag = mm.group(0)
+        w = re.search(r'width="([\d.]+)"', tag)
+        radius = float(w.group(1)) / 2 if w else 26
+        tag = re.sub(r'r[xy]="[\d.]+" ?', "", tag)
+        return tag.replace("<rect", f'<rect rx="{radius}" ry="{radius}" ', 1)
+
+    svg = re.sub(r'<rect[^>]*class="key encoder[^"]*"[^>]*/>', circleify, svg)
+    OUT_SVG.write_text(svg, encoding="utf-8", newline="\n")
 
     import resvg_py
     png = resvg_py.svg_to_bytes(svg_path=str(OUT_SVG), zoom=2.0)

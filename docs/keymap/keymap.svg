@@ -1,4 +1,4 @@
-<svg width="984" height="1931" viewBox="0 0 984 1931" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="984" height="1931" viewBox="0 0 984 1931" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect x="0" y="0" width="984" height="1931" fill="#10131a"/>
 <defs>/* start glyphs */
 <svg id="win">
 <svg viewBox="0 0 24 24"><path d="M3 5.6 10.6 4.5V11.2H3zM11.7 4.3 21 3v8.2h-9.3zM3 12.6h7.6v6.7L3 18.2zM11.7 12.6H21V21l-9.3-1.3z"/></svg>
@@ -130,21 +130,38 @@ path.combo {
 }
 /* End Tabler Icons Cleanup */
 
-rect.number   { fill: #a8d0e6; }
-rect.fkey     { fill: #8ca8e6; }
-rect.mod      { fill: #c8a2c8; }
-rect.nav      { fill: #8cd9c8; }
-rect.sym      { fill: #f5e08c; }
-rect.media    { fill: #f5b98c; }
-rect.system   { fill: #e8909d; }
-rect.layer    { fill: #a8e6b8; }
-rect.macro    { fill: #f0e8d8; }
-rect.bt       { fill: #8cc4e8; }
-rect.nv       { fill: #c8a2c8; }
-rect.wasd     { fill: #a8e6b8; }
-rect.ghost    { fill: #f5f5f5; }
-.ghost text   { fill: #a8a8a8; }
-rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
+svg.keymap { fill: #d1d6db; }
+rect.key { fill: #3f4750; }
+rect.key, rect.combo { stroke: #60666c; }
+rect.combo, rect.combo-separate { fill: #1f3d7a; }
+rect.held, rect.combo.held { fill: #854747; }
+text.label, text.footer { stroke: black; }
+text.trans { fill: #7e8184; }
+path.combo { stroke: #7f7f7f; }
+
+/* dark scheme -- BG swap lives in scripts/draw_keymap.py (BG_COLOR) */
+rect.key      { fill: #3b414b; stroke: #262b33; }
+text          { fill: #ced4dc; }
+.number text  { fill: #a8d0e6; }
+.fkey text    { fill: #8ca8e6; }
+.mod text     { fill: #c8a2c8; }
+.nav text     { fill: #8cd9c8; }
+.sym text     { fill: #f5e08c; }
+.media text   { fill: #f5b98c; }
+.system text  { fill: #e8909d; }
+.layer text   { fill: #a8e6b8; }
+.macro text   { fill: #e8dcc8; }
+.bt text      { fill: #8cc4e8; }
+.nv text      { fill: #c8a2c8; }
+.wasd text    { fill: #a8e6b8; }
+rect.held     { fill: #9c4f56; }
+.held text    { fill: #f2dfe1; }
+rect.ghost    { fill: #2a2f37; }
+.ghost text   { fill: #646b75; }
+rect.encoder  { fill: #2f353d; stroke: #4a5158; }
+.encoder text { fill: #ced4dc; }
+text.label    { fill: #ced4dc; }
+tspan         { fill: inherit; }
 </style>
 <g transform="translate(30, 0)" class="layer-BASE">
 <text x="0" y="28" class="label" id="BASE">BASE:</text>
@@ -391,13 +408,13 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <use href="#win" xlink:href="#win" x="-7" y="-7" height="14" width="14.0" class="key mod tap glyph win"/>
 </g>
 <g transform="translate(381, 67)" class="key encoder keypos-58">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">↑</tspan><tspan x="0" dy="1.2em">↓</tspan>
 </text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">→</tspan><tspan x="0" dy="1.2em">←</tspan>
 </text>
@@ -648,13 +665,13 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <use href="#win" xlink:href="#win" x="-7" y="-7" height="14" width="14.0" class="key ghost tap glyph win"/>
 </g>
 <g transform="translate(381, 67)" class="key encoder keypos-58">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Undo</tspan><tspan x="0" dy="1.2em">Redo</tspan>
 </text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">→</tspan><tspan x="0" dy="1.2em">←</tspan>
 </text>
@@ -918,13 +935,13 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <use href="#win" xlink:href="#win" x="-7" y="-7" height="14" width="14.0" class="key ghost tap glyph win"/>
 </g>
 <g transform="translate(381, 67)" class="key encoder keypos-58">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Desk→</tspan><tspan x="0" dy="1.2em">Desk←</tspan>
 </text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Zoom+</tspan><tspan x="0" dy="1.2em">Zoom-</tspan>
 </text>
@@ -1162,13 +1179,13 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <use href="#win" xlink:href="#win" x="-7" y="-7" height="14" width="14.0" class="key ghost tap glyph win"/>
 </g>
 <g transform="translate(381, 67)" class="key encoder keypos-58">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Vol+</tspan><tspan x="0" dy="1.2em">Vol-</tspan>
 </text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Vol+</tspan><tspan x="0" dy="1.2em">Vol-</tspan>
 </text>
@@ -1415,13 +1432,13 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <use href="#win" xlink:href="#win" x="-7" y="-7" height="14" width="14.0" class="key mod tap glyph win"/>
 </g>
 <g transform="translate(381, 67)" class="key encoder keypos-58">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Vol+</tspan><tspan x="0" dy="1.2em">Vol-</tspan>
 </text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
 <tspan x="0" dy="-0.6em">Vol+</tspan><tspan x="0" dy="1.2em">Vol-</tspan>
 </text>
