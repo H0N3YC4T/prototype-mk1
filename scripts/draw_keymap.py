@@ -115,6 +115,25 @@ def main():
             else:
                 layer[i] = {"t": key, "type": cls}
 
+    # trans keys: show the BASE key underneath, ghosted
+    layer_lists = list(km["layers"].values())
+    base = layer_lists[0]
+    for layer in layer_lists[1:]:
+        for i, key in enumerate(layer):
+            is_trans = key is None or key == "▽" or (
+                isinstance(key, dict) and (key.get("type") == "trans" or key.get("t") == "▽"))
+            if not is_trans:
+                continue
+            under = base[i] if i < len(base) else None
+            if isinstance(under, dict):
+                ghost = dict(under)
+                ghost["type"] = "ghost"
+            elif under:
+                ghost = {"t": str(under), "type": "ghost"}
+            else:
+                ghost = {"t": "", "type": "ghost"}
+            layer[i] = ghost
+
     # knob widgets from sensor-bindings (left knob, right knob appended per layer)
     sensors = sensor_bindings_per_layer(KEYMAP.read_text(encoding="utf-8"))
     layer_names = list(km["layers"])

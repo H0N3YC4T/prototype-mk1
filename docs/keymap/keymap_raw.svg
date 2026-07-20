@@ -133,6 +133,8 @@ rect.media    { fill: #f5b98c; }
 rect.system   { fill: #e8909d; }
 rect.layer    { fill: #a8e6b8; }
 rect.macro    { fill: #f0e8d8; }
+rect.ghost    { fill: #f5f5f5; }
+.ghost text   { fill: #a8a8a8; }
 rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 </style>
 <g transform="translate(30, 0)" class="layer-BASE">
@@ -473,35 +475,25 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
 <text x="0" y="0" class="key macro tap">Alt+↑</text>
 </g>
-<g transform="translate(616, 98)" class="key macro keypos-18">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">7</tspan>
-</text>
+<g transform="translate(616, 98)" class="key number keypos-18">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">7</text>
 </g>
-<g transform="translate(672, 91)" class="key macro keypos-19">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">8</tspan>
-</text>
+<g transform="translate(672, 91)" class="key number keypos-19">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">8</text>
 </g>
-<g transform="translate(728, 84)" class="key macro keypos-20">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">9</tspan>
-</text>
+<g transform="translate(728, 84)" class="key number keypos-20">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">9</text>
 </g>
-<g transform="translate(784, 91)" class="key macro keypos-21">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">PLUS</tspan>
-</text>
+<g transform="translate(784, 91)" class="key sym keypos-21">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">+</text>
 </g>
-<g transform="translate(840, 105)" class="key macro keypos-22">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">MINUS</tspan>
-</text>
+<g transform="translate(840, 105)" class="key sym keypos-22">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">-</text>
 </g>
 <g transform="translate(896, 112)" class="key fkey keypos-23">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key fkey"/>
@@ -531,41 +523,29 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
 <text x="0" y="0" class="key macro tap">Alt+↓</text>
 </g>
-<g transform="translate(616, 154)" class="key macro keypos-30">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">4</tspan>
-</text>
+<g transform="translate(616, 154)" class="key number keypos-30">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">4</text>
 </g>
-<g transform="translate(672, 147)" class="key macro keypos-31">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">5</tspan>
-</text>
+<g transform="translate(672, 147)" class="key number keypos-31">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">5</text>
 </g>
-<g transform="translate(728, 140)" class="key macro keypos-32">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">6</tspan>
-</text>
+<g transform="translate(728, 140)" class="key number keypos-32">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">6</text>
 </g>
-<g transform="translate(784, 147)" class="key macro keypos-33">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em" style="font-size: 88%">KP</tspan><tspan x="0" dy="1.2em" style="font-size: 88%">MULTIPLY</tspan>
-</text>
+<g transform="translate(784, 147)" class="key sym keypos-33">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">*</text>
 </g>
-<g transform="translate(840, 161)" class="key macro keypos-34">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">DIVIDE</tspan>
-</text>
+<g transform="translate(840, 161)" class="key sym keypos-34">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">/</text>
 </g>
-<g transform="translate(896, 168)" class="key macro keypos-35">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">DOT</tspan>
-</text>
+<g transform="translate(896, 168)" class="key sym keypos-35">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">.</text>
 </g>
 <g transform="translate(28, 224)" class="key mod keypos-36">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key mod"/>
@@ -604,72 +584,65 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <text x="0" y="0" class="key macro tap">AltTab</text>
 <text x="0" y="-25" class="key macro shifted">Toggle</text>
 </g>
-<g transform="translate(616, 210)" class="key macro keypos-44">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">1</tspan>
-</text>
+<g transform="translate(616, 210)" class="key number keypos-44">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">1</text>
 </g>
-<g transform="translate(672, 203)" class="key macro keypos-45">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">2</tspan>
-</text>
+<g transform="translate(672, 203)" class="key number keypos-45">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">2</text>
 </g>
-<g transform="translate(728, 196)" class="key macro keypos-46">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">3</tspan>
-</text>
+<g transform="translate(728, 196)" class="key number keypos-46">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key number"/>
+<text x="0" y="0" class="key number tap">3</text>
 </g>
-<g transform="translate(784, 203)" class="key macro keypos-47">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-1.2em" style="font-size: 64%">KP</tspan><tspan x="0" dy="1.2em" style="font-size: 64%">LEFT</tspan><tspan x="0" dy="1.2em" style="font-size: 64%">PARENTHESIS</tspan>
-</text>
+<g transform="translate(784, 203)" class="key sym keypos-47">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">(</text>
 </g>
-<g transform="translate(840, 217)" class="key macro keypos-48">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-1.2em" style="font-size: 64%">KP</tspan><tspan x="0" dy="1.2em" style="font-size: 64%">RIGHT</tspan><tspan x="0" dy="1.2em" style="font-size: 64%">PARENTHESIS</tspan>
-</text>
+<g transform="translate(840, 217)" class="key sym keypos-48">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key sym"/>
+<text x="0" y="0" class="key sym tap">)</text>
 </g>
 <g transform="translate(896, 224)" class="key macro keypos-49">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key macro"/>
-<text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.6em">KP</tspan><tspan x="0" dy="1.2em">ENTER</tspan>
+<text x="0" y="0" class="key macro tap">⏎</text>
+</g>
+<g transform="translate(168, 260)" class="key ghost keypos-50">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">
+<tspan x="0" dy="-0.6em">⊞</tspan><tspan x="0" dy="1.2em">Win</tspan>
 </text>
 </g>
-<g transform="translate(168, 260)" class="key trans keypos-50">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
-</g>
-<g transform="translate(224, 260)" class="key trans keypos-51">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(224, 260)" class="key ghost keypos-51">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">Alt</text>
 </g>
 <g transform="translate(280, 266)" class="key held keypos-52">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key held"/>
 </g>
-<g transform="translate(350, 274) rotate(33.0)" class="key trans keypos-53">
-<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(350, 274) rotate(33.0)" class="key ghost keypos-53">
+<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">⏎</text>
 </g>
-<g transform="translate(574, 274) rotate(-33.0)" class="key trans keypos-54">
-<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(574, 274) rotate(-33.0)" class="key ghost keypos-54">
+<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">␣</text>
 </g>
-<g transform="translate(644, 266)" class="key trans keypos-55">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(644, 266)" class="key ghost keypos-55">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<a href="#RAISE">
+<text x="0" y="0" class="key ghost tap layer-activator">RAISE</text>
+</a></g>
+<g transform="translate(700, 260)" class="key ghost keypos-56">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">⌫</text>
 </g>
-<g transform="translate(700, 260)" class="key trans keypos-56">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
-</g>
-<g transform="translate(756, 260)" class="key trans keypos-57">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(756, 260)" class="key ghost keypos-57">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">
+<tspan x="0" dy="-0.6em">⊞</tspan><tspan x="0" dy="1.2em">Win</tspan>
+</text>
 </g>
 <g transform="translate(392, 28)" class="key encoder keypos-58">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
@@ -897,36 +870,41 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key mod"/>
 <text x="0" y="0" class="key mod tap">⇧</text>
 </g>
-<g transform="translate(168, 260)" class="key trans keypos-50">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(168, 260)" class="key ghost keypos-50">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">
+<tspan x="0" dy="-0.6em">⊞</tspan><tspan x="0" dy="1.2em">Win</tspan>
+</text>
 </g>
-<g transform="translate(224, 260)" class="key trans keypos-51">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(224, 260)" class="key ghost keypos-51">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">Alt</text>
 </g>
-<g transform="translate(280, 266)" class="key trans keypos-52">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(280, 266)" class="key ghost keypos-52">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<a href="#LOWER">
+<text x="0" y="0" class="key ghost tap layer-activator">LOWER</text>
+</a></g>
+<g transform="translate(350, 274) rotate(33.0)" class="key ghost keypos-53">
+<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">⏎</text>
 </g>
-<g transform="translate(350, 274) rotate(33.0)" class="key trans keypos-53">
-<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
-</g>
-<g transform="translate(574, 274) rotate(-33.0)" class="key trans keypos-54">
-<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(574, 274) rotate(-33.0)" class="key ghost keypos-54">
+<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">␣</text>
 </g>
 <g transform="translate(644, 266)" class="key held keypos-55">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key held"/>
 </g>
-<g transform="translate(700, 260)" class="key trans keypos-56">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(700, 260)" class="key ghost keypos-56">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">⌫</text>
 </g>
-<g transform="translate(756, 260)" class="key trans keypos-57">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(756, 260)" class="key ghost keypos-57">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">
+<tspan x="0" dy="-0.6em">⊞</tspan><tspan x="0" dy="1.2em">Win</tspan>
+</text>
 </g>
 <g transform="translate(392, 28)" class="key encoder keypos-58">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
@@ -1138,35 +1116,39 @@ rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
 <g transform="translate(896, 224)" class="key keypos-49">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 </g>
-<g transform="translate(168, 260)" class="key trans keypos-50">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(168, 260)" class="key ghost keypos-50">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">
+<tspan x="0" dy="-0.6em">⊞</tspan><tspan x="0" dy="1.2em">Win</tspan>
+</text>
 </g>
-<g transform="translate(224, 260)" class="key trans keypos-51">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(224, 260)" class="key ghost keypos-51">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">Alt</text>
 </g>
 <g transform="translate(280, 266)" class="key held keypos-52">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key held"/>
 </g>
-<g transform="translate(350, 274) rotate(33.0)" class="key trans keypos-53">
-<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(350, 274) rotate(33.0)" class="key ghost keypos-53">
+<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">⏎</text>
 </g>
-<g transform="translate(574, 274) rotate(-33.0)" class="key trans keypos-54">
-<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(574, 274) rotate(-33.0)" class="key ghost keypos-54">
+<rect rx="6" ry="6" x="-26" y="-33" width="52" height="66" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">␣</text>
 </g>
 <g transform="translate(644, 266)" class="key held keypos-55">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key held"/>
 </g>
-<g transform="translate(700, 260)" class="key trans keypos-56">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(700, 260)" class="key ghost keypos-56">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">⌫</text>
 </g>
-<g transform="translate(756, 260)" class="key trans keypos-57">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
-<text x="0" y="0" class="key trans tap">▽</text>
+<g transform="translate(756, 260)" class="key ghost keypos-57">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key ghost"/>
+<text x="0" y="0" class="key ghost tap">
+<tspan x="0" dy="-0.6em">⊞</tspan><tspan x="0" dy="1.2em">Win</tspan>
+</text>
 </g>
 <g transform="translate(392, 28)" class="key encoder keypos-58">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>

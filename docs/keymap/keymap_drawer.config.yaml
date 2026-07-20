@@ -112,6 +112,29 @@ parse_config:
     GREATER_THAN: ">"
     LT: "<"
     GT: ">"
+    KP_N0: "0"
+    KP_N1: "1"
+    KP_N2: "2"
+    KP_N3: "3"
+    KP_N4: "4"
+    KP_N5: "5"
+    KP_N6: "6"
+    KP_N7: "7"
+    KP_N8: "8"
+    KP_N9: "9"
+    KP_PLUS: "+"
+    KP_MINUS: "-"
+    KP_MULTIPLY: "*"
+    KP_ASTERISK: "*"
+    KP_DIVIDE: "/"
+    KP_SLASH: "/"
+    KP_DOT: "."
+    KP_EQUAL: "="
+    KP_ENTER: "⏎"
+    KP_LEFT_PARENTHESIS: "("
+    KP_RIGHT_PARENTHESIS: ")"
+    KP_LPAR: "("
+    KP_RPAR: ")"
     PRINTSCREEN: PrtSc
     CAPSLOCK: Caps
 
@@ -129,4 +152,6 @@ draw_config:
     rect.system   { fill: #e8909d; }
     rect.layer    { fill: #a8e6b8; }
     rect.macro    { fill: #f0e8d8; }
+    rect.ghost    { fill: #f5f5f5; }
+    .ghost text   { fill: #a8a8a8; }
     rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
