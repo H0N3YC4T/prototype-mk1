@@ -70,7 +70,7 @@
             compatible = "zmk,behavior-sensor-rotate";
             label = "ENCODER_UNDO_REDO";
             #sensor-binding-cells = <0>;
-            bindings = <&kp LC(Y)>, <&kp LC(Z)>;
+            bindings = <&kp LC(Z)>, <&kp LC(Y)>;
         };
 
         desktop_create_destroy: desktop_create_destroy {
