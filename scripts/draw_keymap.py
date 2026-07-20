@@ -76,20 +76,38 @@ def keycode_disp(code, kc_map):
     return kc_map.get(code, code.replace("_", " "))
 
 
-def encoder_legends(binding, kc_map):
+SPECIAL_CODES = {
+    "LC(KP_PLUS)": "Zoom +", "LC(KP_MINUS)": "Zoom -",
+    "LC(Z)": "Undo", "LC(Y)": "Redo",
+    "LC(LG(RIGHT))": "Desk →", "LG(LC(LEFT))": "Desk ←",
+}
+
+
+def code_disp(code, kc_map):
+    code = code.strip()
+    return SPECIAL_CODES.get(code) or keycode_disp(code, kc_map)
+
+
+def sensor_behaviors(keymap_src):
+    """{&name: (cw_code, ccw_code)} from zmk,behavior-sensor-rotate definitions"""
+    out = {}
+    for m in re.finditer(
+            r"(\w+): \w+ \{[^}]*?behavior-sensor-rotate[^}]*?"
+            r"bindings =\s*<&kp ([^>]+)>\s*,\s*<&kp ([^>]+)>", keymap_src, re.S):
+        out["&" + m.group(1)] = (m.group(2).strip(), m.group(3).strip())
+    return out
+
+
+def encoder_legends(binding, kc_map, behaviors):
     """sensor binding -> (cw, ccw) display strings"""
     b = binding.strip()
     if b.startswith("&inc_dec_kp"):
-        _, cw, ccw = b.split(None, 2)[0], *b.split(None, 2)[1:]
         cw, ccw = b.split()[1], b.split()[2]
-        special = {"LC(KP_PLUS)": "Zoom +", "LC(KP_MINUS)": "Zoom -"}
-        return (special.get(cw) or keycode_disp(cw, kc_map),
-                special.get(ccw) or keycode_disp(ccw, kc_map))
-    named = {
-        "&encoder_undo_redo": ("Redo", "Undo"),
-        "&encoder_change_desktop": ("Desk →", "Desk ←"),
-    }
-    return named.get(b, (b.lstrip("&"), ""))
+        return code_disp(cw, kc_map), code_disp(ccw, kc_map)
+    if b in behaviors:
+        cw, ccw = behaviors[b]
+        return code_disp(cw, kc_map), code_disp(ccw, kc_map)
+    return (b.lstrip("&"), "")
 
 
 def sensor_bindings_per_layer(keymap_src):
@@ -149,13 +167,15 @@ def main():
             layer[i] = ghost
 
     # knob widgets from sensor-bindings (left knob, right knob appended per layer)
-    sensors = sensor_bindings_per_layer(KEYMAP.read_text(encoding="utf-8"))
+    keymap_src = KEYMAP.read_text(encoding="utf-8")
+    sensors = sensor_bindings_per_layer(keymap_src)
+    behaviors = sensor_behaviors(keymap_src)
     layer_names = list(km["layers"])
     for name in layer_names:
         bindings = sensors.get(name, [])
         for idx in range(2):
             if idx < len(bindings):
-                cw, ccw = encoder_legends(bindings[idx], kc_map)
+                cw, ccw = encoder_legends(bindings[idx], kc_map, behaviors)
                 cw, ccw = cw.replace(" ", ""), ccw.replace(" ", "")
                 legend = f"{cw} {ccw}".strip()
                 km["layers"][name].append({"t": legend, "type": "encoder"})
