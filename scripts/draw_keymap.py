@@ -142,15 +142,26 @@ def main():
             else:
                 layer[i] = {"t": key, "type": cls}
 
-    # held (layer-activating) keys keep the layer name as their legend
-    for lname, layer in km["layers"].items():
-        for key in layer:
-            if isinstance(key, dict) and key.get("type") == "held" and not key.get("t"):
-                key["t"] = lname
-
-    # trans keys: show the BASE key underneath, ghosted
     layer_lists = list(km["layers"].values())
     base = layer_lists[0]
+
+    # held keys: the layer's own key stays red with its name; combo-held keys
+    # (e.g. LOWER+RAISE while on SETTINGS) render as ghosts of what they are
+    for lname, layer in km["layers"].items():
+        for i, key in enumerate(layer):
+            if not (isinstance(key, dict) and key.get("type") == "held" and not key.get("t")):
+                continue
+            under = base[i] if i < len(base) else None
+            if legend_of(under) == lname:
+                key["t"] = lname
+            elif isinstance(under, dict):
+                ghost = dict(under)
+                ghost["type"] = "ghost"
+                layer[i] = ghost
+            else:
+                layer[i] = {"t": legend_of(under), "type": "ghost"}
+
+    # trans keys: show the BASE key underneath, ghosted
     for layer in layer_lists[1:]:
         for i, key in enumerate(layer):
             is_trans = key is None or key == "▽" or (
