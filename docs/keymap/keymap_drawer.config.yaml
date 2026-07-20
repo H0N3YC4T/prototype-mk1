@@ -26,6 +26,20 @@ parse_config:
     "&at_tog_mod": {t: AltTab, s: Toggle}
     "&shift_capslock": {t: "⇧", s: CAPS}
     "&desktop_create_destroy LG(LC(F4)) LC(LG(D))": {t: "Desk +", h: "Desk x"}
+    "&kp LC(F)": {t: Find}
+    "&kp LC(Z)": {t: Undo}
+    "&kp LC(Y)": {t: Redo}
+    "&kp LC(C)": {t: Copy}
+    "&kp LC(V)": {t: Paste}
+    "&kp LC(LS(NUMBER_4))": {t: Screen Clip}
+    "&kp LC(LS(ESCAPE))": {t: Task Mgr}
+    "&kp LG(LS(LEFT))": {t: "Window ←"}
+    "&kp LS(LG(RIGHT))": {t: "Window →"}
+    "&kp LG(UP_ARROW)": {t: "Snap ↑"}
+    "&kp LG(DOWN_ARROW)": {t: "Snap ↓"}
+    "&kp LG(LEFT_ARROW)": {t: "Snap ←"}
+    "&kp LG(RIGHT_ARROW)": {t: "Snap →"}
+    "&kp LC(N0)": {t: Zoom Rst}
   zmk_keycode_map:
     ENTER: "⏎"
     RETURN: "⏎"
@@ -48,16 +62,16 @@ parse_config:
     RCTRL: Ctrl
     LEFT_CONTROL: Ctrl
     RIGHT_CONTROL: Ctrl
-    LALT: Alt
-    RALT: Alt
-    LEFT_ALT: Alt
-    RIGHT_ALT: Alt
-    LGUI: "⊞ Win"
-    RGUI: "⊞ Win"
-    LEFT_GUI: "⊞ Win"
-    RIGHT_GUI: "⊞ Win"
-    LEFT_WIN: "⊞ Win"
-    RIGHT_WIN: "⊞ Win"
+    LALT: "⌥"
+    RALT: "⌥"
+    LEFT_ALT: "⌥"
+    RIGHT_ALT: "⌥"
+    LGUI: "$$win$$"
+    RGUI: "$$win$$"
+    LEFT_GUI: "$$win$$"
+    RIGHT_GUI: "$$win$$"
+    LEFT_WIN: "$$win$$"
+    RIGHT_WIN: "$$win$$"
     UP: "↑"
     DOWN: "↓"
     LEFT: "←"
@@ -140,6 +154,9 @@ parse_config:
 
 draw_config:
   n_columns: 1
+  glyphs:
+    win: |
+      <svg viewBox="0 0 24 24"><path d="M3 5.6 10.6 4.5V11.2H3zM11.7 4.3 21 3v8.2h-9.3zM3 12.6h7.6v6.7L3 18.2zM11.7 12.6H21V21l-9.3-1.3z"/></svg>
   dark_mode: false
   footer_text: Prototype_Mk1
   svg_extra_style: |
@@ -152,6 +169,9 @@ draw_config:
     rect.system   { fill: #e8909d; }
     rect.layer    { fill: #a8e6b8; }
     rect.macro    { fill: #f0e8d8; }
+    rect.bt       { fill: #8cc4e8; }
+    rect.nv       { fill: #c8a2c8; }
+    rect.wasd     { fill: #a8e6b8; }
     rect.ghost    { fill: #f5f5f5; }
     .ghost text   { fill: #a8a8a8; }
     rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }

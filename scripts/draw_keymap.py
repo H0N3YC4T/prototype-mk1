@@ -24,8 +24,8 @@ OUT_SVG = ROOT / "docs" / "keymap" / "keymap_raw.svg"
 OUT_PNG = ROOT / "docs" / "keymap" / "keymap_raw.png"
 
 # knob widgets drawn in the top of the split gap (drawing-only, not real keys)
-KNOB_ATTRS = ["<&key_physical_attrs 100 100  650    0       0     0     0>",
-              "<&key_physical_attrs 100 100  900    0       0     0     0>"]
+KNOB_ATTRS = ["<&key_physical_attrs 100 100  630   70       0     0     0>",
+              "<&key_physical_attrs 100 100  920   70       0     0     0>"]
 
 MODS = {"Ctrl", "Alt", "CAPS"}
 NAV = {"↑", "↓", "←", "→", "HOME", "END", "PG_UP", "PG_DN", "INS"}
@@ -40,11 +40,19 @@ def legend_of(key):
     return str(key)
 
 
-def classify(key):
+def classify(key, layer=""):
     t = legend_of(key)
+    hold = key.get("h", "") if isinstance(key, dict) else ""
+    if layer == "SETTINGS":
+        if t.startswith("BT") or t == "USB/BT":
+            return "bt"
+        if hold == "NV":
+            return "nv"
+    if layer == "GAMES" and t in {"W", "A", "S", "D"}:
+        return "wasd"
     if not t or t == "▽":
         return None
-    if t.startswith("⇧") or t.startswith("⊞") or t in MODS:
+    if t.startswith(("⇧", "⊞", "⌥", "$$win$$")) or t in MODS:
         return "mod"
     if t in NAV:
         return "nav"
@@ -105,15 +113,21 @@ def main():
     km = yaml.safe_load(parsed.stdout)
 
     # category classes
-    for layer in km["layers"].values():
+    for lname, layer in km["layers"].items():
         for i, key in enumerate(layer):
-            cls = classify(key)
+            cls = classify(key, lname)
             if cls is None:
                 continue
             if isinstance(key, dict):
                 key.setdefault("type", cls)
             else:
                 layer[i] = {"t": key, "type": cls}
+
+    # held (layer-activating) keys keep the layer name as their legend
+    for lname, layer in km["layers"].items():
+        for key in layer:
+            if isinstance(key, dict) and key.get("type") == "held" and not key.get("t"):
+                key["t"] = lname
 
     # trans keys: show the BASE key underneath, ghosted
     layer_lists = list(km["layers"].values())
@@ -143,8 +157,8 @@ def main():
             if idx < len(bindings):
                 cw, ccw = encoder_legends(bindings[idx], kc_map)
                 cw, ccw = cw.replace(" ", ""), ccw.replace(" ", "")
-                km["layers"][name].append(
-                    {"t": f"↻{cw} ↺{ccw}", "type": "encoder"})
+                legend = f"{cw} {ccw}".strip()
+                km["layers"][name].append({"t": legend, "type": "encoder"})
             else:
                 km["layers"][name].append({"t": "", "type": "encoder"})
 
