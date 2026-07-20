@@ -41,11 +41,13 @@
 
         cycle_animation: nvcycle {
             compatible = "zmk,behavior-cycle-animation";
+            display-name = "NV Animation";
             #binding-cells = <1>;
         };
 
         hold_esc: hold_esc {
             compatible = "zmk,behavior-hold-tap";
+            display-name = "Hold-Esc";
             label = "HOLD_ESC";
             bindings = <&kp>, <&kp>;
 
@@ -56,6 +58,7 @@
 
         shift_capslock: shift_capslock {
             compatible = "zmk,behavior-tap-dance";
+            display-name = "Shift/Caps";
             label = "SHIFT_CAPSLOCK";
             #binding-cells = <0>;
             bindings = <&sk RIGHT_SHIFT>, <&caps_word>;
@@ -72,6 +75,7 @@
 
         desktop_create_destroy: desktop_create_destroy {
             compatible = "zmk,behavior-hold-tap";
+            display-name = "Desktop +/-";
             label = "DESKTOP_CREATE_DESTROY";
             bindings = <&kp>, <&kp>;
 
@@ -89,6 +93,7 @@
 
         at_tog_mod: at_tog_mod {
             compatible = "zmk,behavior-mod-morph";
+            display-name = "Alt-Tab Toggle";
             label = "AT_TOG_MOD";
             bindings = <&alt_tab_init>, <&kt LEFT_ALT>;
 
@@ -98,6 +103,7 @@
 
         del_bks: del_bks {
             compatible = "zmk,behavior-mod-morph";
+            display-name = "Del/Bksp";
             label = "DEL_BKS";
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -106,6 +112,7 @@
 
         bks_del: bks_del {
             compatible = "zmk,behavior-mod-morph";
+            display-name = "Bksp/Del";
             label = "BKS_DEL";
             bindings = <&kp BACKSPACE>, <&kp DELETE>;
 
@@ -117,6 +124,7 @@
     macros {
         alt_tab_init: alt_tab_init {
             compatible = "zmk,behavior-macro";
+            display-name = "Alt-Tab Init";
             #binding-cells = <0>;
             bindings = <&kt LEFT_ALT &kp TAB &kp LEFT>;
             label = "ALT_TAB_INIT";
@@ -124,6 +132,7 @@
 
         copy_line: copy_line {
             compatible = "zmk,behavior-macro";
+            display-name = "Copy Line";
             #binding-cells = <0>;
             bindings = <&kp END &kp LS(HOME) &kp LC(C)>;
             label = "COPY_LINE";
@@ -131,6 +140,7 @@
 
         cut_line: cut_line {
             compatible = "zmk,behavior-macro";
+            display-name = "Cut Line";
             #binding-cells = <0>;
             bindings = <&kp END &kp LS(HOME) &kp LC(X)>;
             label = "CUT_LINE";
@@ -138,6 +148,7 @@
 
         delay_alt_tab: delay_alt_tab {
             compatible = "zmk,behavior-macro";
+            display-name = "Delayed Alt-Tab";
             #binding-cells = <0>;
             bindings = <&kp LA(TAB)>;
             label = "DELAY_ALT_TAB";
@@ -146,6 +157,7 @@
 
         binary_and: binary_and {
             compatible = "zmk,behavior-macro";
+            display-name = "&& (And)";
             #binding-cells = <0>;
             bindings = <&kp AMPS &kp AMPS>;
             label = "&&";
@@ -153,6 +165,7 @@
 
         binary_or: binary_or {
             compatible = "zmk,behavior-macro";
+            display-name = "|| (Or)";
             #binding-cells = <0>;
             bindings = <&kp PIPE &kp PIPE>;
             label = "||";
