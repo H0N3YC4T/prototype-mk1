@@ -1,0 +1,38 @@
+name: Draw keymap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "config/*.keymap"
+      - "boards/shields/prototype_mk1/layouts/**"
+      - "docs/keymap/keymap_drawer.config.yaml"
+      - "scripts/draw_keymap.py"
+      - ".github/workflows/draw-keymap.yml"
+  workflow_dispatch:
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install keymap-drawer + renderer
+        run: pip install keymap-drawer resvg-py pyyaml
+
+      - name: Render keymap_raw.svg / .png
+        run: python scripts/draw_keymap.py
+
+      - name: Commit renders
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/keymap/keymap_raw.svg docs/keymap/keymap_raw.png
+          git diff --cached --quiet || git commit -m "keymap-drawer render"
+          git push

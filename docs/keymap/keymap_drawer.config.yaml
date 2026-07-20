@@ -1,0 +1,132 @@
+# keymap-drawer config for the docs/keymap render (see scripts/draw_keymap.py)
+parse_config:
+  raw_binding_map:
+    "&studio_unlock": {t: "Unlock", h: Studio}
+    "&bootloader": {t: "BOOT", h: BOOT}
+    "&sys_reset": {t: "RESET", h: RESET}
+    "&out OUT_TOG": {t: "USB/BT"}
+    "&bt BT_SEL 0": {t: "BT 1"}
+    "&bt BT_SEL 1": {t: "BT 2"}
+    "&bt BT_SEL 2": {t: "BT 3"}
+    "&bt BT_CLR": {t: "BT", s: Clear}
+    "&bt BT_CLR_ALL": {t: "BT", s: Clr All}
+    "&bl BL_INC": {t: "BL +", h: +}
+    "&bl BL_DEC": {t: "BL -", h: "-"}
+    "&bl BL_TOG": {t: "BL"}
+    "&cycle_animation NVC_PAUSE": {t: "Play", h: NV}
+    "&cycle_animation NVC_NEXT": {t: "Next", h: NV}
+    "&cycle_animation NVC_PREV": {t: "Prev", h: NV}
+    "&cycle_animation NVC_SHUF": {t: "Shuf", h: NV}
+    "&copy_line": {t: Copy, s: Line}
+    "&cut_line": {t: Cut, s: Line}
+    "&binary_and": {t: "&&"}
+    "&binary_or": {t: "||"}
+    "&alt_tab_init": {t: AltTab}
+    "&delay_alt_tab": {t: AltTab}
+    "&at_tog_mod": {t: AltTab, s: Toggle}
+    "&shift_capslock": {t: "⇧", s: CAPS}
+    "&desktop_create_destroy LG(LC(F4)) LC(LG(D))": {t: "Desk +", h: "Desk x"}
+  zmk_keycode_map:
+    ENTER: "⏎"
+    RETURN: "⏎"
+    RET: "⏎"
+    SPACE: "␣"
+    TAB: "⇥"
+    BACKSPACE: "⌫"
+    BSPC: "⌫"
+    DELETE: "⌦"
+    DEL: "⌦"
+    ESCAPE: Esc
+    ESC: Esc
+    LSHIFT: "⇧"
+    RSHIFT: "⇧"
+    LSHFT: "⇧"
+    RSHFT: "⇧"
+    LEFT_SHIFT: "⇧"
+    RIGHT_SHIFT: "⇧"
+    LCTRL: Ctrl
+    RCTRL: Ctrl
+    LEFT_CONTROL: Ctrl
+    RIGHT_CONTROL: Ctrl
+    LALT: Alt
+    RALT: Alt
+    LEFT_ALT: Alt
+    RIGHT_ALT: Alt
+    LGUI: "⊞ Win"
+    RGUI: "⊞ Win"
+    LEFT_GUI: "⊞ Win"
+    RIGHT_GUI: "⊞ Win"
+    LEFT_WIN: "⊞ Win"
+    RIGHT_WIN: "⊞ Win"
+    UP: "↑"
+    DOWN: "↓"
+    LEFT: "←"
+    RIGHT: "→"
+    UP_ARROW: "↑"
+    DOWN_ARROW: "↓"
+    LEFT_ARROW: "←"
+    RIGHT_ARROW: "→"
+    C_VOLUME_UP: "Vol +"
+    C_VOL_UP: "Vol +"
+    C_VOLUME_DOWN: "Vol -"
+    C_VOL_DN: "Vol -"
+    C_MUTE: "Mute"
+    C_PP: "Play"
+    C_NEXT: "Next"
+    C_PREV: "Prev"
+    K_LOCK: "Lock"
+    MINUS: "-"
+    PLUS: "+"
+    EQUAL: "="
+    ASTRK: "*"
+    EXCL: "!"
+    CARET: "^"
+    AMPERSAND: "&"
+    PIPE: "|"
+    TILDE: "~"
+    GRAVE: "`"
+    SEMI: ";"
+    SEMICOLON: ";"
+    SQT: "'"
+    SINGLE_QUOTE: "'"
+    DQT: "\""
+    DOUBLE_QUOTES: "\""
+    COMMA: ","
+    DOT: "."
+    FSLH: "/"
+    BSLH: "\\"
+    BACKSLASH: "\\"
+    LEFT_BRACKET: "["
+    RIGHT_BRACKET: "]"
+    LBKT: "["
+    RBKT: "]"
+    LEFT_BRACE: "{"
+    RIGHT_BRACE: "}"
+    LBRC: "{"
+    RBRC: "}"
+    LEFT_PARENTHESIS: "("
+    RIGHT_PARENTHESIS: ")"
+    LPAR: "("
+    RPAR: ")"
+    LESS_THAN: "<"
+    GREATER_THAN: ">"
+    LT: "<"
+    GT: ">"
+    PRINTSCREEN: PrtSc
+    CAPSLOCK: Caps
+
+draw_config:
+  n_columns: 1
+  dark_mode: false
+  footer_text: Prototype_Mk1
+  svg_extra_style: |
+    rect.number   { fill: #a8d0e6; }
+    rect.fkey     { fill: #8ca8e6; }
+    rect.mod      { fill: #c8a2c8; }
+    rect.nav      { fill: #8cd9c8; }
+    rect.sym      { fill: #f5e08c; }
+    rect.media    { fill: #f5b98c; }
+    rect.system   { fill: #e8909d; }
+    rect.layer    { fill: #a8e6b8; }
+    rect.macro    { fill: #f0e8d8; }
+    rect.encoder  { fill: #eceff1; rx: 48px; ry: 48px; stroke-width: 2px; }
