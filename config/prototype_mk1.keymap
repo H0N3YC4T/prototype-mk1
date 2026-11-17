@@ -93,14 +93,13 @@
             bindings = <&kp LC(LG(RIGHT))>, <&kp LG(LC(LEFT))>;
         };
 
-        // game layer: left encoder as mouse wheel (camera zoom)
-
-        scrl_enc: scrl_enc {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_SCROLL";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-        };
+        // &msc never fires from an encoder notch (release cancels its 16ms tick); game layer zooms via WoW's Home/End binds
+        // scrl_enc: scrl_enc {
+        //     compatible = "zmk,behavior-sensor-rotate";
+        //     label = "ENCODER_SCROLL";
+        //     #sensor-binding-cells = <0>;
+        //     bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+        // };
 
         at_tog_mod: at_tog_mod {
             compatible = "zmk,behavior-mod-morph";
@@ -270,7 +269,7 @@
             >;
 
             sensor-bindings =
-                <&scrl_enc>,
+                <&inc_dec_kp END HOME>,
                 <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
 
             label = "GAME";
