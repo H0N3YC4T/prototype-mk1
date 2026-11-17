@@ -1435,7 +1435,9 @@ tspan         { fill: inherit; }
 </g>
 <g transform="translate(381, 67)" class="key encoder keypos-58">
 <rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
-<text x="0" y="0" class="key encoder tap"><tspan style="font-size: 88%">scrl_enc</tspan></text>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">END</tspan><tspan x="0" dy="1.2em">HOME</tspan>
+</text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
 <rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
