@@ -867,9 +867,9 @@ tspan         { fill: inherit; }
 <g transform="translate(382, 186) rotate(45.0)" class="key macro keypos-42">
 <rect rx="6" ry="6" x="-27" y="-27" width="55" height="55" class="key macro"/>
 <text x="0" y="0" class="key macro tap">
-<tspan x="0" dy="-0.9em">Desk</tspan><tspan x="0" dy="1.2em">+</tspan>
+<tspan x="0" dy="-0.9em">Ctl+Gui</tspan><tspan x="0" dy="1.2em">+D</tspan>
 </text>
-<text x="0" y="25" class="key macro hold">Desk x</text>
+<text x="0" y="25" class="key macro hold"><tspan style="font-size: 64%">(LG(LC(F4)…</tspan></text>
 </g>
 <g transform="translate(544, 184) rotate(-45.0)" class="key macro keypos-43">
 <rect rx="6" ry="6" x="-27" y="-27" width="55" height="55" class="key macro"/>
@@ -1435,7 +1435,7 @@ tspan         { fill: inherit; }
 <g transform="translate(381, 67)" class="key encoder keypos-58">
 <rect rx="26.0" ry="26.0"  x="-26" y="-26" width="52" height="52" class="key encoder"/>
 <text x="0" y="0" class="key encoder tap">
-<tspan x="0" dy="-0.6em">Vol+</tspan><tspan x="0" dy="1.2em">Vol-</tspan>
+<tspan x="0" dy="-0.6em" style="font-size: 64%">KSCROLLDOWN</tspan><tspan x="0" dy="1.2em" style="font-size: 64%">KSCROLLUP</tspan>
 </text>
 </g>
 <g transform="translate(543, 67)" class="key encoder keypos-59">
