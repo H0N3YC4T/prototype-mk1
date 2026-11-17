@@ -217,11 +217,11 @@
         layer_upper {
             display-name = "Raise";
             bindings = <
-&kp GRAVE         &kp F1              &kp F2              &kp F3               &kp F4         &kp F5                                                                          &kp F6                &kp F7                 &kp F8         &kp F9            &kp F10            &kp F11
-&kp TAB           &kp LG(LS(LEFT))    &kp LG(UP_ARROW)    &kp LS(LG(RIGHT))    &kp AMPERSAND  &kp PIPE                                                                        &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PLUS       &kp EQUAL         &kp DOUBLE_QUOTES  &kp F12
-&kp LEFT_CONTROL  &kp LG(LEFT_ARROW)  &kp LG(DOWN_ARROW)  &kp LG(RIGHT_ARROW)  &kp CARET      &kp EXCL                                                                        &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp MINUS      &kp ASTRK         &kp SINGLE_QUOTE   &kp GRAVE
-&kp LSHIFT        &kp LC(Y)           &cut_line           &copy_line           &kp LC(V)      &kp LC(LS(NUMBER_4))  &desktop_create_destroy LG(LC(F4)) LC(LG(D))  &kp LC(N0)  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp LESS_THAN  &kp GREATER_THAN  &kp QUESTION       &kp PIPE
-                                                          &trans               &trans         &trans                &trans                                        &trans      &trans                &trans                 &trans
+&kp GRAVE         &kp F1              &kp F2              &kp F3               &kp F4         &kp F5                                                                            &kp F6                &kp F7                 &kp F8         &kp F9            &kp F10            &kp F11
+&kp TAB           &kp LG(LS(LEFT))    &kp LG(UP_ARROW)    &kp LS(LG(RIGHT))    &kp AMPERSAND  &kp PIPE                                                                          &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp PLUS       &kp EQUAL         &kp DOUBLE_QUOTES  &kp F12
+&kp LEFT_CONTROL  &kp LG(LEFT_ARROW)  &kp LG(DOWN_ARROW)  &kp LG(RIGHT_ARROW)  &kp CARET      &kp EXCL                                                                          &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp MINUS      &kp ASTRK         &kp SINGLE_QUOTE   &kp GRAVE
+&kp LSHIFT        &kp LC(Y)           &cut_line           &copy_line           &kp LC(V)      &kp LC(LS(NUMBER_4))  &desktop_create_destroy (LG(LC(F4))) LC(LG(D))  &kp LC(N0)  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp LESS_THAN  &kp GREATER_THAN  &kp QUESTION       &kp PIPE
+                                                          &trans               &trans         &trans                &trans                                          &trans      &trans                &trans                 &trans
             >;
 
             sensor-bindings =
@@ -259,7 +259,7 @@
             >;
 
             sensor-bindings =
-                <&inc_dec_kp C_VOLUME_UP C_VOL_DN>,
+                <&inc_dec_kp K_SCROLL_DOWN K_SCROLL_UP>,
                 <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
 
             label = "GAMES";
